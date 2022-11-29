@@ -1,4 +1,7 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import "./style.css";
 import App from "./App.vue";
 
 import PrimeVue from "primevue/config";
@@ -9,6 +12,7 @@ import InputText from "primevue/inputtext";
 import ToastService from "primevue/toastservice";
 import Toast from "primevue/toast";
 
+
 //importing stylesheets
 import "./style.css";
 import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
@@ -17,6 +21,11 @@ import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 
 const app = createApp(App);
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
+
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(router);
