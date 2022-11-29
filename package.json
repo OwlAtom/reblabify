@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lz-string": "^1.4.4",
+    "pinia": "^2.0.27",
+    "pinia-plugin-persistedstate": "^3.0.1",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },
