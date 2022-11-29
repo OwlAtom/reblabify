@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import "./style.css";
 import App from "./App.vue";
+import "normalize.css/normalize.css";
 
 import PrimeVue from "primevue/config";
 import router from "./router";
@@ -12,7 +13,6 @@ import InputText from "primevue/inputtext";
 import ToastService from "primevue/toastservice";
 import Toast from "primevue/toast";
 
-
 //importing stylesheets
 import "./style.css";
 // import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
@@ -20,8 +20,7 @@ import "./style.css";
 // import "./assets/scss/shared.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
-import 'material-icons/iconfont/material-icons.css';
-
+import "material-icons/iconfont/material-icons.css";
 
 const app = createApp(App);
 
