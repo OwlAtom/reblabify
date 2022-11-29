@@ -29,11 +29,13 @@ export const useNameStore = defineStore(
   },
   {
     persist: {
-      serialize: (state) => {
-        return compressToUTF16(JSON.stringify(state));
-      },
-      deserialize: (state) => {
-        return JSON.parse(decompressFromUTF16(state));
+      serializer: {
+        serialize: (state) => {
+          return compressToUTF16(JSON.stringify(state));
+        },
+        deserialize: (state) => {
+          return JSON.parse(decompressFromUTF16(state));
+        },
       },
     },
   }
