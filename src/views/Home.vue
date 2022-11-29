@@ -13,7 +13,7 @@ import HelloWorld from "../components/HelloWorld.vue";
   <HelloWorld msg="This is the home page." />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .logo {
   height: 6em;
   padding: 1.5em;
