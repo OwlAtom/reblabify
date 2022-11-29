@@ -15,10 +15,13 @@ import Toast from "primevue/toast";
 
 //importing stylesheets
 import "./style.css";
-import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
+// import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
 // import "./assets/_theme.scss";
+// import "./assets/scss/shared.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+import 'material-icons/iconfont/material-icons.css';
+
 
 const app = createApp(App);
 

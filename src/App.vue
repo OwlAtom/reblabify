@@ -10,7 +10,7 @@ const store = useNameStore();
 <template>
   Hello {{ store.fullName }}!
   <router-view></router-view>
-  <Navigation />
+
   <div class="nameStoreTest" style="margin: 30px">
     <div>Indtast dit navn:</div>
     <br />
@@ -20,6 +20,14 @@ const store = useNameStore();
     last:
     <input type="text" v-model="store.name.last" />
   </div>
+  <!-- https://fonts.google.com/icons -->
+  <!-- <span class="material-icons-outlined">home</span>          
+  <span class="material-icons-outlined">chat</span> 
+  <span class="material-icons-round">add</span>   
+  <span class="material-icons-sharp">home</span>    
+  <span class="material-icons-two-tone">home</span>  -->
+  
+  <Navigation />
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

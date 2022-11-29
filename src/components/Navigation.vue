@@ -3,33 +3,34 @@
 </script>
 <template>
   <nav>
-    <router-link to="/">Go to landing</router-link>
-    <router-link to="/home">Go to home</router-link>
+    <router-link :to="{ name: 'Home' }"><span class="material-icons-outlined">home</span></router-link>
+    <router-link :to="{ name: 'Add' }"><span class="material-icons-outlined addBtn">add</span></router-link>
+    <router-link :to="{ name: 'Chat' }"><span class="material-icons-outlined">chat</span></router-link>
+
   </nav>
 </template>
 
 <style lang="scss" scoped>
-nav {
+nav{
   display: flex;
-  justify-content: space-evenly;
-  max-width: 20em;
-  margin: 0 auto;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 4em;
+  border-radius: 8px;
+  background-color: #1B4755; //husk farvevariabler
+  a{
+    color: #F9D6BC; //husk farvevariabler
+    &:hover{
+      color: $red;
+    }
+    .addBtn{
+      background-color: #F9D6BC;
+      border-radius: 100%;
+      aspect-ratio: 1/1;
+      color: #0D232A;
+    }
+  }
 }
-nav a {
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
 
-  color: #42b883;
-  background-color: #f5f5f5;
-  box-shadow: -11px 12px 0px 0px #00000061;
-
-  font-weight: bold;
-  text-decoration: none;
-
-  transition: all 0.2s ease-in-out;
-}
-nav a:hover {
-  color: #f5f5f5;
-  background-color: #42b883;
-}
 </style>

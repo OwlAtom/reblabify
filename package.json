@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "lz-string": "^1.4.4",
+    "material-icons": "^1.12.2",
     "pinia": "^2.0.27",
     "pinia-plugin-persistedstate": "^3.0.1",
     "primeflex": "^3.3.0",
