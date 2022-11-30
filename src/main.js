@@ -6,17 +6,20 @@ import App from "./App.vue";
 
 import PrimeVue from "primevue/config";
 import router from "./router";
+
 //importing components
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import ToastService from "primevue/toastservice";
 import Toast from "primevue/toast";
+import TabView from 'primevue/tabview'; // brugt i ButtonGroup
+import TabPanel from 'primevue/tabpanel'; // brugt i ButtonGroup
 
 
 //importing stylesheets
 import "./style.css";
-import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
-// import "./assets/_theme.scss";
+// import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
+import "./assets/_theme.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 
@@ -31,8 +34,12 @@ app.use(ToastService);
 app.use(router);
 
 //defining components
-app.component(Button);
+// app.component(Button);
+app.component('Button', Button);
 app.component(InputText);
 app.component(Toast);
+app.component('TabView', TabView);
+app.component('TabPanel', TabPanel);
+
 
 app.mount("#app");

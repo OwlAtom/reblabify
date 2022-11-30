@@ -2,6 +2,8 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Navigation from "./components/Navigation.vue";
+import ButtonGroup from "./components/ButtonGroup.vue";
+
 import { useNameStore } from "./stores/name";
 
 const store = useNameStore();
@@ -20,6 +22,9 @@ const store = useNameStore();
     last:
     <input type="text" v-model="store.name.last" />
   </div>
+  <ButtonGroup />
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+
+</style>
