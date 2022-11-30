@@ -39,7 +39,6 @@ const activetab = ref(0)
 .button-group {
     .button-group-item {
         width: 50%;
-
     }
 }
 

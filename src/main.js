@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-import "./style.css";
 import App from "./App.vue";
 import "normalize.css/normalize.css";
 
@@ -17,14 +16,12 @@ import TabView from 'primevue/tabview'; // brugt i ButtonGroup
 import TabPanel from 'primevue/tabpanel'; // brugt i ButtonGroup
 
 //importing stylesheets
-import "./style.css";
-// import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
-import "./assets/_theme.scss";
+import "./style.css"; // evt. flyttes over i scss
+// import "primevue/resources/themes/md-light-indigo/theme.css"; //theme | evt. slettes
 // import "./assets/_theme.scss";
-// import "./assets/scss/shared.scss";
 import "primevue/resources/primevue.min.css"; //core css
-import "primeicons/primeicons.css"; //icons
-import "material-icons/iconfont/material-icons.css";
+import "primeicons/primeicons.css"; //prime icons
+import "material-icons/iconfont/material-icons.css"; // Material icons
 
 const app = createApp(App);
 
@@ -36,8 +33,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(router);
 
-//defining components
-// app.component(Button);
+//defining PrimeVue components
 app.component('Button', Button);
 app.component(InputText);
 app.component(Toast);

@@ -4,6 +4,7 @@
 import Navigation from "./components/Navigation.vue";
 import ButtonGroup1 from "./components/ButtonGroup1.vue";
 import ButtonGroup2 from "./components/ButtonGroup2.vue";
+import ButtonGroup3 from "./components/ButtonGroup3.vue";
 
 
 import { useNameStore } from "./stores/name";
@@ -25,6 +26,7 @@ const store = useNameStore();
   </div>
   <ButtonGroup1 />
   <ButtonGroup2 />
+  <ButtonGroup3 />
 </template>
 
 <style lang="scss" scoped>

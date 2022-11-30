@@ -1,7 +1,5 @@
-// colors
-$blue: blue;
-$red: red;
-
+// Colors
+$green: green;
 
 // Custom tabview buttons
 .button-group {
@@ -15,9 +13,6 @@ $red: red;
     box-shadow: 0 2px 4px #30303040; //todo: farvevariable
 
     .button-group-item {
-        // flex-grow: 1;
-        height: 100%;
-        // width: 50%;
         padding: 3px;
         display: flex;
         justify-content: center;
@@ -33,5 +28,18 @@ $red: red;
         p {
             margin: 0;
         }
+    }
+}
+
+/* Customizations to Primevue Components should be defined here */
+//* Styling af botton group som ses på begivenhedsside og -oversigt
+.tabview-custom {
+    .p-tabview-nav {
+        display: none;
+    }
+  
+    .p-tabview-panels {
+      background: none;
+      padding: 0;
     }
 }
