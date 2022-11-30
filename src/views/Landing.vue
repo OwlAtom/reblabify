@@ -1,3 +1,13 @@
+<script setup>
+import Button from "primevue/button"; // Import the PrimeVue buttons.
+import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
+import HelloWorld from "../components/HelloWorld.vue";
+
+defineProps({
+  msg: String,
+});
+</script>
+
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
@@ -18,21 +28,6 @@
     <!-- End of PrimeVue buttons. -->
   </div>
 </template>
-
-<script>
-import Button from "primevue/button"; // Import the PrimeVue buttons.
-import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
-
-export default {
-  name: "Landing",
-  components: {
-    Button, // The PrimeVue button will be used in the HTML section.
-  },
-  props: {
-    msg: String,
-  },
-};
-</script>
 
 <style scoped>
 .logo {

@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import "./style.css";
 import App from "./App.vue";
+import "normalize.css/normalize.css";
 
 import PrimeVue from "primevue/config";
 import router from "./router";
@@ -15,13 +16,15 @@ import Toast from "primevue/toast";
 import TabView from 'primevue/tabview'; // brugt i ButtonGroup
 import TabPanel from 'primevue/tabpanel'; // brugt i ButtonGroup
 
-
 //importing stylesheets
 import "./style.css";
 // import "primevue/resources/themes/md-light-indigo/theme.css"; //theme
 import "./assets/_theme.scss";
+// import "./assets/_theme.scss";
+// import "./assets/scss/shared.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
+import "material-icons/iconfont/material-icons.css";
 
 const app = createApp(App);
 

@@ -12,7 +12,6 @@ const store = useNameStore();
 </script>
 
 <template>
-  Hello {{ store.fullName }}!
   <router-view></router-view>
   <Navigation />
   <div class="nameStoreTest" style="margin: 30px">
