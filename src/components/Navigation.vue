@@ -10,7 +10,7 @@ const unreadMessages = true; // TODO: connect the notifications to this bool
     <router-link :to="{ name: 'Home' }">
       <HouseIcon />
     </router-link>
-    <router-link :to="{ name: 'Add' }" class="add-btn">
+    <router-link :to="{ name: 'AddEvent' }" class="add-btn">
       <PlusIcon />
     </router-link>
     <router-link
