@@ -1,45 +1,46 @@
 // Colors
 $green: green;
+$darkTan: #edb183;
 
 // Custom tabview buttons
 .button-group {
-    width: 100%;
-    background-color: #FCFCFC; //todo: farvevariable
-    display: flex;
-    border-radius: 8px; //todo: variable
-    height: 2.3em;
+  width: 100%;
+  background-color: #fcfcfc; //todo: farvevariable
+  display: flex;
+  border-radius: 8px; //todo: variable
+  height: 2.3em;
+  padding: 3px;
+  gap: 3px;
+  box-shadow: 0 2px 4px #30303040; //todo: farvevariable
+
+  .button-group-item {
     padding: 3px;
-    gap: 3px;
-    box-shadow: 0 2px 4px #30303040; //todo: farvevariable
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.2s linear;
 
-    .button-group-item {
-        padding: 3px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        transition:all .2s linear;
-
-        &.active {
-            background-color: #F9D6BC; //todo: variabel
-            border-radius: 5px; //todo: variable
-        }
-
-        p {
-            margin: 0;
-        }
+    &.active {
+      background-color: #f9d6bc; //todo: variabel
+      border-radius: 5px; //todo: variable
     }
+
+    p {
+      margin: 0;
+    }
+  }
 }
 
 /* Customizations to Primevue Components should be defined here */
 //* Styling af botton group som ses på begivenhedsside og -oversigt
 .tabview-custom {
-    .p-tabview-nav {
-        display: none;
-    }
-  
-    .p-tabview-panels {
-      background: none;
-      padding: 0;
-    }
+  .p-tabview-nav {
+    display: none;
+  }
+
+  .p-tabview-panels {
+    background: none;
+    padding: 0;
+  }
 }

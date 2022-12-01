@@ -1,5 +1,5 @@
 <script setup>
-import NormalButton from "./NormalButton.vue";
+import NormalButton from "./NormalButtonn.vue";
 import { useclickStore } from "../stores/click";
 
 const store = useclickStore();

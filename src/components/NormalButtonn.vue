@@ -15,8 +15,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss" scoped>
-$darkTan: #edb183;
-
 .btn {
   display: flex;
   align-items: center;
