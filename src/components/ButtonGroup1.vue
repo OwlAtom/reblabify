@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 
+import ButtonGroup3 from "./ButtonGroup3.vue";
+
 const activetab = ref(0)
 
 </script>
@@ -20,12 +22,11 @@ const activetab = ref(0)
 
         <TabView v-model:activeIndex="activetab">
             <TabPanel>
-                <p>Begivenheds detaljer komponent her
-                </p>
+                <p>Begivenheds detaljer komponent her</p>
+                <ButtonGroup3 />
             </TabPanel>
             <TabPanel>
-                <p> Chat komponent
-                </p>
+                <p> Chat komponent </p>
             </TabPanel>
         </TabView>
         
