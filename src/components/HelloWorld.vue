@@ -1,5 +1,5 @@
 <script setup>
-import normalButton from "./normalButton.vue";
+import NormalButton from "./NormalButton.vue";
 import { useclickStore } from "../stores/click";
 
 const store = useclickStore();
@@ -21,7 +21,7 @@ defineProps({
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-  <normalButton
+  <NormalButton
     class="outlined_"
     text="Login"
     IconBefore="chevron_left"
