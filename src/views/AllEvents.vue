@@ -1,11 +1,13 @@
 <script setup>
+import DefaultHeader from "../components/DefaultHeader.vue";
 import ButtonGroup2 from "../components/ButtonGroup2.vue";
 
 </script>
 
 <template>
-    <h1>Begivenhedsoversigt</h1>
+    <DefaultHeader />
     <ButtonGroup2 />
+
 </template>
 
 
