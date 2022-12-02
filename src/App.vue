@@ -4,13 +4,13 @@
 import Navigation from "./components/Navigation.vue";
 
 
-
 import { useNameStore } from "./stores/name";
 
 const store = useNameStore();
 </script>
 
 <template>
+
   <router-view></router-view>
   <Navigation />
   <div class="nameStoreTest" style="margin: 30px">

@@ -1,9 +1,11 @@
 <script setup>
+import DefaultHeader from "../components/DefaultHeader.vue";
 
 </script>
 
 <template>
-<h1>Grupper</h1>
+
+    <DefaultHeader />
   
 </template>
 

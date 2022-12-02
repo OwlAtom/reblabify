@@ -20,6 +20,9 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: () => import("../views/Chat.vue"),
+    meta: {
+      heading: "Chat oversigt",
+    }
   },
   {
     path: "/event-info", //todo: :id
@@ -30,11 +33,17 @@ const routes = [
     path: "/all-events",
     name: "AllEvents",
     component: () => import("../views/AllEvents.vue"),
+    meta: {
+      heading: "Begivenhedsoversigt",
+    }
   },
   {
     path: "/groups",
     name: "Groups",
     component: () => import("../views/Groups.vue"),
+    meta: {
+      heading: "Grupper",
+    }
   },
 ];
 
