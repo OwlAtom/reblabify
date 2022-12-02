@@ -22,9 +22,6 @@ import "./assets/_theme.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //prime icons
 import "material-icons/iconfont/material-icons.css"; // Material icons
-import(
-  "https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;600&family=Raleway:wght@500;700&display=swap"
-); //import fonts
 
 const app = createApp(App);
 

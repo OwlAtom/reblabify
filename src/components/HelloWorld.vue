@@ -12,15 +12,16 @@ defineProps({
 <template>
   <h1>{{ msg }}</h1>
 
-  <div class="card">
+  <div class="card wrapper">
     <button type="button" @click="store.increment()">
       count is <span v-html="store.clicks"></span>
     </button>
 
-    <p class="p-smallest">heyo</p>
+    <p class="px-6">heyo</p>
   </div>
+
   <normalButton
-    class="outlined_"
+    class="outlined"
     text="Login"
     IconBefore="chevron_left"
     IconAfter="chevron_right"

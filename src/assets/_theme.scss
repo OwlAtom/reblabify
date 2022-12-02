@@ -1,3 +1,4 @@
+@import "primeflex/primeflex.scss";
 
 :root {
    $background-color: #A9D5E3; 
@@ -24,6 +25,8 @@
   $overlay: #F4F4F4B3; //opacity 70%   used for modals, notifications or when creating and showing an event/chat
   $icon-placeholder: #F4F4F466; //opacity 40%  used when creating an event
   color-scheme: light;
+
+  
 }
 
 
@@ -55,9 +58,9 @@
   src: url("./fonts/Maven_Pro/static/MavenPro-SemiBold.ttf") format("trueType");  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-$headings: 'Raleway', sans serif;
-$body-text: 'Maven Pro', sans serif;
 
+$headings: 'Raleway', sans serif;
+  $body-text: 'Maven Pro', sans serif;
 
 @mixin headings($size, $color: $primary, $font-weight: 500) {
   font-family: $headings;
@@ -96,39 +99,22 @@ h3{
 .p-smallest{
   @include bodytext(0.75rem); //12px
 }
- 
-
-
-.p-component {
-  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-  font-size: 1rem;
-  font-weight: normal;
-}
-
-.p-component-overlay {
-  background-color: rgba(0, 0, 0, 0.32);
-  transition-duration: 0.2s;
-}
-
-.p-disabled, .p-component:disabled {
-  opacity: 0.38;
-}
 
 .p-error {
-  color: #B00020;
+  color: $cancelled;
 }
 
-.p-text-secondary {
-  color: rgba(0, 0, 0, 0.6);
+.p-text-white {
+  color: $white;
 }
 
-.pi {
-  font-size: 1rem;
+//spacing
+.wrapper{
+  margin: 0 1.25rem 0 1.25rem; 
 }
 
 .p-link {
-  font-size: 1rem;
-  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+ @include bodytext(1rem);
   border-radius: 4px;
 }
 .p-link:focus {
@@ -160,32 +146,6 @@ h3{
   to {
     background-color: transparent;
   }
-}
-
-:root {
-  $background-color: #A9D5E3; 
-  $bottom-wave: #7abed3;
-  $middle-wave: #67b5cd;
-  $top-wave: #94cbdc; 
-  $primary:  #0D232A;//primarily used for text
-  $secondary: #edb183; //used for buttons or as higlighter
-  $secondary-active: #f9d6bc; //primarily used for showing the current state e.g. a tab 
-  $tertiary: #1B4755; //used for header and bottom navigation
-  $white: #FCFCFC; 
-  $box-shadow: #30303040; //opacity 25%
-  $cards: #ECF1F3e6;  //opacity 90%
-  $notification: #BE3334;
-  $active: #4BD37B; //used in chats
-  $coming: #4BD37B99; //opacity 60%
-  $maybe: #D3C54B99; //opacity 60%
-  $not-coming:  #FF5A7999; //opacity 60%
-  $important: #4FD1D9; //used in notifications
-  $cancelled: #FF5A79; //used in notifications
-  $new-invite: #FFCE31; //used in notifications
-  $accepted-invite: #4BD37B; //used in notifications
-  $disabled-card: #DEDEDE80; //opacity 50%
-  $overlay: #F4F4F4B3; //opacity 70%   used for modals, notifications or when creating and showing an event/chat
-  $icon-placeholder: #F4F4F466; //opacity 40%  used when creating an event
 }
 
 .p-autocomplete .p-autocomplete-loader {
@@ -231,7 +191,7 @@ h3{
   color: rgba(0, 0, 0, 0.87);
 }
 .p-autocomplete.p-invalid.p-component > .p-inputtext {
-  border-color: #B00020;
+  border-color: $cancelled;
 }
 
 .p-autocomplete-panel {
@@ -277,7 +237,7 @@ h3{
 }
 
 .p-calendar.p-invalid.p-component > .p-inputtext {
-  border-color: #B00020;
+  border-color: $cancelled;
 }
 
 .p-datepicker {
@@ -528,7 +488,7 @@ h3{
   border-bottom-right-radius: 4px;
 }
 .p-cascadeselect.p-invalid.p-component {
-  border-color: #B00020;
+  border-color: $cancelled;
 }
 
 .p-cascadeselect-panel {
@@ -618,7 +578,7 @@ h3{
   color: #ffffff;
 }
 .p-checkbox.p-invalid > .p-checkbox-box {
-  border-color: #B00020;
+  border-color: $cancelled;
 }
 
 .p-input-filled .p-checkbox .p-checkbox-box {
