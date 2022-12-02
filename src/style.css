@@ -4,18 +4,32 @@
   line-height: 24px;
   font-weight: 400;
 
-  /* color: rgba(255, 255, 255, 0.87); */
-  background-color:  #A9D5E3;
+  background: rgb(169, 213, 227);
+
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
 
-#app {
-  min-height: 100vh;
-}
-body {
+html {
+  height: 100%;
   margin: 0;
   padding: 0;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  background: url(./assets/background.svg);
+  background-attachment: local;
+  background-size: 100%;
+  background-repeat: repeat;
 }
