@@ -11,7 +11,7 @@ const activetab = ref(0)
 <template>
 
     <div class="tabview-custom">
-        <div class="button-group tabs">
+        <div class="button-group">
             <div class="button-group-item" @click="activetab = 0" v-bind:class="[ activetab === 0 ? 'active' : '' ]">
                  <p>Detaljer</p> 
             </div>
