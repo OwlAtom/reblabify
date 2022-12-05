@@ -12,13 +12,13 @@ import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import ToastService from "primevue/toastservice";
 import Toast from "primevue/toast";
-import TabView from 'primevue/tabview'; // brugt i ButtonGroup
-import TabPanel from 'primevue/tabpanel'; // brugt i ButtonGroup
+import TabView from "primevue/tabview"; // brugt i ButtonGroup
+import TabPanel from "primevue/tabpanel"; // brugt i ButtonGroup
 
 //importing stylesheets
 import "./style.css"; // evt. flyttes over i scss
 // import "primevue/resources/themes/md-light-indigo/theme.css"; //theme | evt. slettes
-// import "./assets/_theme.scss";
+import "./assets/_theme.scss";
 import "primevue/resources/primevue.min.css"; //core css
 import "primeicons/primeicons.css"; //prime icons
 import "material-icons/iconfont/material-icons.css"; // Material icons
@@ -34,11 +34,10 @@ app.use(ToastService);
 app.use(router);
 
 //defining PrimeVue components
-app.component('Button', Button);
+app.component("Button", Button);
 app.component(InputText);
 app.component(Toast);
-app.component('TabView', TabView);
-app.component('TabPanel', TabPanel);
-
+app.component("TabView", TabView);
+app.component("TabPanel", TabPanel);
 
 app.mount("#app");

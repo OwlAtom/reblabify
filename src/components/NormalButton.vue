@@ -30,11 +30,11 @@ const props = defineProps({
   font-size: 26px;
   line-height: 31px;
 
-  background-color: $darkTan;
+  background-color: $secondary;
   &.outlined {
     background-color: transparent;
-    border: 2px solid $darkTan;
-    color: $darkTan;
+    border: 2px solid $secondary;
+    color: $secondary;
   }
 }
 .material-icons {
