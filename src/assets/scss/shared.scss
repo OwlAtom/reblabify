@@ -31,15 +31,4 @@ $darkTan: #edb183;
   }
 }
 
-/* Customizations to Primevue Components should be defined here */
-//* Styling af botton group som ses på begivenhedsside og -oversigt
-.tabview-custom {
-  .p-tabview-nav {
-    display: none;
-  }
 
-  .p-tabview-panels {
-    background: none;
-    padding: 0;
-  }
-}

@@ -1,4 +1,5 @@
 <script setup>
+import headerWave from "../assets/headerWave.svg"
 
 </script>
 
@@ -8,11 +9,8 @@
             <h1>{{$route.meta.heading}}</h1>
         </div>
         <div class="svg-container">
-            <svg fill="none" viewBox="0 0 390 25" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 19 V0 H390 V19 C195 -1 195 39 0 19Z" fill="#1B4755"/>
-            </svg>
+            <headerWave />
         </div>
-
     </div>
 
 </template>
