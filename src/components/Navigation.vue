@@ -25,11 +25,6 @@ const unreadMessages = true; // TODO: connect the notifications to this bool
 </template>
 
 <style lang="scss" scoped>
-$darkblue: #1b4755;
-$lightTan: #f9d6bc;
-$darkTan: #edb183;
-$notificationRed: #be3334;
-
 nav {
   display: flex;
   justify-content: space-around;
@@ -37,15 +32,15 @@ nav {
   width: 100%;
   height: 65px;
   border-radius: 8px;
-  background-color: $darkblue;
+  background-color: $tertiary;
   margin-top: 48px;
   a {
     &.add-btn {
       width: 45px;
       height: 45px;
-      background-color: $darkTan;
+      background-color: $secondary;
       border-radius: 100%;
-      color: #0d232a;
+      color: $primary;
       transition: all 0.4s ease-in-out;
       svg {
         transition: all 0.5s ease-in-out;
@@ -63,7 +58,7 @@ nav {
         width: 12px;
         height: 12px;
         border-radius: 100%;
-        background-color: $notificationRed;
+        background-color: $notification;
         display: inline-block;
       }
     }

@@ -1,16 +1,50 @@
-// Colors
-$green: green;
-$darkTan: #edb183;
 
+
+// Colors
+
+$background-color: #A9D5E3; 
+$bottom-wave: #7abed3;
+$middle-wave: #67b5cd;
+$top-wave: #94cbdc; 
+$primary:  #0D232A;//primarily used for text
+$secondary: #edb183; //used for buttons or as higlighter
+$secondary-active: #f9d6bc; //primarily used for showing the current state e.g. a tab 
+$tertiary: #1B4755; //used for header and bottom navigation
+$white: #FCFCFC; 
+$box-shadow: #30303040; //opacity 25%
+$cards: #ECF1F3e6;  //opacity 90%
+$notification: #BE3334;
+$active: #4BD37B; //used in chats
+$coming: #4BD37B99; //opacity 60%
+$maybe: #D3C54B99; //opacity 60%
+$not-coming:  #FF5A7999; //opacity 60%
+$important: #4FD1D9; //used in notifications
+$cancelled: #FF5A79; //used in notifications
+$new-invite: #FFCE31; //used in notifications
+$accepted-invite: #4BD37B; //used in notifications
+$disabled: #DEDEDE80; //opacity 50%
+$overlay: #F4F4F4B3; //opacity 70%   used for modals, notifications or when creating and showing an event/chat
+$icon-placeholder: #F4F4F466; //opacity 40%  used when creating an event
+
+
+// Typography
+//  
+
+//Border radius'
+$border-radius4: 4px;
+$border-radius8: 8px;
+
+  
 // Custom tabview buttons
 .button-group {
-  background-color: #fcfcfc; //todo: farvevariable
+  width: 100%;
+  background-color: $white; 
   display: flex;
-  border-radius: 8px; //todo: variable
+  border-radius: $border-radius8; 
   height: 2.3em;
   padding: 3px;
   gap: 3px;
-  box-shadow: 0 2px 4px #30303040; //todo: farvevariable
+  box-shadow: 0 2px 4px $box-shadow; 
 
   .button-group-item {
     padding: 3px;
@@ -21,8 +55,8 @@ $darkTan: #edb183;
     transition: all 0.2s linear;
 
     &.active {
-      background-color: #f9d6bc; //todo: variabel
-      border-radius: 5px; //todo: variable
+      background-color: $secondary-active ; 
+      border-radius: $border-radius4;
     }
 
     p {
