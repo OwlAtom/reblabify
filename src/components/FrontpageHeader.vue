@@ -29,25 +29,21 @@ let greeting =
 
 <template>
   <div class="heading-wrapper">
-        <div  class="frontpage-heading">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div  class="frontpage-heading wrapper">
+            <div class="flex justify-content-between align-items-center">
                 <h1>{{ greeting }},</h1>
-                <div style="display: flex; gap: 1.5em;">
+                <div class="flex gap-4">
                     <div class="icon-wrapper" @click="openModal">
                         <NotificationBell v-bind:class="[ displayModal == true ? 'active' : '' ]"/>
                     </div>
-                    <!-- <div class="icon-wrapper">
-                        <UserIcon />
-                    </div> -->
                     <router-link :to="{ name: 'Chat' }" class="icon-wrapper"> <!--todo: create user store-->
                         <UserIcon />
                     </router-link>
                 </div>
-
             </div>
             
-            <div style="display: flex; align-items: center;">
-                <div style="height:40px; width: 40px; border-radius:50%; background-color: #f3f3f3; margin-right: 10px;"></div>
+            <div class="flex align-items-center">
+                <div style="height:40px; width: 40px; border-radius:50%; background-color: #f3f3f3; margin-right: 10px;"></div> <!--todo: lave icon komponent-->
                 <!-- todo: user store -->
                 <p style="margin:0; color: #F9D6BC; font-size: 20px;">Navn Navnesen</p> 
             </div>
@@ -56,10 +52,11 @@ let greeting =
             <HeaderWave />
         </div>
     </div>
+
     <div class="notification-modal">
-        <Dialog v-model:visible="displayModal" :modal="true" :dismissableMask="true" position="top" style="width:100%;border-radius: 40px; backdrop-filter: blur(10px);margin: 7em 0 0 0;">
+        <Dialog v-model:visible="displayModal" :modal="true" :dismissableMask="true" position="top" style="width:100%;border-radius: 40px; backdrop-filter: blur(10px);margin: 6em 0 0 0;">
             <template #header>
-                <h3>Header</h3>
+                <h3>Notifikationer</h3>
             </template>
             <p class="m-0">Notifikations komponent</p>
             <br>
@@ -79,12 +76,11 @@ let greeting =
 
     .frontpage-heading {
         background-color: rgb(27, 71, 85);
-        padding: 3em 10px 0 10px;
+        padding-top: 3em;
 
     }
     .svg-container {
         width: 100%;
-        transform: translateY(-1px);
 
         svg {
             width: 100%;
@@ -93,7 +89,7 @@ let greeting =
 }
 
 .active {
-    fill: #f9d6bc;
+    fill: $secondary-active;
 }
 
 </style>

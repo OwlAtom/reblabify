@@ -9,12 +9,19 @@ import FrontpageHeader from "../components/FrontpageHeader.vue";
 <template>
   <FrontpageHeader />
 
-  <div>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="../assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="This is the home page." />
+  <section class="wrapper">
+    <h2>Kommende begivenheder</h2>
+    <div class="upcoming-events-container"></div>
+
+    <h2>Mine begivenheder</h2>
+    <div class="my-events-container"></div>
+
+    <h2>Grupper</h2>
+    <div class="groups-display-container"></div>
+  </section>
+
+
+
 </template>
 
 <style lang="scss" scoped>

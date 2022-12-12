@@ -1,13 +1,13 @@
 @import "primeflex/primeflex.scss";
 
 :root {
-   $background-color: #A9D5E3; 
+  $background-color: #A9D5E3; 
   $bottom-wave: #7abed3;
   $middle-wave: #67b5cd;
   $top-wave: #94cbdc; 
   $primary:  #0D232A;//primarily used for text
   $secondary: #edb183; //used for buttons or as higlighter
-  $secondary-active: #f9d6bc; //primarily used for showing the current state e.g. a tab 
+  $secondary-active: #f9d6bc; //primarily used for showing the current state e.g. a tab + headings
   $tertiary: #1B4755; //used for header and bottom navigation
   $white: #FCFCFC; 
   $box-shadow: #30303040; //opacity 25%
@@ -26,7 +26,6 @@
   $icon-placeholder: #F4F4F466; //opacity 40%  used when creating an event
   color-scheme: light;
 
-  
 }
 
 
@@ -110,7 +109,7 @@ h3{
 
 //spacing
 .wrapper{
-  margin: 0 1.25rem 0 1.25rem; 
+  padding: 0 1.25rem 0 1.25rem; 
 }
 
 .p-link {
