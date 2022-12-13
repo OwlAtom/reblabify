@@ -7946,7 +7946,7 @@ h3 {
   background: #d9d8d9;
   border-color: #d9d8d9;
 }
-
+  
 /* Customizations to Primevue Components should be defined here */
 
 //* Styling af botton group som ses på begivenhedsside og -oversigt
@@ -7964,7 +7964,7 @@ h3 {
 //* styling af 'Dialog' til notifikationer
 .p-dialog {
   $modal-color: #fff;
-  $modal-color-70: rgba($modal-color, 0.7);
+  $modal-color-70: rgba( $modal-color, .7 );
 
   .p-dialog-header {
     // border-bottom: 0 none;
@@ -7985,4 +7985,5 @@ h3 {
       border-bottom-left-radius: 40px;
     }
   }
+
 }
