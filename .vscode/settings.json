@@ -1,0 +1,16 @@
+{
+  "vetur.validation.template": false, // turn off deprecated template validation
+  "editor.linkedEditing": true,
+  "html.autoClosingTags": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": ["javascript", "vue"]
+}
