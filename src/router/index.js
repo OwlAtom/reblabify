@@ -22,7 +22,7 @@ const routes = [
     component: () => import("../views/Chat.vue"),
     meta: {
       heading: "Chat oversigt",
-    }
+    },
   },
   {
     path: "/event-info", //todo: :id
@@ -35,7 +35,7 @@ const routes = [
     component: () => import("../views/AllEvents.vue"),
     meta: {
       heading: "Begivenhedsoversigt",
-    }
+    },
   },
   {
     path: "/groups",
@@ -43,7 +43,7 @@ const routes = [
     component: () => import("../views/Groups.vue"),
     meta: {
       heading: "Grupper",
-    }
+    },
   },
 ];
 

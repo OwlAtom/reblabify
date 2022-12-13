@@ -1,16 +1,16 @@
 <script setup>
-const props = defineProps({
+defineProps({
   text: String,
-  IconBefore: String,
-  IconAfter: String,
+  iconBefore: String,
+  iconAfter: String,
 });
 </script>
 
 <template>
   <button ref="theButton" class="btn">
-    <span v-if="IconBefore" class="material-icons">{{ IconBefore }}</span>
+    <span v-if="iconBefore" class="material-icons">{{ iconBefore }}</span>
     {{ text }}
-    <span v-if="IconAfter" class="material-icons">{{ IconAfter }}</span>
+    <span v-if="iconAfter" class="material-icons">{{ iconAfter }}</span>
   </button>
 </template>
 
