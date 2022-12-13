@@ -27,18 +27,17 @@ let greeting =
           <div class="icon-wrapper" @click="openModal">
             <NotificationBell :class="[displayModal == true ? 'active' : '']" />
           </div>
-          <router-link :to="{ name: 'Chat' }" class="icon-wrapper">
-            <!--todo: create user store-->
+          <router-link :to="{ name: '' }" class="icon-wrapper">
             <UserIcon />
           </router-link>
         </div>
       </div>
 
       <div class="flex align-items-center">
+        <!--todo: lave icon komponent der bruges istedet for nedenstående div-->
         <div style="height: 40px; width: 40px; border-radius: 50%; background-color: #f3f3f3; margin-right: 10px"></div>
-        <!--todo: lave icon komponent-->
         <!-- todo: user store -->
-        <p style="margin: 0; color: #f9d6bc; font-size: 18px">Trine Trinesen</p>
+        <p class="user-name-heading">Trine Trinesen</p>
       </div>
     </div>
     <div class="svg-container">
@@ -53,6 +52,7 @@ let greeting =
       :dismissable-mask="true"
       position="top"
       style="width: 100%; border-radius: 40px; backdrop-filter: blur(10px); margin: 6em 0 0 0">
+      <!--* ^ inline style for at det ikke overskrives ^-->
       <template #header>
         <h3>Notifikationer</h3>
       </template>
@@ -72,6 +72,12 @@ let greeting =
   .frontpage-heading {
     background-color: rgb(27, 71, 85);
     padding-top: 3em;
+
+    .user-name-heading {
+      margin: 0;
+      color: #f9d6bc;
+      font-size: 18px;
+    }
   }
   .svg-container {
     width: 100%;
