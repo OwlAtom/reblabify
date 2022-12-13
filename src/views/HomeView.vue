@@ -1,6 +1,5 @@
 <script setup>
 import FrontpageHeader from "../components/FrontpageHeader.vue";
-
 </script>
 
 <template>
