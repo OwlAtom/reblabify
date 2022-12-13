@@ -61,7 +61,7 @@
 $headings: 'Raleway', sans serif;
   $body-text: 'Maven Pro', sans serif;
 
-@mixin headings($size, $color: $primary, $font-weight: 500) {
+@mixin headings($size, $color: $primary, $font-weight: 700) {
   font-family: $headings;
   color: $color;
   font-size: $size;
@@ -81,7 +81,7 @@ $headings: 'Raleway', sans serif;
 }
 
 h1{
-  @include headings(1.5rem, null, 700); //24px  
+  @include headings(1.5rem, $secondary-active); //24px  
 }
 
 h2{

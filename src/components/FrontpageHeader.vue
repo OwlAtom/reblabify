@@ -45,7 +45,7 @@ let greeting =
             <div class="flex align-items-center">
                 <div style="height:40px; width: 40px; border-radius:50%; background-color: #f3f3f3; margin-right: 10px;"></div> <!--todo: lave icon komponent-->
                 <!-- todo: user store -->
-                <p style="margin:0; color: #F9D6BC; font-size: 20px;">Navn Navnesen</p> 
+                <p style="margin:0; color: #F9D6BC; font-size: 18px;">Trine Trinesen</p> 
             </div>
         </div>
         <div class="svg-container">
