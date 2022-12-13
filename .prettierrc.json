@@ -6,6 +6,6 @@
   "quoteProps": "consistent",
   "bracketSpacing": true,
   "bracketSameLine": true,
-  "vueIndentScriptAndStyle": true,
+  "vueIndentScriptAndStyle": false,
   "endOfLine": "auto"
 }
