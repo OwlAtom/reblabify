@@ -60,16 +60,3 @@ $border-radius8: 8px;
     }
   }
 }
-
-/* Customizations to Primevue Components should be defined here */
-//* Styling af botton group som ses på begivenheds- og oversigtsside
-.tabview-custom {
-  .p-tabview-nav {
-    display: none;
-  }
-
-  .p-tabview-panels {
-    background: none;
-    padding: 0;
-  }
-}
