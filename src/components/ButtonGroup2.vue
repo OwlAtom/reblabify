@@ -1,53 +1,43 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const activetab = ref(0)
-
+const activetab = ref(0);
 </script>
 
-
 <template>
-
-    <div class="tabview-custom">
-        <div class="button-group">
-            <div class="button-group-item" @click="activetab = 0" v-bind:class="[ activetab === 0 ? 'active' : '' ]">
-                 <p>Kommende</p> 
-            </div>
-            <div class="button-group-item" @click="activetab = 1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">
-                <p>Afholdte</p>
-            </div>
-            <div class="button-group-item" @click="activetab = 2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">
-                <p>Mine</p>
-            </div>
-        </div>
-
-        <TabView v-model:activeIndex="activetab">
-            <TabPanel>
-                <p>Liste over event, filtreret på dato og ejerskab (kommende) </p>
-            </TabPanel>
-            <TabPanel>
-                <p>Liste over event, filtreret på dato og ejerskab (afholdte) </p>
-            </TabPanel>
-            <TabPanel>
-                <p>Liste over event, filtreret på dato og ejerskab (mine) </p>
-            </TabPanel>
-        </TabView>
-        
+  <div class="tabview-custom">
+    <div class="button-group">
+      <div class="button-group-item" :class="[activetab === 0 ? 'active' : '']" @click="activetab = 0">
+        <p>Kommende</p>
+      </div>
+      <div class="button-group-item" :class="[activetab === 1 ? 'active' : '']" @click="activetab = 1">
+        <p>Afholdte</p>
+      </div>
+      <div class="button-group-item" :class="[activetab === 2 ? 'active' : '']" @click="activetab = 2">
+        <p>Mine</p>
+      </div>
     </div>
+
+    <TabView v-model:activeIndex="activetab">
+      <TabPanel>
+        <p>Liste over event, filtreret på dato og ejerskab (kommende)</p>
+      </TabPanel>
+      <TabPanel>
+        <p>Liste over event, filtreret på dato og ejerskab (afholdte)</p>
+      </TabPanel>
+      <TabPanel>
+        <p>Liste over event, filtreret på dato og ejerskab (mine)</p>
+      </TabPanel>
+    </TabView>
+  </div>
 </template>
 
-
-
 <style lang="scss" scoped>
-
 .button-group {
-    .button-group-item {
-        width: 33%;
-
-    }
+  .button-group-item {
+    width: 33%;
+  }
 }
 
 // tabview styles i _theme.scss
-
-
 </style>

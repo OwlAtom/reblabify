@@ -34,7 +34,7 @@ app.use(ToastService);
 app.use(router);
 
 //defining PrimeVue components
-app.component("Button", Button);
+app.component("DefaultButton", Button);
 app.component(InputText);
 app.component(Toast);
 app.component("TabView", TabView);
