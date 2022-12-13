@@ -6,17 +6,14 @@ import ChatCircleDotsIcon from "../assets/icons/ChatCircleDots.svg";
 const unreadMessages = true; // TODO: connect the notifications to this bool
 </script>
 <template>
-  <nav v-bind:class="{ 'home-nav': $route.path == '/home' }">
+  <nav :class="{ 'home-nav': $route.path == '/home' }">
     <router-link :to="{ name: 'Home' }">
       <HouseIcon />
     </router-link>
     <router-link :to="{ name: 'AddEvent' }" class="add-btn">
       <PlusIcon />
     </router-link>
-    <router-link
-      :to="{ name: 'Chat' }"
-      v-bind:class="{ notification: unreadMessages }"
-    >
+    <router-link :to="{ name: 'Chat' }" :class="{ notification: unreadMessages }">
       <div>
         <ChatCircleDotsIcon class="chat-btn" />
       </div>
