@@ -4,12 +4,12 @@ const routes = [
   {
     path: "/",
     name: "Landing",
-    component: () => import("../views/Landing.vue"), //Login/signin ?
+    component: () => import("../views/LandingPage.vue"), //Login/signin ?
   },
   {
     path: "/home",
     name: "Home",
-    component: () => import("../views/Home.vue"),
+    component: () => import("../views/HomeView.vue"),
   },
   {
     path: "/add-event",
@@ -19,7 +19,7 @@ const routes = [
   {
     path: "/chat",
     name: "Chat",
-    component: () => import("../views/Chat.vue"),
+    component: () => import("../views/EventChat.vue"),
     meta: {
       heading: "Chat oversigt",
     },
@@ -40,7 +40,7 @@ const routes = [
   {
     path: "/groups",
     name: "Groups",
-    component: () => import("../views/Groups.vue"),
+    component: () => import("../views/GroupsOverview.vue"),
     meta: {
       heading: "Grupper",
     },
