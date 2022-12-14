@@ -1,6 +1,7 @@
 <script setup>
 // todo: Create store
 // mock data:
+let eventIcon = "✨";
 let eventName = "Nytårsaften";
 let messageSender = "Navn";
 let newMessage = "Lorem ipsum dolor sit amet consectetur adipisicing.";
@@ -12,7 +13,9 @@ let unread = true;
 
 <template>
   <div class="recent-chat box-shadow flex justify-content-between align-items-center">
-    <div class="chat-card-icon"></div>
+    <div class="chat-card-icon">
+      <p>{{ eventIcon }}</p>
+    </div>
     <div class="recent-chat-text">
       <div class="flex justify-content-between align-items-center">
         <h3>{{ eventName }}</h3>
@@ -39,6 +42,15 @@ let unread = true;
     padding-bottom: 17%;
     background-color: $white;
     border-radius: 0.7em;
+    position: relative;
+
+    p {
+      font-size: 10vw;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .recent-chat-text {
