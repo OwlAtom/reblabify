@@ -7,6 +7,8 @@ import eslintPlugin from "vite-plugin-eslint";
 export default defineConfig({
   plugins: [vue(), svgLoader(), eslintPlugin()],
 
+  test: { environment: "happy-dom" },
+
   css: {
     preprocessorOptions: {
       scss: {
