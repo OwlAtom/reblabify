@@ -19,7 +19,7 @@ defineProps({
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
   </div>
-  <HelloWorld msg="Welcome to the landing page!" />
+  <HelloWorld msg="Hello Vitest" />
   <div>
     <h3>PrimeVue Buttons</h3>
     <!-- Start of PrimeVue buttons. -->

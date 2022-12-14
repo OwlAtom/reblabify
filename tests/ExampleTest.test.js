@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
-import ExampleTest from "./src/components/ExampleTest.vue";
 import { describe, expect, it } from "vitest";
+import ExampleTest from "./src/components/ExampleTest.vue";
 
 describe("ExampleTest.vue", () => {
   it("renders correct style for error", () => {
