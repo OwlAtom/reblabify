@@ -19,9 +19,9 @@ const routes = [
   {
     path: "/chat",
     name: "Chat",
-    component: () => import("../views/EventChat.vue"),
+    component: () => import("../views/ChatOverview.vue"),
     meta: {
-      heading: "Chat oversigt",
+      heading: "Chatoversigt",
     },
   },
   {
