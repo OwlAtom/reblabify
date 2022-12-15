@@ -46,12 +46,7 @@ let greeting =
   </div>
 
   <div class="notification-modal">
-    <Dialog
-      v-model:visible="displayModal"
-      :modal="true"
-      :dismissable-mask="true"
-      position="top"
-      style="width: 100%; border-radius: 40px; backdrop-filter: blur(10px); margin: 6em 0 0 0">
+    <Dialog v-model:visible="displayModal" :modal="true" :dismissable-mask="true" position="top">
       <!--* ^ inline style for at det ikke overskrives ^-->
       <template #header>
         <h3>Notifikationer</h3>

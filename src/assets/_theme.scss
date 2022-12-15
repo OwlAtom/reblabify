@@ -7970,6 +7970,10 @@ h3 {
 .p-dialog {
   $modal-color: #fff;
   $modal-color-70: rgba($modal-color, 0.7);
+  width: 100%;
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
+  margin: 6em 0 0 0 !important;
 
   .p-dialog-header {
     // border-bottom: 0 none;
