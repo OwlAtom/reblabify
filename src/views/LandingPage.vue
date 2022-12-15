@@ -10,6 +10,10 @@ defineProps({
 
 <template>
   <div>
+    <CardHeader title="Fødselsdagsinvitation" icon="flag" />
+    <!-- Dynamically assign the value of a variable -->
+    <!--<BlogPost :title="post.title" /> https://vuejs.org/guide/components/props.html#prop-passing-details-->
+
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>

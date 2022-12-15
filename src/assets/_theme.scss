@@ -58,7 +58,7 @@
 $headings: "Raleway", sans serif;
 $body-text: "Maven Pro", sans serif;
 
-@mixin headings($size, $color: $primary, $font-weight: 500) {
+@mixin headings($size, $color: $primary, $font-weight: 700) {
   font-family: $headings;
   color: $color;
   font-size: $size;
@@ -78,7 +78,7 @@ $body-text: "Maven Pro", sans serif;
 }
 
 h1 {
-  @include headings(1.5rem, null, 700); //24px
+  @include headings(1.5rem, $secondary-active); //24px
 }
 
 h2 {
@@ -107,7 +107,7 @@ h3 {
 
 //spacing
 .wrapper {
-  margin: 0 1.25rem 0 1.25rem;
+  padding: 0 1.25rem 0 1.25rem;
 }
 
 .p-link {
@@ -7946,7 +7946,7 @@ h3 {
   background: #d9d8d9;
   border-color: #d9d8d9;
 }
-  
+
 /* Customizations to Primevue Components should be defined here */
 
 //* Styling af botton group som ses på begivenhedsside og -oversigt
@@ -7964,7 +7964,7 @@ h3 {
 //* styling af 'Dialog' til notifikationer
 .p-dialog {
   $modal-color: #fff;
-  $modal-color-70: rgba( $modal-color, .7 );
+  $modal-color-70: rgba($modal-color, 0.7);
 
   .p-dialog-header {
     // border-bottom: 0 none;
@@ -7985,5 +7985,4 @@ h3 {
       border-bottom-left-radius: 40px;
     }
   }
-
 }
