@@ -2,7 +2,7 @@
 import Button from "primevue/button"; // Import the PrimeVue buttons.
 import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
 import HelloWorld from "../components/HelloWorld.vue";
-
+import EventDeclarations from "../components/EventDeclarations.vue";
 defineProps({
   msg: String,
 });
@@ -13,6 +13,7 @@ defineProps({
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
+    <EventDeclarations :declarations="5" :invited-total="12" />
   </div>
   <HelloWorld msg="Welcome to the landing page!" />
   <div>
