@@ -78,7 +78,7 @@ $body-text: "Maven Pro", sans serif;
 }
 
 h1 {
-  @include headings(1.5rem, $secondary-active); //24px
+  @include headings(1.5rem); //24px
 }
 
 h2 {
