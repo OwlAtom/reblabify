@@ -45,6 +45,11 @@ const routes = [
       heading: "Grupper",
     },
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/UserLogin.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -2,6 +2,23 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
+
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCkMeu0Y5iCwjENndtY-KujBB7txtLtLio",
+  authDomain: "reblabify.firebaseapp.com",
+  databaseURL: "https://reblabify-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "reblabify",
+  storageBucket: "reblabify.appspot.com",
+  messagingSenderId: "342442064472",
+  appId: "1:342442064472:web:fc5b690eb43deaf709e82d",
+};
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
 import "normalize.css/normalize.css";
 
 import PrimeVue from "primevue/config";
