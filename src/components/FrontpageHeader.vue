@@ -4,8 +4,10 @@ import { ref } from "vue";
 import HeaderWave from "../assets/headerWave.svg";
 import UserIcon from "../assets/icons/User.svg";
 import NotificationBell from "../assets/icons/NotificationBell.svg";
-
 import Dialog from "primevue/dialog";
+import { useUserStore } from "../stores/user";
+
+const user = useUserStore().user;
 
 const displayModal = ref(false);
 // const position = ref('center');
@@ -34,10 +36,9 @@ let greeting =
       </div>
 
       <div class="flex align-items-center">
-        <!--todo: lave icon komponent der bruges istedet for nedenstående div-->
-        <div style="height: 40px; width: 40px; border-radius: 50%; background-color: #f3f3f3; margin-right: 10px"></div>
-        <!-- todo: user store -->
-        <p class="user-name-heading">Trine Trinesen</p>
+        <!--todo: lave icon komponent der bruges istedet for nedenstående img-->
+        <img :src="user.photoURL" :alt="'Profile Image for ' + user.displayName" class="profile-picture" />
+        <p class="user-name-heading">{{ user.displayName }}</p>
       </div>
     </div>
     <div class="svg-container">
@@ -46,12 +47,7 @@ let greeting =
   </div>
 
   <div class="notification-modal">
-    <Dialog
-      v-model:visible="displayModal"
-      :modal="true"
-      :dismissable-mask="true"
-      position="top"
-      style="width: 100%; border-radius: 40px; backdrop-filter: blur(10px); margin: 6em 0 0 0">
+    <Dialog v-model:visible="displayModal" :modal="true" :dismissable-mask="true" position="top">
       <!--* ^ inline style for at det ikke overskrives ^-->
       <template #header>
         <h3>Notifikationer</h3>
@@ -72,6 +68,13 @@ let greeting =
   .frontpage-heading {
     background-color: rgb(27, 71, 85);
     padding-top: 3em;
+    .profile-picture {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      background-color: #f3f3f3;
+      margin-right: 10px;
+    }
 
     .user-name-heading {
       margin: 0;

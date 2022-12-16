@@ -78,7 +78,7 @@ $body-text: "Maven Pro", sans serif;
 }
 
 h1 {
-  @include headings(1.5rem, $secondary-active); //24px
+  @include headings(1.5rem); //24px
 }
 
 h2 {
@@ -7968,14 +7968,14 @@ h3 {
 
 //* styling af 'Dialog' til notifikationer
 .p-dialog {
-  $modal-color: #fff;
-  $modal-color-70: rgba($modal-color, 0.7);
+  $modal-color-70: rgba($white, 0.7);
+  width: 100%;
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
+  margin: 6em 0 0 0 !important;
 
   .p-dialog-header {
-    // border-bottom: 0 none;
     background: $modal-color-70;
-    // color: rgba(0, 0, 0, 0.87);
-    // padding: 1.5rem;
     border-top-right-radius: 40px;
     border-top-left-radius: 40px;
   }
@@ -7983,7 +7983,6 @@ h3 {
   .p-dialog-content {
     background: $modal-color-70;
     // color: rgba(0, 0, 0, 0.87);
-    // padding: 0 1.5rem 1.5rem 1.5rem;
 
     &:last-of-type {
       border-bottom-right-radius: 40px;

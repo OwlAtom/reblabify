@@ -9,24 +9,25 @@ import FrontpageHeader from "../components/FrontpageHeader.vue";
   <FrontpageHeader />
 
   <section class="wrapper">
-    <div class="flex justify-content-between align-items-center ">
+    <div class="flex justify-content-between align-items-center">
       <h2>Kommende begivenheder</h2>
       <div class="see-more-link">
         <!-- send data med der fortæller hvilken sorteringen der skal være -->
         <router-link :to="{ name: 'AllEvents' }">
-          <p>Se alle </p> <i class="pi pi-chevron-right"></i>
+          <p>Se alle</p>
+          <i class="pi pi-chevron-right"></i>
         </router-link>
       </div>
     </div>
     <div class="upcoming-events-container"></div>
 
-
-    <div class="flex justify-content-between align-items-center ">
+    <div class="flex justify-content-between align-items-center">
       <h2>Mine begivenheder</h2>
       <div class="see-more-link">
         <!-- send data med der fortæller hvilken sorteringen der skal være -->
         <router-link :to="{ name: 'AllEvents' }">
-          <p>Se alle </p> <i class="pi pi-chevron-right"></i>
+          <p>Se alle</p>
+          <i class="pi pi-chevron-right"></i>
         </router-link>
       </div>
     </div>
@@ -35,9 +36,6 @@ import FrontpageHeader from "../components/FrontpageHeader.vue";
     <h2>Grupper</h2>
     <div class="groups-display-container"></div>
   </section>
-
-
-
 </template>
 
 <style lang="scss" scoped>
