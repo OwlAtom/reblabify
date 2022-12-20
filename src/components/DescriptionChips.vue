@@ -20,6 +20,8 @@ defineProps({
   background-color: $white;
   padding: 0.6em;
   width: max-content;
+  user-select: none;
+  cursor: pointer;
 
   p {
     padding-right: 10px;
