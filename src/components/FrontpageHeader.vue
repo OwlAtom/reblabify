@@ -6,6 +6,7 @@ import UserIcon from "../assets/icons/User.svg";
 import NotificationBell from "../assets/icons/NotificationBell.svg";
 import Dialog from "primevue/dialog";
 import { useUserStore } from "../stores/user";
+import NotificationItem from "./NotificationItem.vue";
 
 const user = useUserStore().user;
 
@@ -50,13 +51,14 @@ let greeting =
     <Dialog v-model:visible="displayModal" :modal="true" :dismissable-mask="true" position="top">
       <!--* ^ inline style for at det ikke overskrives ^-->
       <template #header>
-        <h3>Notifikationer</h3>
+        <h2>Notifikationer</h2>
       </template>
-      <p class="m-0">Notifikations komponent</p>
-      <br />
-      <p class="m-0">Notifikation komponent</p>
-      <br />
-      <p class="m-0">Notifikation komponent</p>
+      <div class="flex flex-wrap gap-2">
+        <NotificationItem text="Anna og 5 andre har accepteret din invitation" type="new-invite" />
+        <NotificationItem text="Ny invitation: Allans fest" type="accepted-invite" />
+        <NotificationItem text="'Allans fest' er blevet aflyst" type="cancellation" />
+        <NotificationItem text="Bekræft email" type="important" />
+      </div>
     </Dialog>
   </div>
 </template>

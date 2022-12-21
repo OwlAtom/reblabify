@@ -6,7 +6,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="chip">
+  <div class="chip box-shadow">
     <p class="emoji">{{ emoji }}</p>
     <p>{{ text }}</p>
   </div>
