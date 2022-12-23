@@ -7978,10 +7978,13 @@ h3 {
     background: $modal-color-70;
     border-top-right-radius: 40px;
     border-top-left-radius: 40px;
+    padding: 1.25rem 1.25rem 0 1.25rem;
   }
 
   .p-dialog-content {
     background: $modal-color-70;
+    padding: 1.25rem;
+
     // color: rgba(0, 0, 0, 0.87);
 
     &:last-of-type {
