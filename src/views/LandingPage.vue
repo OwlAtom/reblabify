@@ -3,8 +3,6 @@ import Button from "primevue/button"; // Import the PrimeVue buttons.
 import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
 import HelloWorld from "../components/HelloWorld.vue";
 import EventDeclarations from "../components/EventDeclarations.vue";
-import ButtonGroup3 from "../components/ButtonGroup3.vue";
-import RoundButtons from "../components/RoundButtons.vue";
 
 defineProps({
   msg: String,
@@ -14,8 +12,7 @@ defineProps({
 <template>
   <div>
     <CardHeader title="Fødselsdagsinvitation" icon="flag" />
-    <ButtonGroup3 />
-    <RoundButtons />
+
     <!-- Dynamically assign the value of a variable -->
     <!--<BlogPost :title="post.title" /> https://vuejs.org/guide/components/props.html#prop-passing-details-->
 

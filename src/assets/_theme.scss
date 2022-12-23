@@ -110,11 +110,6 @@ h3 {
   padding: 0 1.25rem 0 1.25rem;
 }
 
-// box shadow
-.box-shadow {
-  box-shadow: 0 2px 4px $box-shadow;
-}
-
 .p-link {
   @include bodytext(1rem);
   border-radius: 4px;
@@ -7993,70 +7988,90 @@ h3 {
 }
 
 //* styling af radiobuttons til tilkendegivelser
-
-
-.p-radiobutton {
-  width: 32px;
-  height: 32px;
-}
-.p-radiobutton .p-radiobutton-box {
-  border: none;
-  background: $white;
-  width: 32px;
-  height: 32px;
-  color: $white;
-  border-radius: 50%;
-  // transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s,
-  //   background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
-}
-.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
-  border-color: $white;
-}
-.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: none;
-  border-color: $white;
-}
- @mixin radiobutton($declaration) {
-  background-color: $declaration;
-
-  @if $declaration == first {
-    background-color: $accepted-invite;
-  } @else if $declaration == second {
-    background-color: $maybe;
-  } @else if $declaration == third{
-    background-color: $not-coming;
+.custom-select-buttons {
+  .p-buttonset .p-button:first-of-type {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
   }
- }
-
-.p-radiobutton .p-radiobutton-box .p-radiobutton-icon .green {
-
-  width: 32px;
-  height: 32px;
-  transition-duration: 0.2s;
-  background-color: $accepted-invite;
-
+  .p-buttonset .p-button:not(:first-of-type):not(:last-of-type) {
+    border-radius: 50%;
+  }
+  .p-buttonset .p-button:last-of-type {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
+  .p-buttonset .p-button {
+    padding: 10px;
+    margin: 5px;
+    min-width: auto;
+    border: none;
+    box-shadow: 0 2px 4px $box-shadow;
+  }
 }
 
+// .p-radiobutton {
+//   width: 32px;
+//   height: 32px;
+// }
+// .p-radiobutton .p-radiobutton-box {
+//   border: none;
+//   background: $white;
+//   width: 32px;
+//   height: 32px;
+//   color: $white;
+//   border-radius: 50%;
+//   // transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s,
+//   //   background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+// }
+// .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+//   border-color: $white;
+// }
+// .p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
+//   outline: 0 none;
+//   outline-offset: 0;
+//   box-shadow: none;
+//   border-color: $white;
+// }
+//  @mixin radiobutton($declaration) {
+//   background-color: $declaration;
 
-.p-radiobutton .p-radiobutton-box.p-highlight {
-  border-color: $white;
-  background: #ffffff;
-}
-.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
-  border-color:$white;
-  background: #ffffff;
-  color: #3f51b5;
-}
-.p-radiobutton.p-invalid > .p-radiobutton-box {
-  border-color: #b00020;
-}
-.p-radiobutton:focus {
-  outline: 0 none;
-}
-.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled).p-focus {
-  border-color: $white;
-}
+//   @if $declaration == first {
+//     background-color: $accepted-invite;
+//   } @else if $declaration == second {
+//     background-color: $maybe;
+//   } @else if $declaration == third{
+//     background-color: $not-coming;
+//   }
+//  }
 
+// .p-radiobutton .p-radiobutton-box .p-radiobutton-icon .green {
 
+//   width: 32px;
+//   height: 32px;
+//   transition-duration: 0.2s;
+//   background-color: $accepted-invite;
+
+// }
+
+// .p-radiobutton .p-radiobutton-box.p-highlight {
+//   border-color: $white;
+//   background: #ffffff;
+// }
+// .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+//   border-color:$white;
+//   background: #ffffff;
+//   color: #3f51b5;
+// }
+// .p-radiobutton.p-invalid > .p-radiobutton-box {
+//   border-color: #b00020;
+// }
+// .p-radiobutton:focus {
+//   outline: 0 none;
+// }
+// .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled).p-focus {
+//   border-color: $white;
+// }

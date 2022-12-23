@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 import ButtonGroup3 from "./ButtonGroup3.vue";
+import RoundButtons from "./RoundButtons.vue";
 
 const activetab = ref(0);
 </script>
@@ -20,6 +21,7 @@ const activetab = ref(0);
     <TabView v-model:activeIndex="activetab">
       <TabPanel>
         <p>Begivenheds detaljer komponent her</p>
+        <RoundButtons page="event-page" />
         <ButtonGroup3 />
       </TabPanel>
       <TabPanel>
