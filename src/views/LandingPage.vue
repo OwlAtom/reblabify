@@ -4,6 +4,7 @@ import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
 import HelloWorld from "../components/HelloWorld.vue";
 import EventDeclarations from "../components/EventDeclarations.vue";
 
+import EventDateLabel from "../components/EventDateLabel.vue";
 defineProps({
   msg: String,
 });
@@ -15,7 +16,7 @@ defineProps({
 
     <!-- Dynamically assign the value of a variable -->
     <!--<BlogPost :title="post.title" /> https://vuejs.org/guide/components/props.html#prop-passing-details-->
-
+    <EventDateLabel month="Nov" date="20" />
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>

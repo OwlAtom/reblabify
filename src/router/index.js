@@ -25,7 +25,7 @@ const routes = [
     },
   },
   {
-    path: "/event-info", //todo: :id
+    path: "/event-info/:id",
     name: "EventInfo",
     component: () => import("../views/EventInfo.vue"),
   },
@@ -44,6 +44,11 @@ const routes = [
     meta: {
       heading: "Grupper",
     },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/UserLogin.vue"),
   },
 ];
 
