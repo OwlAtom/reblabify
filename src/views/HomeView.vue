@@ -30,7 +30,7 @@ onBeforeMount(() => {
       <h2>Mine begivenheder</h2>
       <div class="see-more-link">
         <!-- send data med der fortæller hvilken sorteringen der skal være -->
-        <router-link :to="{ name: 'AllEvents' }">
+        <router-link :to="{ name: 'AllEventsMine' }">
           <p>Se alle</p>
           <i class="pi pi-chevron-right"></i>
         </router-link>
