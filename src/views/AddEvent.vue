@@ -111,10 +111,19 @@ function test() {
       <DescriptionChips text="Svar senest" emoji="🚩" />
     </div>
 
-    <InviteIllustration />
-    <a href="https://storyset.com/email">Email illustrations by Storyset</a>
-    <friendsIllustration />
-    <a href="https://storyset.com/people">People illustrations by Storyset</a>
+    <div class="invite-cards">
+      <div class="invite-card">
+        <h3>Invitér venner</h3>
+        <InviteIllustration />
+        <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
+      </div>
+
+      <div class="invite-card">
+        <h3>Invitér gruppe</h3>
+        <friendsIllustration />
+        <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -123,6 +132,7 @@ function test() {
   background-color: $overlay;
   border-radius: 40px;
   padding-top: 4em;
+  backdrop-filter: blur(10px);
 }
 
 input,
@@ -150,6 +160,29 @@ textarea:focus-visible {
 
   label {
     flex-basis: 50%;
+  }
+}
+
+.invite-cards {
+  display: flex;
+  gap: 20px;
+
+  .invite-card {
+    background-color: rgba(white, 0.5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 50%;
+    box-shadow: 0 2px 4px $box-shadow;
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    svg {
+      width: 80%;
+    }
   }
 }
 </style>
