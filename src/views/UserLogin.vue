@@ -1,6 +1,6 @@
 <script setup>
 import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
-import { useUserStore } from "../stores/user";
+import { useUsersStore } from "../stores/users";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
@@ -23,7 +23,7 @@ onMounted(() => {
 
       const user = result.user;
 
-      useUserStore().setUser({
+      useUsersStore().setUser({
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,

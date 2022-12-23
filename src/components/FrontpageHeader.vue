@@ -5,9 +5,9 @@ import HeaderWave from "../assets/headerWave.svg";
 import UserIcon from "../assets/icons/User.svg";
 import NotificationBell from "../assets/icons/NotificationBell.svg";
 import Dialog from "primevue/dialog";
-import { useUserStore } from "../stores/user";
+import { useUsersStore } from "../stores/users";
 
-const user = useUserStore().user;
+const user = useUsersStore().users.self;
 
 const displayModal = ref(false);
 // const position = ref('center');

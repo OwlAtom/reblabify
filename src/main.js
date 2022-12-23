@@ -4,6 +4,9 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 
 import { initializeApp } from "firebase/app";
+// import { getPerformance } from "firebase/performance";
+// import { getAnalytics } from "firebase/analytics";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,9 +18,14 @@ const firebaseConfig = {
   storageBucket: "reblabify.appspot.com",
   messagingSenderId: "342442064472",
   appId: "1:342442064472:web:fc5b690eb43deaf709e82d",
+  measurementId: "G-GPNFV4ZWFF",
 };
 // Initialize Firebase
-initializeApp(firebaseConfig);
+// eslint-disable-next-line no-unused-vars
+const firebase = initializeApp(firebaseConfig);
+// const perf = getPerformance(firebase); // https://firebase.google.com/docs/perf-mon/get-started-web
+// const analytics = getAnalytics(firebase); // https://firebase.google.com/docs/analytics/get-started?platform=web
+// analytics.app.automaticDataCollectionEnabled = true;
 
 import "normalize.css/normalize.css";
 

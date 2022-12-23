@@ -25,7 +25,7 @@ const routes = [
     },
   },
   {
-    path: "/event-info", //todo: :id
+    path: "/event-info/:id",
     name: "EventInfo",
     component: () => import("../views/EventInfo.vue"),
   },
