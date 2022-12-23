@@ -1,8 +1,13 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-// import HelloWorld from "../components/HelloWorld.vue";
 import FrontpageHeader from "../components/FrontpageHeader.vue";
+import { useEventsStore } from "../stores/events";
+import { onBeforeMount } from "vue";
+const eventsStore = useEventsStore();
+
+let events = [...eventsStore.events];
+onBeforeMount(() => {
+  eventsStore.getUsersOwnEvents();
+});
 </script>
 
 <template>
@@ -31,7 +36,15 @@ import FrontpageHeader from "../components/FrontpageHeader.vue";
         </router-link>
       </div>
     </div>
-    <div class="my-events-container"></div>
+    <div v-for="event in events" :key="event.id" class="my-events-container">
+      <div class="event-details">
+        <p>{{ event.title }}</p>
+        <p>{{ event.id }}</p>
+        <router-link :to="{ name: 'EventInfo', params: { id: event.id } }">
+          <p>Se mere</p>
+        </router-link>
+      </div>
+    </div>
 
     <h2>Grupper</h2>
     <div class="groups-display-container"></div>
