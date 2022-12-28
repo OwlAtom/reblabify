@@ -8,6 +8,7 @@ useUsersStore().init();
 
 const unreadMessages = true; // TODO: connect the notifications to this bool
 </script>
+
 <template>
   <nav :class="{ 'home-nav': $route.path == '/home' }">
     <router-link :to="{ name: 'Home' }">
@@ -29,12 +30,15 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   height: 65px;
   border-radius: 8px;
   background-color: $tertiary;
   margin-top: 48px;
   a {
+    height: 45px;
     &.add-btn {
       width: 45px;
       height: 45px;
@@ -42,10 +46,14 @@ nav {
       border-radius: 100%;
       color: $primary;
       transition: all 0.4s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       svg {
         transition: all 0.5s ease-in-out;
-        stroke-width: 4;
-        transform: scale(0.5);
+        stroke-width: 5;
+        transform: scale(0.6);
       }
     }
     &.notification {
@@ -64,11 +72,14 @@ nav {
     }
   }
   &.home-nav a.add-btn {
-    transform: translate(0, -0.5em) scale(1.5);
-    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.251);
+    // transform: translate(0, -0.5em) scale(1.5);
+    box-shadow: 0px 4px 4px rgba(255, 255, 255, 0.25);
+    width: 70px;
+    height: 70px;
+    transform: translateY(-15px);
     svg {
       stroke-width: 3;
-      transform: scale(0.8);
+      transform: scale(1);
     }
   }
 }
