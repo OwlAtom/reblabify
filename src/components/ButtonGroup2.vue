@@ -1,7 +1,13 @@
 <script setup>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
-const activetab = ref(0);
+let activetab = ref(0);
+const route = useRoute();
+
+if (route.path == "/all-events/mine") {
+  activetab = ref(2);
+}
 </script>
 
 <template>
