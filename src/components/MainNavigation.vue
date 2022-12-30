@@ -2,6 +2,9 @@
 import HouseIcon from "../assets/icons/House.svg";
 import PlusIcon from "../assets/icons/Plus.svg";
 import ChatCircleDotsIcon from "../assets/icons/ChatCircleDots.svg";
+import { useUsersStore } from "../stores/users";
+
+useUsersStore().init();
 
 const unreadMessages = true; // TODO: connect the notifications to this bool
 </script>
