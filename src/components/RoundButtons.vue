@@ -5,7 +5,7 @@ defineProps({
   page: String,
 });
 
-const picked = ref({ page: "" });
+const picked = ref();
 </script>
 
 <template>
@@ -29,6 +29,7 @@ const picked = ref({ page: "" });
 
 <style lang="scss" scoped>
 input[type="radio"] {
+  appearance: none;
   -webkit-appearance: none; //evt. tjekke for browser kompatibilitet
 }
 label {
