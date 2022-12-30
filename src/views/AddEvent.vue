@@ -55,7 +55,15 @@ function test() {
 }
 </script>
 <template>
+  <div class="add-cover">
+    <span class="material-icons-round"> add </span>
+    <p>Tilføj coverbillede/tema</p>
+  </div>
   <div class="wrapper overlay">
+    <div class="add-icon-circle">
+      <span class="material-icons-round"> add </span>
+      <p>Tilføj ikon</p>
+    </div>
     <h1>Opret begivenhed</h1>
     <button @click="test">Test</button>
     <div v-for="event in eventStore.events" :key="event.id">
@@ -99,12 +107,13 @@ function test() {
 
       <label for="loaction">Lokation</label>
       <input v-model="formData.location" type="text" placeholder="Lokation" name="location" />
+      <!-- todo: 'normalButton'? + places i bunden derefter -->
       <button type="submit" @click="handleSubmit">Opret</button>
     </form>
 
     <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
     <div class="flex flex-wrap gap-2">
-      <DescriptionChips text="Lokation" emoji="📍" />
+      <DescriptionChips text="Lokation" emoji="📍" class="added-chip" />
       <DescriptionChips text="Dresscode" emoji="👔" />
       <DescriptionChips text="Medorganisator" emoji="🤝" />
       <DescriptionChips text="Privathed" emoji="🔒" />
@@ -128,11 +137,47 @@ function test() {
 </template>
 
 <style lang="scss" scoped>
+.add-cover {
+  height: 11em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+  }
+}
 .overlay {
   background-color: $overlay;
   border-radius: 40px;
   padding-top: 4em;
+  padding-bottom: 4em;
   backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+
+  .add-icon-circle {
+    width: 7em;
+    height: 7em;
+    background-color: $white;
+    border-radius: 50%;
+    position: absolute;
+    top: -3em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+.material-icons-round {
+  font-size: 28px;
 }
 
 input,
@@ -156,7 +201,7 @@ textarea:focus-visible {
 
 .set-time {
   display: flex;
-  gap: 20px;
+  gap: 15px;
 
   label {
     flex-basis: 50%;
@@ -165,7 +210,8 @@ textarea:focus-visible {
 
 .invite-cards {
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  padding: 2em 0;
 
   .invite-card {
     background-color: rgba(white, 0.5);
@@ -184,5 +230,9 @@ textarea:focus-visible {
       width: 80%;
     }
   }
+}
+
+.added-chip {
+  background-color: $secondary-active;
 }
 </style>
