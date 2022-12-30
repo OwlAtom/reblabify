@@ -36,6 +36,13 @@ const routes = [
     meta: {
       heading: "Begivenhedsoversigt",
     },
+    children: [
+      {
+        path: "/all-events/mine",
+        name: "AllEventsMine",
+        component: () => import("../views/AllEvents.vue"),
+      },
+    ],
   },
   {
     path: "/groups",
