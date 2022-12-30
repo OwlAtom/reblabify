@@ -8,6 +8,9 @@ let events = [...eventsStore.events];
 onBeforeMount(() => {
   eventsStore.getUsersOwnEvents();
 });
+function fetchEvents() {
+  eventsStore.getInvitedEvents();
+}
 </script>
 
 <template>
@@ -36,6 +39,7 @@ onBeforeMount(() => {
         </router-link>
       </div>
     </div>
+    <button @click="fetchEvents">Fetch events that im invited to</button>
     <div v-for="event in events" :key="event.id" class="my-events-container">
       <div class="event-details">
         <p>{{ event.title }}</p>
