@@ -3,6 +3,7 @@ import { ref, onBeforeMount } from "vue";
 import ButtonGroup3 from "./ButtonGroup3.vue";
 import { useEventsStore } from "../stores/events";
 import { useRouter } from "vue-router";
+import eventChat from "./eventChat.vue";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
@@ -60,7 +61,7 @@ function inviteFriend() {
         </div>
       </TabPanel>
       <TabPanel>
-        <p>Chat komponent</p>
+        <eventChat />
       </TabPanel>
     </TabView>
   </div>
