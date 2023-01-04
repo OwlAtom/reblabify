@@ -6,7 +6,7 @@ import Navigation from "./components/MainNavigation.vue";
 
 <template>
   <router-view></router-view>
-  <Navigation />
+  <Navigation v-if="$route.path !== '/add-event'" />
 </template>
 
 <style lang="scss" scoped></style>
