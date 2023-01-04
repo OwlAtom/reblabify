@@ -2,6 +2,7 @@
 import FrontpageHeader from "../components/FrontpageHeader.vue";
 import { useEventsStore } from "../stores/events";
 import { onBeforeMount } from "vue";
+import EventCard from "../components/EventCard.vue";
 const eventsStore = useEventsStore();
 
 let events = [...eventsStore.events];
@@ -18,6 +19,7 @@ onBeforeMount(() => {
       <h2>Kommende begivenheder</h2>
       <div class="see-more-link">
         <!-- send data med der fortæller hvilken sorteringen der skal være -->
+        <EventCard />
         <router-link :to="{ name: 'AllEvents' }">
           <p>Se alle</p>
           <i class="pi pi-chevron-right"></i>
