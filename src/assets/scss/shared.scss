@@ -31,6 +31,11 @@ $icon-placeholder: #f4f4f466; //opacity 40%  used when creating an event
 $border-radius4: 4px;
 $border-radius8: 8px;
 
+// box shadow
+.box-shadow {
+  box-shadow: 0 2px 4px $box-shadow;
+}
+
 // Custom tabview buttons
 .button-group {
   width: 100%;
