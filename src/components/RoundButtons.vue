@@ -1,15 +1,21 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-defineProps({
-  page: String,
-});
+// defineProps({
+//   page: String,
+// });
+
+const router = useRouter();
+const path = router.currentRoute.value.path;
+
+console.log(path);
 
 const picked = ref();
 </script>
 
 <template>
-  <div :class="page == 'event-page' ? 'horisontal' : 'vertical'">
+  <div v-if="!path.includes('/home')" :class="path.includes('/event-info/') ? 'horisontal' : 'vertical'">
     <input id="accepted" v-model="picked" type="radio" value="accepted" />
     <label for="accepted" class="accepted-btn">
       <i class="pi pi-check-circle"></i>
@@ -31,6 +37,7 @@ const picked = ref();
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none; //evt. tjekke for browser kompatibilitet
+  display: none;
 }
 label {
   border-radius: 50%;
@@ -42,7 +49,6 @@ label {
 .pi {
   color: $primary;
 }
-
 .horisontal {
   display: flex;
   justify-content: center;
@@ -59,7 +65,7 @@ label {
 .vertical {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 
   label {
     padding: 10px;

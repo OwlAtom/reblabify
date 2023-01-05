@@ -53,11 +53,24 @@ export const useUsersStore = defineStore(
       });
     }
     function getUserById(userId) {
+      // check if the user is in the users.others object, if it is, return the user
+      if (users.value.others.some((user) => user.id === userId)) {
+        return users.value.others.find((user) => user.id === userId);
+      }
+      // if the userID is self, return the users own object
+      if (userId === users.value.self.uid) {
+        return users.value.self;
+      }
+
+      console.log("fetching user from firestore");
       const docRef = doc(db, "users", userId);
       getDoc(docRef)
         .then((doc) => {
           if (doc.exists()) {
-            console.log("Document data:", doc.data());
+            // add the user to the users.others object
+            users.value.others.push({ ...doc.data(), id: doc.id });
+            // return the user
+            return { ...doc.data(), id: doc.id };
           } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
