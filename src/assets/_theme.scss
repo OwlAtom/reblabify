@@ -110,11 +110,6 @@ h3 {
   padding: 0 1.25rem 0 1.25rem;
 }
 
-// box shadow
-.box-shadow {
-  box-shadow: 0 2px 4px $box-shadow;
-}
-
 .p-link {
   @include bodytext(1rem);
   border-radius: 4px;
@@ -1371,7 +1366,7 @@ h3 {
   width: 10px;
   height: 10px;
   transition-duration: 0.2s;
-  background-color: #3f51b5;
+  background-color: $white;
 }
 .p-radiobutton .p-radiobutton-box.p-highlight {
   border-color: #3f51b5;
@@ -7991,5 +7986,31 @@ h3 {
       border-bottom-right-radius: 40px;
       border-bottom-left-radius: 40px;
     }
+  }
+}
+
+//* styling af radiobuttons til tilkendegivelser
+.custom-select-buttons {
+  .p-buttonset .p-button:first-of-type {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+  .p-buttonset .p-button:not(:first-of-type):not(:last-of-type) {
+    border-radius: 50%;
+  }
+  .p-buttonset .p-button:last-of-type {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
+  .p-buttonset .p-button {
+    padding: 10px;
+    margin: 5px;
+    min-width: auto;
+    border: none;
+    box-shadow: 0 2px 4px $box-shadow;
   }
 }
