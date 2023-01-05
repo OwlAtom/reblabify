@@ -1,11 +1,7 @@
-<script>
+<script setup>
 import EventDateLabel from "./EventDateLabel.vue";
 import EventDeclarations from "./EventDeclarations.vue";
 import CardHeader from "./CardHeader.vue";
-
-export default {
-  components: { CardHeader, EventDateLabel, EventDeclarations },
-};
 </script>
 
 <template>
