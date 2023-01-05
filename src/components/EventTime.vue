@@ -1,19 +1,19 @@
 <script setup>
 defineProps({
-  declarations: String,
-  invitedTotal: Number,
+  startTime: String,
+  endTime: String,
 });
 </script>
 
 <template>
   <div class="flex align-items-center column-gap-1">
-    <span class="material-icons"> group </span>
-    <p class="p-smallest">{{ declarations }} af {{ invitedTotal }} deltager</p>
+    <span class="pi pi-clock"></span>
+    <p class="p-smallest">{{ startTime }} - {{ endTime }}</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.material-icons {
+.pi .pi-clock {
   font-size: 20px;
 }
 p {
