@@ -43,12 +43,10 @@ function fetchEvents() {
     <button @click="fetchEvents">Fetch events that im invited to</button>
     <!-- todo: v-if ejer er lig brugeren der er logget ind -->
     <div v-for="event in events" :key="event.id" class="my-events-container">
-      <router-link :to="{ name: 'EventInfo', params: { id: event.id } }">
-        <div class="event-details">
-          <p>{{ event.id }}</p>
-          <EventCard :event="event" />
-        </div>
-      </router-link>
+      <div class="event-details">
+        <p>{{ event.id }}</p>
+        <EventCard :event="event" />
+      </div>
     </div>
 
     <h2>Grupper</h2>

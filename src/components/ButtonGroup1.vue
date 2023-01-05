@@ -49,7 +49,6 @@ function inviteFriend() {
       <TabPanel>
         <p>Begivenheds detaljer komponent her</p>
         <RoundButtons page="event-page" />
-        <ButtonGroup3 />
         <div class="event-details">
           <p>{{ event.title }}</p>
           <p>{{ event.description }}</p>

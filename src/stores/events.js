@@ -33,22 +33,19 @@ export const useEventsStore = defineStore(
     async function getEventsByUserId(userId) {
       if (!userId) return;
 
-      let eventsArray = [];
       const hostQuery = query(eventsCollection, where("host", "==", userId));
       try {
         const querySnapshot = await getDocs(hostQuery);
         querySnapshot.forEach((doc) => {
-          eventsArray.push({ ...doc.data(), id: doc.id });
+          addEventToArray({ ...doc.data(), id: doc.id });
         });
-        events.value = eventsArray;
-        return eventsArray;
       } catch (error) {
         console.log(error);
       }
     }
 
     function getUsersOwnEvents() {
-      return getEventsByUserId(userStore.getUserId());
+      getEventsByUserId(userStore.getUserId());
     }
 
     function getEventById(eventId) {
@@ -146,12 +143,25 @@ export const useEventsStore = defineStore(
       const invitedQuery = query(eventsCollection, where("invited", "array-contains", userId));
       getDocs(invitedQuery).then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          events.value.push({ ...doc.data(), id: doc.id });
+          addEventToArray({ ...doc.data(), id: doc.id });
         });
       });
 
       // get all events that the user is hosting
       // return the combined array
+    }
+
+    function addEventToArray(event) {
+      console.log("adding event to array", event);
+      // check if the event is already in the array
+      const index = events.value.findIndex((e) => e.id === event.id);
+      if (index !== -1) {
+        // if the event is already in the array, update it
+        events.value[index] = event;
+        return;
+      }
+      // if the event is not in the array, add it
+      events.value.push(event);
     }
 
     return {
