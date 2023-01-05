@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import ButtonGroup3 from "./ButtonGroup3.vue";
+import RoundButtons from "./RoundButtons.vue";
 import { useEventsStore } from "../stores/events";
 import { useRouter } from "vue-router";
 import eventChat from "./eventChat.vue";
@@ -47,6 +48,8 @@ function inviteFriend() {
     <TabView v-model:activeIndex="activeTab">
       <TabPanel>
         <p>Begivenheds detaljer komponent her</p>
+        <RoundButtons page="event-page" />
+        <ButtonGroup3 />
         <div class="event-details">
           <p>{{ event.title }}</p>
           <p>{{ event.description }}</p>

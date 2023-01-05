@@ -3,6 +3,7 @@ import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } fr
 import { useUsersStore } from "../stores/users";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import welcomeIllustration from "../assets/illustrations/welcome.svg";
 
 const router = useRouter();
 const provider = new GoogleAuthProvider();
@@ -40,6 +41,8 @@ onMounted(() => {
 
 <template>
   <button @click="googleSignIn">Login</button>
+  <welcomeIllustration />
+  <a href="https://storyset.com/event">Event illustrations by Storyset</a>
 </template>
 
 <style scoped></style>

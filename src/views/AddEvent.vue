@@ -1,8 +1,9 @@
 <script setup>
 import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
-import welcomeIllustration from "../assets/illustrations/welcome.svg";
 import { useEventsStore } from "../stores/events.js";
+import DescriptionChips from "../components/DescriptionChips.vue";
+
 const eventStore = useEventsStore();
 
 const formData = {
@@ -54,33 +55,184 @@ function test() {
 }
 </script>
 <template>
-  <h1>Opret begivenhed</h1>
-  <button @click="test">Test</button>
-  <div v-for="event in eventStore.events" :key="event.id">
-    {{ event.title }}
-    {{ event.startDate }}
-    {{ event.startTime }}
-    {{ event.endDate }}
-    {{ event.endTime }}
-    {{ event.description }}
+  <div class="add-cover">
+    <span class="material-icons-round"> add </span>
+    <p>Tilføj coverbillede/tema</p>
   </div>
-  <form @submit.prevent="submitForm">
-    <input v-model="formData.title" type="text" placeholder="Titel" />
-    <input v-model="formData.startDate" type="date" />
-    <input v-model="formData.startTime" type="time" />
-    <input v-model="formData.endDate" type="date" />
-    <input v-model="formData.endTime" type="time" />
-    <textarea v-model="formData.description" placeholder="Beskrivelse"></textarea>
-    <input v-model="formData.location" type="text" placeholder="Lokation" />
-    <button type="submit" @click="handleSubmit">Opret</button>
-  </form>
+  <div class="wrapper overlay">
+    <div class="add-icon-circle">
+      <span class="material-icons-round"> add </span>
+      <p>Tilføj ikon</p>
+    </div>
+    <h1>Opret begivenhed</h1>
+    <button @click="test">Test</button>
+    <div v-for="event in eventStore.events" :key="event.id">
+      {{ event.title }}
+      {{ event.startDate }}
+      {{ event.startTime }}
+      {{ event.endDate }}
+      {{ event.endTime }}
+      {{ event.description }}
+    </div>
+    <form @submit.prevent="submitForm">
+      <label for="title">Begivenhedsnavn</label>
+      <input v-model="formData.title" type="text" placeholder="Titel" name="title" />
 
-  <InviteIllustration />
-  <a href="https://storyset.com/email">Email illustrations by Storyset</a>
-  <friendsIllustration />
-  <a href="https://storyset.com/people">People illustrations by Storyset</a>
-  <welcomeIllustration />
-  <a href="https://storyset.com/event">Event illustrations by Storyset</a>
+      <div class="set-time">
+        <label for="startDate">
+          Start dato
+          <input v-model="formData.startDate" type="date" name="startDate" />
+        </label>
+
+        <label for="startTime">
+          Start tidspunkt
+          <input v-model="formData.startTime" type="time" name="startTime" />
+        </label>
+      </div>
+
+      <div class="set-time">
+        <label for="endDate">
+          Slut dato
+          <input v-model="formData.endDate" type="date" name="endDate" />
+        </label>
+
+        <label for="endDate">
+          Slut tidspunkt
+          <input v-model="formData.endTime" type="time" name="endTime" />
+        </label>
+      </div>
+
+      <label for="description">Beskrivelse</label>
+      <textarea v-model="formData.description" placeholder="Beskrivelse" name="description" rows="3"></textarea>
+
+      <label for="loaction">Lokation</label>
+      <input v-model="formData.location" type="text" placeholder="Lokation" name="location" />
+      <!-- todo: 'normalButton'? + places i bunden derefter -->
+      <button type="submit" @click="handleSubmit">Opret</button>
+    </form>
+
+    <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
+    <div class="flex flex-wrap gap-2">
+      <DescriptionChips text="Lokation" emoji="📍" class="added-chip" />
+      <DescriptionChips text="Dresscode" emoji="👔" />
+      <DescriptionChips text="Medorganisator" emoji="🤝" />
+      <DescriptionChips text="Privathed" emoji="🔒" />
+      <DescriptionChips text="Svar senest" emoji="🚩" />
+    </div>
+
+    <div class="invite-cards">
+      <div class="invite-card">
+        <h3>Invitér venner</h3>
+        <InviteIllustration />
+        <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
+      </div>
+
+      <div class="invite-card">
+        <h3>Invitér gruppe</h3>
+        <friendsIllustration />
+        <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
+      </div>
+    </div>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.add-cover {
+  height: 11em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+  }
+}
+.overlay {
+  background-color: $overlay;
+  border-radius: 40px;
+  padding-top: 4em;
+  padding-bottom: 4em;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+
+  .add-icon-circle {
+    width: 7em;
+    height: 7em;
+    background-color: $white;
+    border-radius: 50%;
+    position: absolute;
+    top: -3em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+.material-icons-round {
+  font-size: 28px;
+}
+
+input,
+textarea {
+  width: 100%;
+  min-height: 2.5em;
+  border: none;
+  border-bottom: 2px solid gray;
+  border-radius: 4px;
+  background-color: rgba(white, 0.5);
+  box-shadow: 0 2px 4px $box-shadow;
+  margin-bottom: 10px;
+}
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-bottom: 2px solid $secondary;
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba($secondary-active, 0.8);
+}
+
+.set-time {
+  display: flex;
+  gap: 15px;
+
+  label {
+    flex-basis: 50%;
+  }
+}
+
+.invite-cards {
+  display: flex;
+  gap: 15px;
+  padding: 2em 0;
+
+  .invite-card {
+    background-color: rgba(white, 0.5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 50%;
+    box-shadow: 0 2px 4px $box-shadow;
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    svg {
+      width: 80%;
+    }
+  }
+}
+
+.added-chip {
+  background-color: $secondary-active;
+}
+</style>
