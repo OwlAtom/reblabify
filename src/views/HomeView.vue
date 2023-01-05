@@ -2,6 +2,7 @@
 import FrontpageHeader from "../components/FrontpageHeader.vue";
 import { useEventsStore } from "../stores/events";
 import { onBeforeMount } from "vue";
+import EventCard from "../components/EventCard.vue";
 const eventsStore = useEventsStore();
 
 let events = [...eventsStore.events];
@@ -36,14 +37,14 @@ onBeforeMount(() => {
         </router-link>
       </div>
     </div>
+    <!-- todo: v-if ejer er lig brugeren der er logget ind -->
     <div v-for="event in events" :key="event.id" class="my-events-container">
-      <div class="event-details">
-        <p>{{ event.title }}</p>
-        <p>{{ event.id }}</p>
-        <router-link :to="{ name: 'EventInfo', params: { id: event.id } }">
-          <p>Se mere</p>
-        </router-link>
-      </div>
+      <router-link :to="{ name: 'EventInfo', params: { id: event.id } }">
+        <div class="event-details">
+          <p>{{ event.id }}</p>
+          <EventCard :event="event" />
+        </div>
+      </router-link>
     </div>
 
     <h2>Grupper</h2>

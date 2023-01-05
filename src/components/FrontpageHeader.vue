@@ -18,7 +18,7 @@ const openModal = () => {
 
 let timeNow = new Date().getHours();
 let greeting =
-  timeNow >= 5 && timeNow < 12 ? "Godmorgen" : timeNow >= 12 && timeNow < 18 ? "God eftermiddag" : "God aften";
+  timeNow >= 5 && timeNow < 12 ? "Godmorgen" : timeNow >= 12 && timeNow < 18 ? "God eftermiddag" : "Godaften";
 </script>
 
 <template>
@@ -64,11 +64,14 @@ let greeting =
 </template>
 
 <style lang="scss" scoped>
+h1 {
+  color: $secondary-active;
+}
 .heading-wrapper {
   margin-bottom: 1em;
 
   .frontpage-heading {
-    background-color: rgb(27, 71, 85);
+    background-color: $tertiary;
     padding-top: 3em;
     .profile-picture {
       height: 40px;
@@ -80,7 +83,7 @@ let greeting =
 
     .user-name-heading {
       margin: 0;
-      color: #f9d6bc;
+      color: $secondary-active;
       font-size: 18px;
     }
   }
