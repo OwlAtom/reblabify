@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useUsersStore } from "../stores/users";
+import { ref as vueRef } from "vue";
 /* eslint-disable */
 import {
   getDatabase,
@@ -45,7 +46,7 @@ const sendMessage = () => {
   }
 };
 
-let messages = [];
+let messages = vueRef([]);
 
 const handleSnapshot = (snapshot) => {
   const data = snapshot.val();
@@ -58,19 +59,16 @@ const handleSnapshot = (snapshot) => {
       }
     });
     // add the new messages
-    messages = [...values];
-    // this however does not update the messages in the template :(
-    // when site is reloaded by vite, the messages are updated (make a change in this file to see)
+    messages.value = [...values];
   }
 };
 // listen for changes
-onValue(chatRef, handleSnapshot); // this loads new messages (check console) but does not display in view
+onValue(chatRef, handleSnapshot);
 
 // on first load, force get the messages
 get(chatRef)
   .then((snapshot) => {
     handleSnapshot(snapshot);
-    // this is called, but the messages are not updated in the view :(
   })
   .catch((error) => {
     console.error(error);
