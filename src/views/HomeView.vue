@@ -16,7 +16,6 @@ function fetchEvents() {
 }
 
 const user = useUsersStore().users.self;
-console.log(user.uid);
 </script>
 
 <template>
