@@ -8,9 +8,9 @@ defineProps({
 
 <template>
   <button ref="theButton" class="btn">
-    <span v-if="iconBefore" class="material-icons">{{ iconBefore }}</span>
+    <span v-if="iconBefore" class="material-icons icon-before">{{ iconBefore }}</span>
     {{ text }}
-    <span v-if="iconAfter" class="material-icons">{{ iconAfter }}</span>
+    <span v-if="iconAfter" class="material-icons icon-after">{{ iconAfter }}</span>
   </button>
 </template>
 

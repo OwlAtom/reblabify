@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "test": "vitest",
+    "test": "vitest --dom",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
