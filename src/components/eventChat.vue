@@ -1,78 +1,29 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { useUsersStore } from "../stores/users";
-import { ref as vueRef } from "vue";
-/* eslint-disable */
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  onValue,
-  orderByKey,
-  limitToLast,
-  query,
-  child,
-  push,
-  update,
-} from "firebase/database";
-/* eslint-enable */
+import { useChatStore } from "../stores/chat";
+import { ref, onBeforeUnmount } from "vue";
 
 const router = useRouter();
 const eventID = router.currentRoute.value.params.id;
+const chatStore = useChatStore();
 
-const db = getDatabase();
-const chatRef = ref(db, `chats/${eventID}/chat`);
-
-const usersStore = useUsersStore();
-const user = usersStore.users.self;
-
+const messageContent = ref();
 const sendMessage = () => {
-  const message = document.querySelector("#message").value;
-  if (message) {
-    const newMessage = {
-      sender: user.displayName,
-      message: message,
-      posted: new Date().toISOString(),
-      photoURL: user.photoURL,
-    };
-    push(chatRef, newMessage)
-      .then(() => {
-        document.querySelector("#message").value = "";
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  chatStore.sendMessage(messageContent.value.value, eventID);
+  messageContent.value = "";
 };
 
-let messages = vueRef([]);
+const messages = ref([]);
 
-const handleSnapshot = (snapshot) => {
-  const data = snapshot.val();
-  if (data) {
-    const values = Object.values(data);
-    values.forEach((message) => {
-      message.posted = new Date(message.posted).toLocaleString();
-      if (message.photoURL === user.photoURL) {
-        message.isOwnMessage = true; // mark own messages
-      }
-    });
-    // add the new messages
-    messages.value = [...values];
-  }
-};
-// listen for changes
-onValue(chatRef, handleSnapshot);
+function snapshotHandler(snapshot) {
+  chatStore.handleSnapshot(snapshot, eventID);
+  messages.value = chatStore.getMessages(eventID);
+}
 
-// on first load, force get the messages
-get(chatRef)
-  .then((snapshot) => {
-    handleSnapshot(snapshot);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+const unsubscribe = chatStore.subscribeToChat(eventID, snapshotHandler);
+onBeforeUnmount(() => {
+  unsubscribe(); // needed to prevent memory leaks
+});
 </script>
 
 <template>
@@ -92,13 +43,10 @@ get(chatRef)
       </div>
     </div>
     <div class="chat-input">
-      <input id="message" type="text" placeholder="Skriv en besked" @keyup.enter="sendMessage()" />
+      <input id="message" ref="messageContent" type="text" placeholder="Skriv en besked" @keyup.enter="sendMessage()" />
       <button @click="sendMessage()">Send</button>
     </div>
   </div>
-
-  <div>Her er din chat for begivenhed {{ eventID }}</div>
-  <div>og din bruger er {{ user.uid }}</div>
 </template>
 
 <style lang="scss" scoped>
