@@ -8,6 +8,7 @@ import eventChat from "./eventChat.vue";
 import EventLocation from "./EventLocation.vue";
 import UserByline from "./UserByline.vue";
 import EventDateTime from "./EventDateTime.vue";
+import EventDescription from "./EventDescription.vue";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
@@ -39,13 +40,11 @@ const activeTab = ref(0);
 
 <template>
   <div class="add-cover">
-    <span class="material-icons-round"> add </span>
     <p>Skal laves om til coverbilledet</p>
   </div>
   <div class="wrapper overlay">
     <div class="add-icon-circle">
-      <span class="material-icons-round"> add </span>
-      <p>Tilføj ikon</p>
+      <span class="icon">✨</span>
     </div>
     <div class="tabview-custom">
       <div class="button-group">
@@ -63,10 +62,12 @@ const activeTab = ref(0);
           <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
           <EventLocation :event-location="event.location" />
           <RoundButtons page="event-page" />
-          <Divider />
+          <Divider width="100px" height="50px" />
           <h3>Vært(er)</h3>
           <UserByline :user="host" />
+          <EventDescription :description="event.description" />
           <h3>Tilkendegivelser</h3>
+
           <!-- <div class="event-details">
             <p>{{ event.title }}</p>
             <p>{{ event.description }}</p>
@@ -104,10 +105,6 @@ const activeTab = ref(0);
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  p {
-    margin: 0;
-  }
 }
 .overlay {
   background-color: $overlay;
@@ -131,6 +128,10 @@ const activeTab = ref(0);
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    .icon {
+      font-size: 3.9em;
+    }
 
     p {
       margin: 0;
