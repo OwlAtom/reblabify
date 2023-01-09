@@ -7,6 +7,7 @@ import { useRouter } from "vue-router";
 import eventChat from "./eventChat.vue";
 import EventLocation from "./EventLocation.vue";
 import UserByline from "./UserByline.vue";
+import EventDateTime from "./EventDateTime.vue";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
@@ -59,6 +60,7 @@ const activeTab = ref(0);
       <TabView v-model:activeIndex="activeTab">
         <TabPanel>
           <h1>{{ event.title }}</h1>
+          <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
           <EventLocation :event-location="event.location" />
           <RoundButtons page="event-page" />
           <Divider />
