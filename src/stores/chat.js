@@ -46,7 +46,14 @@ export const useChatStore = defineStore(
       if (data) {
         const values = Object.values(data);
         values.forEach((message) => {
-          message.posted = new Date(message.posted).toLocaleString();
+          message.posted = new Date(message.posted).toLocaleString(undefined, {
+            weekday: "short",
+            // year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          });
 
           if (message.uid === user.uid) {
             message.isOwnMessage = true;
