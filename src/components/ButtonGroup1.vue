@@ -5,6 +5,8 @@ import RoundButtons from "./RoundButtons.vue";
 import { useEventsStore } from "../stores/events";
 import { useRouter } from "vue-router";
 import eventChat from "./eventChat.vue";
+import EventLocation from "./EventLocation.vue";
+import UserByline from "./UserByline.vue";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
@@ -18,20 +20,20 @@ onBeforeMount(() => {
   });
 });
 const activeTab = ref(0);
-const inviteFriendInput = ref(null);
+// const inviteFriendInput = ref(null);
 
-function inviteFriend() {
-  const friendEmail = inviteFriendInput.value.value;
-  // Check that the input is a valid email address (null is not a valid email)
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(friendEmail)) {
-    console.log("invalid email");
-    return;
-  }
+// function inviteFriend() {
+//   const friendEmail = inviteFriendInput.value.value;
+//   // Check that the input is a valid email address (null is not a valid email)
+//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   if (!emailRegex.test(friendEmail)) {
+//     console.log("invalid email");
+//     return;
+//   }
 
-  // If we've gotten this far, we have a valid email, so invite the friend
-  eventsStore.inviteFriendByEmail(eventID, friendEmail);
-}
+//   // If we've gotten this far, we have a valid email, so invite the friend
+//   eventsStore.inviteFriendByEmail(eventID, friendEmail);
+// }
 </script>
 
 <template>
@@ -55,11 +57,15 @@ function inviteFriend() {
       </div>
 
       <TabView v-model:activeIndex="activeTab">
-        <!-- <p>Begivenheds detaljer komponent her</p> -->
-        >
         <TabPanel>
+          <h1>{{ event.title }}</h1>
+          <EventLocation :event-location="event.location" />
           <RoundButtons page="event-page" />
-          <div class="event-details">
+          <Divider />
+          <h3>Vært(er)</h3>
+          <UserByline :user="host" />
+          <h3>Tilkendegivelser</h3>
+          <!-- <div class="event-details">
             <p>{{ event.title }}</p>
             <p>{{ event.description }}</p>
             <p>{{ event.date }}</p>
@@ -69,9 +75,9 @@ function inviteFriend() {
             <div>
               <input ref="inviteFriendInput" placeholder="Invite some friends" />
               <button @click="inviteFriend">Invite</button>
-            </div>
-            <ButtonGroup3 />
-          </div>
+            </div> -->
+          <ButtonGroup3 />
+          <!-- </div> -->
         </TabPanel>
         <TabPanel>
           <eventChat />
