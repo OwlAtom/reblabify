@@ -35,37 +35,49 @@ function inviteFriend() {
 </script>
 
 <template>
-  <div class="tabview-custom">
-    <div class="button-group">
-      <div class="button-group-item" :class="[activeTab === 0 ? 'active' : '']" @click="activeTab = 0">
-        <p>Detaljer</p>
-      </div>
-      <div class="button-group-item" :class="[activeTab === 1 ? 'active' : '']" @click="activeTab = 1">
-        <p>Chat</p>
-      </div>
+  <div class="add-cover">
+    <span class="material-icons-round"> add </span>
+    <p>Skal laves om til coverbilledet</p>
+  </div>
+  <div class="wrapper overlay">
+    <div class="add-icon-circle">
+      <span class="material-icons-round"> add </span>
+      <p>Tilføj ikon</p>
     </div>
-
-    <TabView v-model:activeIndex="activeTab">
-      <TabPanel>
-        <p>Begivenheds detaljer komponent her</p>
-        <RoundButtons page="event-page" />
-        <div class="event-details">
-          <p>{{ event.title }}</p>
-          <p>{{ event.description }}</p>
-          <p>{{ event.date }}</p>
-          <p>{{ event.time }}</p>
-          <p>{{ event.location }}</p>
-          <div>
-            <input ref="inviteFriendInput" placeholder="Invite some friends" />
-            <button @click="inviteFriend">Invite</button>
-          </div>
-          <ButtonGroup3 />
+    <div class="tabview-custom">
+      <div class="button-group">
+        <div class="button-group-item" :class="[activeTab === 0 ? 'active' : '']" @click="activeTab = 0">
+          <p>Detaljer</p>
         </div>
-      </TabPanel>
-      <TabPanel>
-        <eventChat />
-      </TabPanel>
-    </TabView>
+        <div class="button-group-item" :class="[activeTab === 1 ? 'active' : '']" @click="activeTab = 1">
+          <p>Chat</p>
+        </div>
+      </div>
+
+      <TabView v-model:activeIndex="activeTab">
+        <!-- <p>Begivenheds detaljer komponent her</p> -->
+        >
+        <TabPanel>
+          <RoundButtons page="event-page" />
+          <div class="event-details">
+            <p>{{ event.title }}</p>
+            <p>{{ event.description }}</p>
+            <p>{{ event.date }}</p>
+            <p>{{ event.time }}</p>
+            <p>{{ event.location }}</p>
+            <h1>hej</h1>
+            <div>
+              <input ref="inviteFriendInput" placeholder="Invite some friends" />
+              <button @click="inviteFriend">Invite</button>
+            </div>
+            <ButtonGroup3 />
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <eventChat />
+        </TabPanel>
+      </TabView>
+    </div>
   </div>
 </template>
 
@@ -77,4 +89,47 @@ function inviteFriend() {
 }
 
 // tabview styles i _theme.scss
+
+.add-cover {
+  height: 11em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    margin: 0;
+  }
+}
+.overlay {
+  background-color: $overlay;
+  border-radius: 40px;
+  padding-top: 4em;
+  padding-bottom: 4em;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+
+  .add-icon-circle {
+    width: 7em;
+    height: 7em;
+    background-color: $white;
+    border-radius: 50%;
+    position: absolute;
+    top: -3em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+.material-icons-round {
+  font-size: 28px;
+}
 </style>
