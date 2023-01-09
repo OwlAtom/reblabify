@@ -1,6 +1,8 @@
 <script setup>
 import FrontpageHeader from "../components/FrontpageHeader.vue";
 import { useEventsStore } from "../stores/events";
+import { useUsersStore } from "../stores/users";
+
 import { onBeforeMount } from "vue";
 import EventCard from "../components/EventCard.vue";
 const eventsStore = useEventsStore();
@@ -12,6 +14,8 @@ onBeforeMount(() => {
 function fetchEvents() {
   eventsStore.getInvitedEvents();
 }
+
+const user = useUsersStore().users.self;
 </script>
 
 <template>
@@ -28,6 +32,11 @@ function fetchEvents() {
         </router-link>
       </div>
     </div>
+    <div v-for="event in events" :key="event.id" class="my-events-container">
+      <div class="event-details">
+        <EventCard v-if="event.host !== user.uid" :event="event" />
+      </div>
+    </div>
     <div class="upcoming-events-container"></div>
 
     <div class="flex justify-content-between align-items-center">
@@ -41,11 +50,10 @@ function fetchEvents() {
       </div>
     </div>
     <button @click="fetchEvents">Fetch events that im invited to</button>
-    <!-- todo: v-if ejer er lig brugeren der er logget ind -->
+
     <div v-for="event in events" :key="event.id" class="my-events-container">
       <div class="event-details">
-        <p>{{ event.id }}</p>
-        <EventCard :event="event" />
+        <EventCard v-if="event.host === user.uid" :event="event" />
       </div>
     </div>
 
