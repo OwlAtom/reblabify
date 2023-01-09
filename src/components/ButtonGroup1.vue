@@ -55,11 +55,11 @@ function inviteFriend() {
           <p>{{ event.date }}</p>
           <p>{{ event.time }}</p>
           <p>{{ event.location }}</p>
+          <ButtonGroup3 />
           <div>
             <input ref="inviteFriendInput" placeholder="Invite some friends" />
             <button @click="inviteFriend">Invite</button>
           </div>
-          <ButtonGroup3 />
         </div>
       </TabPanel>
       <TabPanel>

@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from "vue";
+
 import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
 import { useEventsStore } from "../stores/events.js";
@@ -48,18 +50,20 @@ function validateFormData(formData) {
     throw errors;
   }
 }
-function test() {
-  eventStore.getEventsByUserId("HtqmhWclvxdoQX4KUnBc2AEfRNJ3").then(() => {
-    console.log(eventStore.returnFutureEvents());
-  });
-}
+// function test() {
+//   eventStore.getEventsByUserId("HtqmhWclvxdoQX4KUnBc2AEfRNJ3").then(() => {
+//     console.log(eventStore.returnFutureEvents());
+//   });
+// }
+
+let showPopup = ref(false);
 </script>
 <template>
   <div class="add-cover">
     <span class="material-icons-round"> add </span>
     <p>Tilføj coverbillede/tema</p>
   </div>
-  <div class="wrapper overlay">
+  <div v-if="!showPopup" class="wrapper overlay">
     <div class="add-icon-circle">
       <span class="material-icons-round"> add </span>
       <p>Tilføj ikon</p>
@@ -121,7 +125,7 @@ function test() {
     </div>
 
     <div class="invite-cards">
-      <div class="invite-card">
+      <div class="invite-card" @click="showPopup = !showPopup">
         <h3>Invitér venner</h3>
         <InviteIllustration />
         <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
@@ -133,6 +137,18 @@ function test() {
         <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
       </div>
     </div>
+  </div>
+
+  <div v-if="showPopup" class="invite-popup wrapper overlay">
+    <span class="material-icons-round close-btn" @click="showPopup = !showPopup"> highlight_off </span>
+    <h1>Tilføj venner</h1>
+    <form @submit.prevent="submitForm">
+      <label for="people">Søg</label>
+      <input ref="inviteFriendInput" name="people" />
+
+      <!-- todo: 'normalButton'? + places i bunden derefter -->
+      <button @click="inviteFriend">Opret</button>
+    </form>
   </div>
 </template>
 
@@ -154,7 +170,8 @@ function test() {
   padding-top: 4em;
   padding-bottom: 4em;
   backdrop-filter: blur(10px);
-  position: relative;
+  position: absolute;
+  top: 11em;
   z-index: 10;
 
   .add-icon-circle {
@@ -207,7 +224,9 @@ textarea:focus-visible {
     flex-basis: 50%;
   }
 }
-
+.added-chip {
+  background-color: $secondary-active;
+}
 .invite-cards {
   display: flex;
   gap: 15px;
@@ -232,7 +251,16 @@ textarea:focus-visible {
   }
 }
 
-.added-chip {
-  background-color: $secondary-active;
+.invite-popup {
+  width: 100%;
+  height: calc(100% - 11em);
+
+  .close-btn {
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1.25rem;
+  }
 }
 </style>
