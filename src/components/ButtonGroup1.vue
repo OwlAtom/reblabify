@@ -47,7 +47,7 @@ function inviteFriend() {
     <TabView v-model:activeIndex="activeTab">
       <TabPanel>
         <p>Begivenheds detaljer komponent her</p>
-        <RoundButtons page="event-page" />
+        <RoundButtons :event-id="eventID" />
         <ButtonGroup3 />
         <div class="event-details">
           <p>{{ event.title }}</p>

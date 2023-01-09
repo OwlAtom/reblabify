@@ -49,6 +49,9 @@ export const useEventsStore = defineStore("events", () => {
   }
 
   function getEventById(eventId) {
+    // if undefined, throw error
+    if (!eventId) throw new Error("Event Id is undefined");
+
     const event = findEventById(eventId);
     if (event) return Promise.resolve(event);
     // get a single event by id
@@ -135,6 +138,67 @@ export const useEventsStore = defineStore("events", () => {
       return date > new Date();
     });
   }
+  async function changeAttendanceStatus(eventId, status) {
+    // throw error if status is not accepted, maybe or declined
+    if (!["accepted", "maybe", "declined"].includes(status)) {
+      throw new Error("Status must be accepted, maybe or declined");
+    }
+    // throw if undef
+    if (!eventId) throw new Error("Event Id is undefined");
+
+    const event = await getEventById(eventId);
+    // add the users id to the event.attending array
+    // check if the event has a status array
+    console.log(event);
+    if (!event[status]) {
+      event[status] = [];
+    }
+    const userId = userStore.getUserId();
+    event[status].push(userId);
+    // remove user from other status arrays
+    if (status !== "accepted" && typeof event.attending === "object") {
+      event.attending = event.attending.filter((id) => id !== userId);
+    }
+    if (status !== "maybe" && typeof event.maybe === "object") {
+      event.maybe = event.maybe.filter((id) => id !== userId);
+    }
+    if (status !== "declined" && typeof event.declined === "object") {
+      event.declined = event.declined.filter((id) => id !== userId);
+    }
+
+    event.invited = event.invited.filter((id) => id !== userId);
+
+    updateEventInDatabase(event);
+  }
+  // easy to use helper functions:
+  function acceptEvent(eventId) {
+    changeAttendanceStatus(eventId, "accepted");
+  }
+  function maybeEvent(eventId) {
+    changeAttendanceStatus(eventId, "maybe");
+  }
+  function declineEvent(eventId) {
+    changeAttendanceStatus(eventId, "declined");
+  }
+
+  async function getAttendanceStatus(eventId) {
+    // throw error if undefined eventId
+    if (!eventId) {
+      throw new Error("No event id provided");
+    }
+    const event = await getEventById(eventId);
+    const userId = userStore.getUserId();
+    if (event.accepted?.includes(userId)) {
+      return "accepted";
+    }
+    if (event.maybe?.includes(userId)) {
+      return "maybe";
+    }
+    if (event.declined?.includes(userId)) {
+      return "declined";
+    }
+    return "invited";
+  }
 
   return {
     events,
@@ -146,5 +210,10 @@ export const useEventsStore = defineStore("events", () => {
     inviteFriendToEvent,
     getUsersOwnEvents,
     inviteFriendByEmail,
+    acceptEvent,
+    maybeEvent,
+    declineEvent,
+    changeAttendanceStatus,
+    getAttendanceStatus,
   };
 });

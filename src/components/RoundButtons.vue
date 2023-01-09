@@ -1,17 +1,35 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
+import { useEventsStore } from "../stores/events";
 
-// defineProps({
-//   page: String,
-// });
+const eventsStore = useEventsStore();
 
 const router = useRouter();
 const path = router.currentRoute.value.path;
 
-console.log(path);
-
 const picked = ref();
+
+const props = defineProps({
+  eventId: String,
+});
+// get event id from props or router.currentRoute.value.params.id;
+const eventId = props.eventId || router.currentRoute.value.params.id;
+
+onBeforeMount(() => {
+  // set picked to the current status
+  picked.value = eventsStore.getAttendanceStatus(eventId);
+
+  // watch to see if picked changes
+  watch(
+    () => picked.value,
+    (newValue) => {
+      console.log("picked changed to", newValue);
+      console.log("eventId", eventId);
+      eventsStore.changeAttendanceStatus(eventId, newValue);
+    }
+  );
+});
 </script>
 
 <template>
@@ -26,8 +44,8 @@ const picked = ref();
       <i class="pi pi-question-circle"></i>
     </label>
 
-    <input id="rejected" v-model="picked" type="radio" value="rejected" />
-    <label for="rejected" class="rejected-btn">
+    <input id="declined" v-model="picked" type="radio" value="declined" />
+    <label for="declined" class="declined-btn">
       <i class="pi pi-times-circle"></i>
     </label>
   </div>
@@ -85,7 +103,7 @@ input[type="radio"]:checked + label {
   &.maybe-btn {
     background-color: $maybe;
   }
-  &.rejected-btn {
+  &.declined-btn {
     background-color: $not-coming;
   }
 }

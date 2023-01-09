@@ -1,9 +1,7 @@
 <script setup>
 import Button from "primevue/button"; // Import the PrimeVue buttons.
 import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
-import HelloWorld from "../components/HelloWorld.vue";
 import EventDeclarations from "../components/EventDeclarations.vue";
-import RoundButtons from "../components/RoundButtons.vue";
 
 import EventDateLabel from "../components/EventDateLabel.vue";
 defineProps({
@@ -23,9 +21,6 @@ defineProps({
     </a>
     <EventDeclarations :declarations="5" :invited-total="12" />
   </div>
-  <RoundButtons page="landing" />
-
-  <HelloWorld msg="Hello Vitest" />
   <div>
     <h3>PrimeVue Buttons</h3>
     <!-- Start of PrimeVue buttons. -->

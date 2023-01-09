@@ -48,7 +48,7 @@ const host = usersStore.getUserById(props.event.host);
         <EventDeclarations declarations="0" :invited-total="event?.invited?.length" />
       </div>
       <div class="buttons">
-        <RoundButtons />
+        <RoundButtons :event-id="event.id" />
       </div>
     </div>
   </router-link>
