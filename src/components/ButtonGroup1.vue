@@ -52,7 +52,8 @@ function inviteFriend() {
         <div class="event-details">
           <p>{{ event.title }}</p>
           <p>{{ event.description }}</p>
-          <p>{{ event.date }}</p>
+          <p>{{ event.startDate }}</p>
+          <p>{{ event.endDate }}</p>
           <p>{{ event.time }}</p>
           <p>{{ event.location }}</p>
           <div>

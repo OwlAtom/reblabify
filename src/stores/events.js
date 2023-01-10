@@ -40,7 +40,7 @@ export const useEventsStore = defineStore("events", () => {
       events.value = eventsArray;
       return eventsArray;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -52,15 +52,20 @@ export const useEventsStore = defineStore("events", () => {
     // if undefined, throw error
     if (!eventId) throw new Error("Event Id is undefined");
 
-    const event = findEventById(eventId);
-    if (event) return Promise.resolve(event);
+    let event = findEventById(eventId);
+    if (event !== null) {
+      event.id = eventId;
+      return Promise.resolve(event);
+    }
     // get a single event by id
     const docRef = doc(db, "events", eventId);
     return new Promise((resolve, reject) => {
       getDoc(docRef)
         .then((doc) => {
           if (doc.exists()) {
-            resolve(doc.data());
+            event = { ...doc.data(), id: doc.id };
+            events.value.push(event);
+            resolve(event);
           } else {
             resolve(null);
           }
@@ -79,7 +84,7 @@ export const useEventsStore = defineStore("events", () => {
     const event = findEventById(eventId);
     // add the friendId to the event.invited array
     event.invited.push(friendId);
-    updateEventInDatabase(event);
+    updateEventInDatabase(event, eventId);
   }
   async function inviteFriendByEmail(eventId, email) {
     const event = findEventById(eventId);
@@ -99,14 +104,21 @@ export const useEventsStore = defineStore("events", () => {
     }
     // add the friendId to the event.invited array
     event.invited.push(invitedUser.id);
-    updateEventInDatabase(event);
+    updateEventInDatabase(event, eventId);
   }
 
   function findEventById(eventId) {
-    return events.value.find((event) => event.id === eventId);
+    const event = events.value.find((event) => event.id === eventId);
+    if (!event) {
+      return null;
+    }
+    return event;
   }
 
-  function updateEventInDatabase(event) {
+  function updateEventInDatabase(event, eventId) {
+    if (!event.id) {
+      throw new Error("Event Id is undefined");
+    }
     // update the event in the database
     const docRef = doc(db, "events", event.id);
     try {
@@ -122,10 +134,11 @@ export const useEventsStore = defineStore("events", () => {
           console.error("Error updating document: ", error);
         });
     } catch (error) {
-      console.error("Error updating document: ", error);
+      console.error("Error updating document: ", error, toRaw(event));
     }
     // also update the event in the events array
     const index = events.value.findIndex((e) => e.id === event.id);
+    event.id = eventId;
     events.value[index] = event;
   }
 
@@ -139,23 +152,28 @@ export const useEventsStore = defineStore("events", () => {
     });
   }
   async function changeAttendanceStatus(eventId, status) {
-    // throw error if status is not accepted, maybe or declined
+    // throw an error if status is not accepted, maybe or declined
     if (!["accepted", "maybe", "declined"].includes(status)) {
       throw new Error("Status must be accepted, maybe or declined");
     }
-    // throw if undef
+    // throw an error if eventId is undefined
     if (!eventId) throw new Error("Event Id is undefined");
 
     const event = await getEventById(eventId);
-    // add the users id to the event.attending array
-    // check if the event has a status array
-    console.log(event);
+    const userId = userStore.getUserId();
+
     if (!event[status]) {
       event[status] = [];
     }
-    const userId = userStore.getUserId();
+
+    // return if user is already in the status array
+    if (event[status].includes(userId)) {
+      console.log("User is already in the " + status + " array");
+      return;
+    }
+
     event[status].push(userId);
-    // remove user from other status arrays
+    // remove userId from other arrays
     if (status !== "accepted" && typeof event.attending === "object") {
       event.attending = event.attending.filter((id) => id !== userId);
     }
@@ -168,7 +186,7 @@ export const useEventsStore = defineStore("events", () => {
 
     event.invited = event.invited.filter((id) => id !== userId);
 
-    updateEventInDatabase(event);
+    updateEventInDatabase(event, eventId);
   }
   // easy to use helper functions:
   function acceptEvent(eventId) {

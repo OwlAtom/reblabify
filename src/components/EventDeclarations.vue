@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  declarations: String,
+  declarations: Number,
   invitedTotal: Number,
 });
 </script>
