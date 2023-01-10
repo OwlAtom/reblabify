@@ -40,6 +40,8 @@ import Toast from "primevue/toast";
 import TabView from "primevue/tabview"; // brugt i ButtonGroup
 import TabPanel from "primevue/tabpanel"; // brugt i ButtonGroup
 import RadioButton from "primevue/radiobutton";
+// import Divider from "primevue/divider";
+// import Badge from "primevue/badge";
 
 //importing stylesheets
 import "./style.css"; // evt. flyttes over i scss
@@ -66,5 +68,7 @@ app.component(Toast);
 app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("RadioButton", RadioButton);
+// app.component("HorizontalDivider", Divider);
+// app.component("TabViewBadge", Badge);
 
 app.mount("#app");

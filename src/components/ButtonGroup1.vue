@@ -58,17 +58,20 @@ const activeTab = ref(0);
 
       <TabView v-model:activeIndex="activeTab">
         <TabPanel>
-          <h1>{{ event.title }}</h1>
-          <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
-          <EventLocation :event-location="event.location" />
-          <RoundButtons page="event-page" />
-          <Divider width="100px" height="50px" />
-          <h3>Vært(er)</h3>
-          <UserByline :user="host" />
-          <EventDescription :description="event.description" />
-          <h3>Tilkendegivelser</h3>
+          <div>
+            <h1>{{ event.title }}</h1>
+            <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
+            <EventLocation :event-location="event.location" />
+            <RoundButtons page="event-page" />
+          </div>
+          <HorizontalDivider type="dashed" />
+          <div>
+            <h3>Vært(er)</h3>
+            <UserByline :user="host" />
+            <EventDescription :description="event.description" />
+            <h3>Tilkendegivelser</h3>
 
-          <!-- <div class="event-details">
+            <!-- <div class="event-details">
             <p>{{ event.title }}</p>
             <p>{{ event.description }}</p>
             <p>{{ event.date }}</p>
@@ -79,8 +82,9 @@ const activeTab = ref(0);
               <input ref="inviteFriendInput" placeholder="Invite some friends" />
               <button @click="inviteFriend">Invite</button>
             </div> -->
-          <ButtonGroup3 />
-          <!-- </div> -->
+            <ButtonGroup3 />
+            <!-- </div> -->
+          </div>
         </TabPanel>
         <TabPanel>
           <eventChat />
