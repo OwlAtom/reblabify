@@ -36,15 +36,15 @@ onBeforeUnmount(() => {
         :class="{ 'chat-message-self': message.isOwnMessage }">
         <img :src="message.photoURL" :alt="message.sender" />
         <div class="chat-message-content">
-          <p class="message-content-sender">{{ message.sender }}</p>
+          <p class="message-content-sender chat-text">{{ message.sender }}</p>
           <p class="message-content-text">{{ message.message }}</p>
-          <p class="timestamp">({{ message.posted }})</p>
+          <p class="timestamp">{{ message.posted }}</p>
         </div>
       </div>
     </div>
     <div class="chat-input">
       <input id="message" ref="messageContent" type="text" placeholder="Skriv en besked" @keyup.enter="sendMessage()" />
-      <button @click="sendMessage()">Send</button>
+      <button class="box-shadow" @click="sendMessage()"><span class="material-icons-round"> send </span></button>
     </div>
   </div>
 </template>
@@ -55,10 +55,10 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  margin: 1rem;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.25rem;
+  // margin: 1rem;
+  // padding: 1rem;
+  // background: #fff;
+  // border-radius: 0.25rem;
   .chat-feed {
     height: 100%;
     overflow-y: scroll;
@@ -84,22 +84,28 @@ onBeforeUnmount(() => {
           font-weight: bold;
         }
         .message-content-text {
-          background-color: #ccc;
+          background-color: $white;
           padding: 0.5rem;
-          border-radius: 0.25rem;
+          border-radius: 10px;
+          width: fit-content;
         }
         .timestamp {
           font-size: 0.75rem;
-          color: #ccc;
+          color: $primary;
         }
       }
     }
     .chat-message-self {
       flex-direction: row-reverse;
+
+      img {
+        margin-left: 0.5rem;
+        margin-right: 0;
+      }
       .chat-message-content {
         align-items: flex-end;
         .message-content-text {
-          background-color: #eee;
+          background-color: $bottom-wave;
         }
       }
     }
@@ -107,18 +113,45 @@ onBeforeUnmount(() => {
   .chat-input {
     display: flex;
     justify-content: space-between;
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.25rem;
-    }
+    gap: 0.5rem;
+    // input {
+    //   width: 100%;
+    //   padding: 0.5rem;
+    //   border: 1px solid #ccc;
+    //   border-radius: 0.25rem;
+    // }
     button {
       padding: 0.5rem;
-      border: 1px solid #ccc;
+      border: none;
       border-radius: 0.25rem;
-      background-color: #ccc;
+      background-color: $secondary;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        color: $primary;
+        font-size: 2rem;
+      }
     }
   }
+}
+
+input,
+textarea {
+  width: 100%;
+  min-height: 2.5em;
+  border: none;
+  border-bottom: 2px solid gray;
+  border-radius: 4px;
+  background-color: rgba(white, 0.5);
+  box-shadow: 0 2px 4px $box-shadow;
+}
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-bottom: 2px solid $secondary;
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba($secondary-active, 0.8);
 }
 </style>
