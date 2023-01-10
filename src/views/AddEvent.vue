@@ -3,6 +3,7 @@ import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
 import { useEventsStore } from "../stores/events.js";
 import DescriptionChips from "../components/DescriptionChips.vue";
+import GoBackBtn from "../components/GoBackBtn.vue";
 
 const eventStore = useEventsStore();
 
@@ -55,6 +56,7 @@ function test() {
 }
 </script>
 <template>
+  <GoBackBtn />
   <div class="add-cover">
     <span class="material-icons-round"> add </span>
     <p>Tilføj coverbillede/tema</p>
