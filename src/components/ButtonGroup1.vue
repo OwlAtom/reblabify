@@ -64,10 +64,9 @@ const activeTab = ref(0);
             <EventLocation :event-location="event.location" />
             <RoundButtons page="event-page" />
           </div>
-          <HorizontalDivider type="dashed" />
           <div>
             <h3>Vært(er)</h3>
-            <UserByline :user="host" />
+            <UserByline :user="event.host" />
             <EventDescription :description="event.description" />
             <h3>Tilkendegivelser</h3>
 
