@@ -81,7 +81,7 @@ const activeTab = ref(0);
               <input ref="inviteFriendInput" placeholder="Invite some friends" />
               <button @click="inviteFriend">Invite</button>
             </div> -->
-            <ButtonGroup3 />
+            <ButtonGroup3 :event="event" />
             <!-- </div> -->
           </div>
         </TabPanel>
@@ -116,7 +116,6 @@ const activeTab = ref(0);
   padding-bottom: 4em;
   backdrop-filter: blur(10px);
   position: relative;
-  z-index: 10;
 
   .add-icon-circle {
     width: 7em;
