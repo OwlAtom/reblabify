@@ -56,8 +56,18 @@ const activeTab = ref(0);
         </div>
       </div>
 
-      <TabView v-model:activeIndex="activeTab">
-        <TabPanel>
+    <TabView v-model:activeIndex="activeTab">
+      <TabPanel>
+        <p>Begivenheds detaljer komponent her</p>
+        <RoundButtons :event-id="eventID" />
+        <ButtonGroup3 />
+        <div class="event-details">
+          <p>{{ event.title }}</p>
+          <p>{{ event.description }}</p>
+          <p>{{ event.startDate }}</p>
+          <p>{{ event.endDate }}</p>
+          <p>{{ event.time }}</p>
+          <p>{{ event.location }}</p>
           <div>
             <h1>{{ event.title }}</h1>
             <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
