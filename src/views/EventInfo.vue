@@ -3,7 +3,9 @@ import ButtonGroup1 from "../components/ButtonGroup1.vue";
 </script>
 
 <template>
-  <ButtonGroup1 />
+  <div>
+    <ButtonGroup1 />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
