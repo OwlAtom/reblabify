@@ -108,6 +108,10 @@ const activeTab = ref(0);
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  p {
+    margin: 0;
+  }
 }
 .overlay {
   background-color: $overlay;
@@ -117,6 +121,7 @@ const activeTab = ref(0);
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 10;
+  min-height: calc(100vh - 11em);
 
   .add-icon-circle {
     width: 7em;
