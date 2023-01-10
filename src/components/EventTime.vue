@@ -1,4 +1,3 @@
-s
 <script setup>
 defineProps({
   startTime: String,
