@@ -37,9 +37,11 @@ $border-radius8: 8px;
 }
 
 //link styling
-a:link, a:visited, a:active{
+a:link,
+a:visited,
+a:active {
   text-decoration: none;
-  color: $primary; 
+  color: $primary;
 }
 
 // Custom tabview buttons
@@ -52,6 +54,7 @@ a:link, a:visited, a:active{
   padding: 3px;
   gap: 3px;
   box-shadow: 0 2px 4px $box-shadow;
+  margin-bottom: 1em;
 
   .button-group-item {
     padding: 3px;

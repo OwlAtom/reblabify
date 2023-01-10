@@ -4,7 +4,7 @@ import EventDeclarations from "./EventDeclarations.vue";
 import CardHeader from "./CardHeader.vue";
 import EventTime from "./EventTime.vue";
 import EventLocation from "./EventLocation.vue";
-import RoundButtons from "./RoundButtons.vue";
+// import RoundButtons from "./RoundButtons.vue";
 import UserByline from "./UserByline.vue";
 import { useUsersStore } from "../stores/users";
 const usersStore = useUsersStore();
@@ -17,7 +17,6 @@ const props = defineProps({
 event: {
     "invited": [
         "1IWv49gQz6fO3IgIdCbC",
-        "9zlCLnGlIXT23mvgtqtZI80K98I3"
     ],
     "endDate": "2023-01-01",
     "description": "Vi fejrer det nye år med et brag af en fest!",
@@ -25,7 +24,6 @@ event: {
     "location": "København",
     "startDate": "2022-12-31",
     "endTime": "04:00",
-    "host": "HtqmhWclvxdoQX4KUnBc2AEfRNJ3",
     "startTime": "20:00",
     "id": "AagMVmNThhJ9QjmDaD2H"
     todo: icon
@@ -45,11 +43,11 @@ const host = usersStore.getUserById(props.event.host);
         <CardHeader :event-title="event.title" icon="✨" />
         <EventTime :start-time="event.startTime" :end-time="event.endTime" />
         <EventLocation v-if="event.location" :event-location="event.location" />
-        <EventDeclarations declarations="0" :invited-total="event?.invited?.length" />
+        <EventDeclarations :declarations="0" :invited-total="event?.invited?.length" />
       </div>
-      <div class="buttons">
-        <RoundButtons />
-      </div>
+      <!-- <div class="buttons">
+        <RoundButtons :event-id="event.id" />
+      </div> -->
     </div>
   </router-link>
 </template>
