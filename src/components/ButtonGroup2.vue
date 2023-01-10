@@ -2,11 +2,13 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useEventsStore } from "../stores/events";
+import { useUsersStore } from "../stores/users";
 import EventCard from "../components/EventCard.vue";
 
 const eventsStore = useEventsStore();
 
 let events = [...eventsStore.events];
+const user = useUsersStore().users.self;
 
 let activetab = ref(0);
 const route = useRoute();
@@ -35,7 +37,7 @@ if (route.path == "/all-events/mine") {
         <p>Liste over event, filtreret på dato og ejerskab (kommende)</p>
         <div v-for="event in events" :key="event.id" class="my-events-container">
           <div class="event-details">
-            <EventCard :event="event" />
+            <EventCard v-if="event.host !== user.uid" :event="event" />
           </div>
         </div>
       </TabPanel>
@@ -44,6 +46,11 @@ if (route.path == "/all-events/mine") {
       </TabPanel>
       <TabPanel>
         <p>Liste over event, filtreret på dato og ejerskab (mine)</p>
+        <div v-for="event in events" :key="event.id" class="my-events-container">
+          <div class="event-details">
+            <EventCard v-if="event.host === user.uid" :event="event" />
+          </div>
+        </div>
       </TabPanel>
     </TabView>
   </div>
