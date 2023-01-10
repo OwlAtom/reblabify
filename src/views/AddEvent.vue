@@ -3,7 +3,7 @@ import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
 import { useEventsStore } from "../stores/events.js";
 import DescriptionChips from "../components/DescriptionChips.vue";
-import GoBackBtn from "../components/GoBackBtn.vue";
+import BackButton from "../components/BackButton.vue";
 
 const eventStore = useEventsStore();
 
@@ -49,14 +49,9 @@ function validateFormData(formData) {
     throw errors;
   }
 }
-function test() {
-  eventStore.getEventsByUserId("HtqmhWclvxdoQX4KUnBc2AEfRNJ3").then(() => {
-    console.log(eventStore.returnFutureEvents());
-  });
-}
 </script>
 <template>
-  <GoBackBtn />
+  <BackButton />
   <div class="add-cover">
     <span class="material-icons-round"> add </span>
     <p>Tilføj coverbillede/tema</p>
