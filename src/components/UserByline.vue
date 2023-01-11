@@ -20,10 +20,6 @@ if (props.user) {
 } else {
   renderedUser.value = usersStore.getUserById(props.userId);
 }
-
-if (props.userId) {
-  console.log(usersStore.getUserById(props.userId));
-}
 </script>
 <template>
   <div class="profile">

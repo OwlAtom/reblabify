@@ -7,7 +7,7 @@
 
 <style lang="scss" scoped>
 .tilbage {
-  position: relative;
+  position: absolute;
   top: 20px;
   left: 10px;
 }

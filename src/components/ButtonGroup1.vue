@@ -56,52 +56,27 @@ const activeTab = ref(0);
         </div>
       </div>
 
-    <TabView v-model:activeIndex="activeTab">
-      <TabPanel>
-        <p>Begivenheds detaljer komponent her</p>
-        <RoundButtons :event-id="eventID" />
-        <ButtonGroup3 />
-        <div class="event-details">
-          <p>{{ event.title }}</p>
-          <p>{{ event.description }}</p>
-          <p>{{ event.startDate }}</p>
-          <p>{{ event.endDate }}</p>
-          <p>{{ event.time }}</p>
-          <p>{{ event.location }}</p>
-          <ButtonGroup3 />
-          <div>
-            <h1>{{ event.title }}</h1>
-            <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
-            <EventLocation :event-location="event.location" />
-            <RoundButtons page="event-page" />
-          </div>
-<<<<<<< HEAD
-        </div>
-      </TabPanel>
-      <TabPanel>
-        <eventChat />
-      </TabPanel>
-    </TabView>
-=======
-          <div>
-            <h3>Vært(er)</h3>
-            <UserByline :user="event.host" />
-            <EventDescription :description="event.description" />
-            <h3>Tilkendegivelser</h3>
-
-            <!-- <div class="event-details">
-            <p>{{ event.title }}</p>
-            <p>{{ event.description }}</p>
-            <p>{{ event.date }}</p>
-            <p>{{ event.time }}</p>
-            <p>{{ event.location }}</p>
-            <h1>hej</h1>
+      <TabView v-model:activeIndex="activeTab">
+        <TabPanel>
+          <div class="event-details">
             <div>
-              <input ref="inviteFriendInput" placeholder="Invite some friends" />
-              <button @click="inviteFriend">Invite</button>
-            </div> -->
-            <ButtonGroup3 :event="event" />
-            <!-- </div> -->
+              <h1>{{ event.title }}</h1>
+              <EventDateTime :date="event.startDate" :start-time="event.startTime" :end-time="event.endTime" />
+              <EventLocation :event-location="event.location" />
+              <RoundButtons :event-id="eventID" />
+            </div>
+            <div>
+              <h3>Vært(er)</h3>
+              <UserByline :user-id="event.host" />
+              <EventDescription :description="event.description" />
+              <h3>Tilkendegivelser</h3>
+
+              <!-- <div>
+                <input ref="inviteFriendInput" placeholder="Invite some friends" />
+                <button @click="inviteFriend">Invite</button>
+              </div> -->
+              <ButtonGroup3 :event="event" />
+            </div>
           </div>
         </TabPanel>
         <TabPanel>
@@ -109,7 +84,6 @@ const activeTab = ref(0);
         </TabPanel>
       </TabView>
     </div>
->>>>>>> development
   </div>
 </template>
 

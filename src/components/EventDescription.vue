@@ -9,7 +9,7 @@ const showMore = ref(false);
 const boxHeight = ref();
 onMounted(() => {
   console.log(boxHeight.value.offsetHeight);
-  if (boxHeight.value.offsetHeight == 24) {
+  if (boxHeight.value.offsetHeight <= 24) {
     console.log(document.querySelector(".fade"));
     document.querySelector(".btnText").style.display = "none";
     document.querySelector(".fadeAfter").style.display = "none";

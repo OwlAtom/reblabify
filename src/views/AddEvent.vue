@@ -4,19 +4,24 @@ import { ref } from "vue";
 import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
 import { useEventsStore } from "../stores/events.js";
+import { useUsersStore } from "../stores/users.js";
 import DescriptionChips from "../components/DescriptionChips.vue";
 import BackButton from "../components/BackButton.vue";
+import UserByline from "../components/UserByline.vue";
+import NormalButton from "../components/NormalButton.vue";
 
 const eventStore = useEventsStore();
+const usersStore = useUsersStore();
 
 const formData = {
-  title: "Nyårsfesten 2022",
-  startDate: "2022-12-31",
-  startTime: "20:00",
-  endDate: "2023-01-01",
-  endTime: "04:00",
-  description: "Vi fejrer det nye år med et brag af en fest!",
-  location: "København",
+  title: "",
+  startDate: new Date().toISOString().split("T")[0],
+  startTime: new Date().toTimeString().split(" ")[0].slice(0, -3),
+  endDate: "",
+  endTime: "",
+  description: "",
+  location: "",
+  invited: [],
 };
 function handleSubmit(e) {
   e.preventDefault();
@@ -45,17 +50,53 @@ function validateFormData(formData) {
   if (!formData.location) {
     errors.location = "Location is required";
   }
+  if (formData.endDate) {
+    // check if endDate is after startDate
+    const startDate = new Date(formData.startDate);
+    const endDate = new Date(formData.endDate);
+    if (endDate < startDate) {
+      errors.endDate = "End date must be after start date";
+    }
+  }
   // we dont need to check the format because inputs
   // throw an error if there are any validation errors
   if (Object.keys(errors).length > 0) {
     throw errors;
   }
 }
-// function test() {
-//   eventStore.getEventsByUserId("HtqmhWclvxdoQX4KUnBc2AEfRNJ3").then(() => {
-//     console.log(eventStore.returnFutureEvents());
-//   });
-// }
+
+const inviteFriendInput = ref(null);
+
+async function inviteFriend(friendId) {
+  let invitee = null;
+
+  if (typeof friendId === "string") {
+    invitee = await usersStore.getUserById(friendId);
+  } else if (inviteFriendInput.value.value !== "") {
+    invitee = await usersStore.getUserByEmail(inviteFriendInput.value.value);
+  }
+
+  // dont invite if no user is found
+  if (invitee === null) {
+    return;
+  }
+
+  // dont invite yourself
+  if (invitee.id === usersStore.users.self.uid) {
+    return;
+  }
+  // dont invite duplicates
+  if (formData.invited.includes(invitee.id)) {
+    return;
+  }
+
+  invitees.value.push(invitee);
+  formData.invited.push(invitee.id);
+  usersStore.addFriend(invitee.id);
+}
+
+const invitees = ref([]);
+const friends = ref(usersStore.users.self.friends);
 
 let showPopup = ref(false);
 </script>
@@ -71,18 +112,9 @@ let showPopup = ref(false);
       <p>Tilføj ikon</p>
     </div>
     <h1>Opret begivenhed</h1>
-    <button @click="test">Test</button>
-    <div v-for="event in eventStore.events" :key="event.id">
-      {{ event.title }}
-      {{ event.startDate }}
-      {{ event.startTime }}
-      {{ event.endDate }}
-      {{ event.endTime }}
-      {{ event.description }}
-    </div>
     <form @submit.prevent="submitForm">
       <label for="title">Begivenhedsnavn</label>
-      <input v-model="formData.title" type="text" placeholder="Titel" name="title" />
+      <input v-model="formData.title" type="text" name="title" />
 
       <div class="set-time">
         <label for="startDate">
@@ -109,12 +141,12 @@ let showPopup = ref(false);
       </div>
 
       <label for="description">Beskrivelse</label>
-      <textarea v-model="formData.description" placeholder="Beskrivelse" name="description" rows="3"></textarea>
+      <textarea v-model="formData.description" name="description" rows="3"></textarea>
 
       <label for="loaction">Lokation</label>
-      <input v-model="formData.location" type="text" placeholder="Lokation" name="location" />
+      <input v-model="formData.location" type="text" name="location" />
       <!-- todo: 'normalButton'? + places i bunden derefter -->
-      <button type="submit" @click="handleSubmit">Opret</button>
+      <!-- <button type="submit" @click="handleSubmit">Opret</button> -->
     </form>
 
     <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
@@ -139,18 +171,25 @@ let showPopup = ref(false);
         <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
       </div>
     </div>
+    <div v-for="invitee in invitees" :key="invitee.id">{{ invitee.displayName }}</div>
+    <NormalButton type="submit" text="Opret begivenhed" @click="handleSubmit" />
   </div>
 
   <div v-if="showPopup" class="invite-popup wrapper overlay">
     <span class="material-icons-round close-btn" @click="showPopup = !showPopup"> highlight_off </span>
     <h1>Tilføj venner</h1>
+
     <form @submit.prevent="submitForm">
       <label for="people">Søg</label>
       <input ref="inviteFriendInput" name="people" />
 
-      <!-- todo: 'normalButton'? + places i bunden derefter -->
-      <button @click="inviteFriend">Opret</button>
+      <NormalButton text="Invitér ven" @click="inviteFriend" />
     </form>
+    <div v-for="invitee in invitees" :key="invitee.id">{{ invitee.displayName }}</div>
+    <h3>Foreslåede</h3>
+    <div v-for="friend in friends" :key="friend">
+      <UserByline :user-id="friend" @click="inviteFriend(friend)" />
+    </div>
   </div>
 </template>
 
