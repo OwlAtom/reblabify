@@ -1,15 +1,34 @@
 <script setup>
-defineProps({
+import { useUsersStore } from "../stores/users";
+import { ref } from "vue";
+
+const usersStore = useUsersStore();
+const props = defineProps({
   user: {
     type: Object,
-    required: true,
+  },
+  userId: {
+    type: String,
   },
 });
+
+const renderedUser = ref(null);
+
+if (props.user) {
+  /* eslint-disable-next-line vue/no-setup-props-destructure */
+  renderedUser.value = props.user;
+} else {
+  renderedUser.value = usersStore.getUserById(props.userId);
+}
+
+if (props.userId) {
+  console.log(usersStore.getUserById(props.userId));
+}
 </script>
 <template>
   <div class="profile">
-    <img :src="user?.photoURL" alt="Billede af begivenhedens vært" />
-    {{ user?.displayName }}
+    <img :src="renderedUser?.photoURL" :alt="'billede af ' + renderedUser.displayName" />
+    {{ renderedUser?.displayName }}
   </div>
 </template>
 
