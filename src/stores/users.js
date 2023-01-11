@@ -125,6 +125,17 @@ export const useUsersStore = defineStore(
         }
       });
     }
+    function addFriend(friendId) {
+      if (users.value.self.friends === undefined) {
+        users.value.self.friends = [];
+      }
+      // check if friend is alredy added
+      if (users.value.self.friends.includes(friendId)) {
+        return;
+      }
+      // add the friend to the users friends array
+      users.value.self.friends.push(friendId);
+    }
 
     return {
       users,
@@ -136,6 +147,7 @@ export const useUsersStore = defineStore(
       getUserByEmail,
       search,
       createUser,
+      addFriend,
     };
   },
   {

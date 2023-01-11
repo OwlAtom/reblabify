@@ -2,6 +2,7 @@
 import Button from "primevue/button"; // Import the PrimeVue buttons.
 import "primeflex/primeflex.css"; // Import the PrimeVue layout utility library.
 import EventDeclarations from "../components/EventDeclarations.vue";
+import CardHeader from "../components/CardHeader.vue";
 
 import EventDateLabel from "../components/EventDateLabel.vue";
 defineProps({

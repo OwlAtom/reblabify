@@ -3,10 +3,9 @@ import { ref } from "vue";
 import UserByline from "./UserByline.vue";
 
 const activetab = ref(0);
-const props = defineProps({
+defineProps({
   event: { type: Object, required: true },
 });
-console.log(props.event.accepted);
 </script>
 
 <template>
