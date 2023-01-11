@@ -1,4 +1,15 @@
-import { getFirestore, collection, addDoc, query, where, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { compressToUTF16, decompressFromUTF16 } from "lz-string";
 import { useUsersStore } from "./users";
 import { defineStore } from "pinia";
@@ -27,6 +38,23 @@ export const useEventsStore = defineStore(
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
+        });
+    }
+
+    function deleteEvent(event) {
+      console.log(event);
+
+      // remove from pinia
+      this.events = this.events.filter((x) => x.id !== event);
+      console.log("Removed from events!");
+      // remove from firestore
+      const docRef = doc(db, "events", event);
+      deleteDoc(docRef)
+        .then(() => {
+          console.log("Event has been deleted");
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
         });
     }
 
@@ -250,6 +278,7 @@ export const useEventsStore = defineStore(
     return {
       events,
       addEvent,
+      deleteEvent,
       getEventsByUserId,
       getEventById,
       returnFutureEvents,

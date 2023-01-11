@@ -40,6 +40,8 @@ import Toast from "primevue/toast";
 import TabView from "primevue/tabview"; // brugt i ButtonGroup
 import TabPanel from "primevue/tabpanel"; // brugt i ButtonGroup
 import RadioButton from "primevue/radiobutton";
+import ConfirmationService from "primevue/confirmationservice";
+import ConfirmDialog from "primevue/confirmdialog";
 // import Badge from "primevue/badge";
 
 //importing stylesheets
@@ -59,14 +61,16 @@ app.use(pinia);
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(router);
+app.use(ConfirmationService);
 
 //defining PrimeVue components
 app.component("DefaultButton", Button);
 app.component(InputText);
-app.component(Toast);
+app.component("ToastMsg", Toast);
 app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("RadioButton", RadioButton);
 // app.component("TabViewBadge", Badge);
+app.component("ConfirmDialog", ConfirmDialog);
 
 app.mount("#app");

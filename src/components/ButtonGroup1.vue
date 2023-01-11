@@ -9,6 +9,8 @@ import EventLocation from "./EventLocation.vue";
 import UserByline from "./UserByline.vue";
 import EventDateTime from "./EventDateTime.vue";
 import EventDescription from "./EventDescription.vue";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
@@ -21,6 +23,40 @@ onBeforeMount(() => {
     // todo, fix at view ikke opdateres når event er loaded
   });
 });
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const confirm1 = (event) => {
+  confirm.require({
+    message: "Er du sikker på du vil slette begivenheden?",
+    header: "Slet begivenhed",
+    icon: "pi pi-exclamation-triangle",
+    acceptLabel: "Slet",
+    rejectLabel: "Fortryd",
+    accept: () => {
+      history.back();
+      eventsStore.deleteEvent(event);
+      toast.add({ severity: "success", summary: "Slettet", detail: "Begivenheden blev slettet", life: 4000 });
+    },
+    reject: () => {
+      toast.add({
+        severity: "info",
+        summary: "Sletning annuleret",
+        detail: "Du har annuleret sletning af begivenheden",
+        life: 4000,
+      });
+    },
+  });
+};
+
+// funktionen er flyttet ind i confirm1 (gemmes hvis der skal skrives om det)
+// function deleteEvent(event) {
+//   // todo: 'are you sure' box
+//   history.back();
+//   eventsStore.deleteEvent(event);
+// }
+
 const activeTab = ref(0);
 // const inviteFriendInput = ref(null);
 
@@ -39,6 +75,13 @@ const activeTab = ref(0);
 </script>
 
 <template>
+  <!-- todo: v-if på host id -->
+  <div>
+    <DefaultButton icon="pi pi-trash" class="mr-2 iconBtn" @click="confirm1(event.id)"></DefaultButton>
+    <ToastMsg position="bottom-center" />
+    <ConfirmDialog class="confirmationBox"></ConfirmDialog>
+  </div>
+
   <div class="add-cover">
     <p>Skal laves om til coverbilledet</p>
   </div>
@@ -92,6 +135,15 @@ const activeTab = ref(0);
   .button-group-item {
     width: 50%;
   }
+}
+.iconBtn {
+  background: $notification;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+.p-button:enabled:hover {
+  background: $notification;
 }
 
 // tabview styles i _theme.scss
