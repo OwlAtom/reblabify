@@ -3,6 +3,8 @@ import { ref, onBeforeMount } from "vue";
 import ButtonGroup3 from "./ButtonGroup3.vue";
 import RoundButtons from "./RoundButtons.vue";
 import { useEventsStore } from "../stores/events";
+import { useUsersStore } from "../stores/users";
+
 import { useRouter } from "vue-router";
 import eventChat from "./eventChat.vue";
 import EventLocation from "./EventLocation.vue";
@@ -14,6 +16,8 @@ import { useToast } from "primevue/usetoast";
 
 const router = useRouter();
 const eventsStore = useEventsStore();
+
+const user = useUsersStore().users.self;
 
 const eventID = router.currentRoute.value.params.id;
 let event = eventsStore.findEventById(eventID);
@@ -52,7 +56,6 @@ const confirm1 = (event) => {
 
 // funktionen er flyttet ind i confirm1 (gemmes hvis der skal skrives om det)
 // function deleteEvent(event) {
-//   // todo: 'are you sure' box
 //   history.back();
 //   eventsStore.deleteEvent(event);
 // }
@@ -76,7 +79,7 @@ const activeTab = ref(0);
 
 <template>
   <!-- todo: v-if på host id -->
-  <div>
+  <div v-if="event.host === user.uid">
     <DefaultButton icon="pi pi-trash" class="mr-2 iconBtn" @click="confirm1(event.id)"></DefaultButton>
     <ToastMsg position="bottom-center" />
     <ConfirmDialog class="confirmationBox"></ConfirmDialog>
