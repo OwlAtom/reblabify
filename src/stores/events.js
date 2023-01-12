@@ -42,16 +42,13 @@ export const useEventsStore = defineStore(
     }
 
     function deleteEvent(event) {
-      console.log(event);
-
       // remove from pinia
       this.events = this.events.filter((x) => x.id !== event);
-      console.log("Removed from events!");
       // remove from firestore
       const docRef = doc(db, "events", event);
       deleteDoc(docRef)
         .then(() => {
-          console.log("Event has been deleted");
+          console.log("Event " + event + " has been deleted");
         })
         .catch((error) => {
           console.error("Error removing document: ", error);
