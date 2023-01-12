@@ -14,6 +14,7 @@ import { compressToUTF16, decompressFromUTF16 } from "lz-string";
 import { useUsersStore } from "./users";
 import { defineStore } from "pinia";
 import { ref, toRaw } from "vue";
+import router from "../router/index";
 
 const db = getFirestore();
 const eventsCollection = collection(db, "events");
@@ -35,6 +36,7 @@ export const useEventsStore = defineStore(
         .then((docRef) => {
           console.log("Document written with ID: ", docRef.id);
           getEventById(docRef.id);
+          router.push({ path: `/event-info/${docRef.id}` });
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
