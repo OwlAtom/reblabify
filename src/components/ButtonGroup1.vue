@@ -39,7 +39,7 @@ const confirm1 = (event) => {
     acceptLabel: "Slet",
     rejectLabel: "Fortryd",
     accept: () => {
-      history.back();
+      router.push({ name: "Home" });
       eventsStore.deleteEvent(event);
       toast.add({ severity: "success", summary: "Slettet", detail: "Begivenheden blev slettet", life: 4000 });
     },
