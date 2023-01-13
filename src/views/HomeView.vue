@@ -3,17 +3,19 @@ import FrontpageHeader from "../components/FrontpageHeader.vue";
 import { useEventsStore } from "../stores/events";
 import { useUsersStore } from "../stores/users";
 
-import { onBeforeMount } from "vue";
+import { ref, onBeforeMount } from "vue";
 import EventCard from "../components/EventCard.vue";
 const eventsStore = useEventsStore();
 
-let events = [...eventsStore.events];
+const events = ref(eventsStore.events);
 onBeforeMount(() => {
   eventsStore.getUsersOwnEvents();
-});
-function fetchEvents() {
   eventsStore.getInvitedEvents();
-}
+  events.value = eventsStore.events;
+});
+// function fetchEvents() {
+//   eventsStore.getInvitedEvents();
+// }
 
 const user = useUsersStore().users.self;
 </script>
@@ -49,7 +51,6 @@ const user = useUsersStore().users.self;
         </router-link>
       </div>
     </div>
-    <button @click="fetchEvents">Fetch events that im invited to</button>
 
     <div v-for="event in events" :key="event.id" class="my-events-container">
       <div class="event-details">

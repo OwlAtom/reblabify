@@ -184,6 +184,7 @@ export const useEventsStore = defineStore(
       if (!userId) return;
       // get list of events that the user is invited to
       const invitedQuery = query(eventsCollection, where("invited", "array-contains", userId));
+      // todo: query the accepted, declined, and maybe arrays
       getDocs(invitedQuery).then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           addEventToArray({ ...doc.data(), id: doc.id });

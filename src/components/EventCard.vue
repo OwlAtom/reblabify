@@ -7,30 +7,22 @@ import EventLocation from "./EventLocation.vue";
 // import RoundButtons from "./RoundButtons.vue";
 import UserByline from "./UserByline.vue";
 import { useUsersStore } from "../stores/users";
+import { onBeforeMount, ref } from "vue";
+
 const usersStore = useUsersStore();
 
 const props = defineProps({
   event: { type: Object, required: true },
 });
 
-/*
-event: {
-    "invited": [
-        "1IWv49gQz6fO3IgIdCbC",
-    ],
-    "endDate": "2023-01-01",
-    "description": "Vi fejrer det nye år med et brag af en fest!",
-    "title": "Nyårsfesten 2023",
-    "location": "København",
-    "startDate": "2022-12-31",
-    "endTime": "04:00",
-    "startTime": "20:00",
-    "id": "AagMVmNThhJ9QjmDaD2H"
-    todo: icon
-    todo: invited, accepted, declined, maybe
-}
-*/
-const host = usersStore.getUserById(props.event.host);
+const host = ref(null);
+const renderByline = ref(false);
+onBeforeMount(async () => {
+  host.value = await usersStore.getUserById(props.event.host).catch((error) => {
+    console.error(error);
+  });
+  renderByline.value = true;
+});
 </script>
 
 <template>
@@ -39,7 +31,7 @@ const host = usersStore.getUserById(props.event.host);
       <EventDateLabel :date="event.startDate" />
 
       <div class="content">
-        <UserByline :user="host" />
+        <UserByline v-if="renderByline" :user="host" />
         <CardHeader :event-title="event.title" icon="✨" />
         <EventTime :start-time="event.startTime" :end-time="event.endTime" />
         <EventLocation v-if="event.location" :event-location="event.location" />

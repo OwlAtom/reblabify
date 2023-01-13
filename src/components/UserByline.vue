@@ -1,6 +1,6 @@
 <script setup>
 import { useUsersStore } from "../stores/users";
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 
 const usersStore = useUsersStore();
 const props = defineProps({
@@ -12,18 +12,22 @@ const props = defineProps({
   },
 });
 
-const renderedUser = ref(null);
+const renderedUser = ref({ photoURL: "", displayName: "" });
 
-if (props.user) {
-  /* eslint-disable-next-line vue/no-setup-props-destructure */
-  renderedUser.value = props.user;
-} else {
-  renderedUser.value = usersStore.getUserById(props.userId);
-}
+onBeforeMount(async () => {
+  if (props.user) {
+    /* eslint-disable-next-line vue/no-setup-props-destructure */
+    renderedUser.value = props.user;
+  } else if (props.userId) {
+    renderedUser.value = await usersStore.getUserById(props.userId).catch((error) => {
+      console.error(error);
+    });
+  }
+});
 </script>
 <template>
   <div class="profile">
-    <img :src="renderedUser?.photoURL" :alt="'billede af ' + renderedUser.displayName" />
+    <img :src="renderedUser?.photoURL" :alt="'billede af ' + renderedUser?.displayName" />
     {{ renderedUser?.displayName }}
   </div>
 </template>
