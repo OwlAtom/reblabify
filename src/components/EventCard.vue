@@ -32,7 +32,7 @@ onBeforeMount(async () => {
 
       <div class="content">
         <UserByline v-if="renderByline" :user="host" />
-        <CardHeader :event-title="event.title" icon="✨" />
+        <CardHeader :event-title="event.title" :icon="event.icon" />
         <EventTime :start-time="event.startTime" :end-time="event.endTime" />
         <EventLocation v-if="event.location" :event-location="event.location" />
         <EventDeclarations :declarations="0" :invited-total="event?.invited?.length" />

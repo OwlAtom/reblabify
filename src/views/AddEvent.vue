@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from "vue";
 
+// import picker compopnent
+import EmojiPicker from "vue3-emoji-picker";
+// import css
+import "vue3-emoji-picker/css";
+
 import InviteIllustration from "../assets/illustrations/invite.svg";
 import friendsIllustration from "../assets/illustrations/friendship.svg";
 import { useEventsStore } from "../stores/events.js";
@@ -15,6 +20,7 @@ const usersStore = useUsersStore();
 
 const formData = {
   title: "",
+  icon: "",
   startDate: new Date().toISOString().split("T")[0],
   startTime: new Date().toTimeString().split(" ")[0].slice(0, -3),
   endDate: "",
@@ -99,20 +105,42 @@ const invitees = ref([]);
 const friends = ref(usersStore.users.self.friends);
 
 let showPopup = ref(false);
+
+let showDialog = ref(false);
+function toogleDialogEmoji() {
+  showDialog.value = !showDialog.value;
+}
+
+const emoji = ref(null);
+
+function showEmoji(newEmoji) {
+  formData.icon = newEmoji.i;
+  emoji.value = newEmoji.i;
+
+  showDialog.value = !showDialog.value;
+}
 </script>
 <template>
   <BackButton />
-  <div class="add-cover">
-    <span class="material-icons-round"> add </span>
-    <p>Tilføj coverbillede/tema</p>
-  </div>
-  <div v-if="!showPopup" class="wrapper overlay">
-    <div class="add-icon-circle">
+  <form @submit.prevent="submitForm">
+    <div class="add-cover">
       <span class="material-icons-round"> add </span>
-      <p>Tilføj ikon</p>
+      <p>Tilføj coverbillede/tema</p>
     </div>
-    <h1>Opret begivenhed</h1>
-    <form @submit.prevent="submitForm">
+    <div v-if="!showPopup" class="wrapper overlay">
+      <div class="add-icon-circle" @click="toogleDialogEmoji">
+        <template v-if="!emoji">
+          <span class="material-icons-round"> add </span>
+          <p>Tilføj ikon</p>
+        </template>
+        <template v-else>
+          <span class="setIcon"> {{ emoji }} </span>
+        </template>
+      </div>
+      <EmojiPicker v-show="showDialog" :native="true" @select="showEmoji" />
+
+      <h1>Opret begivenhed</h1>
+
       <label for="title">Begivenhedsnavn</label>
       <input v-model="formData.title" type="text" name="title" />
 
@@ -147,34 +175,33 @@ let showPopup = ref(false);
       <input v-model="formData.location" type="text" name="location" />
       <!-- todo: 'normalButton'? + places i bunden derefter -->
       <!-- <button type="submit" @click="handleSubmit">Opret</button> -->
-    </form>
 
-    <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
-    <div class="flex flex-wrap gap-2">
-      <DescriptionChips text="Lokation" emoji="📍" class="added-chip" />
-      <DescriptionChips text="Dresscode" emoji="👔" />
-      <DescriptionChips text="Medorganisator" emoji="🤝" />
-      <DescriptionChips text="Privathed" emoji="🔒" />
-      <DescriptionChips text="Svar senest" emoji="🚩" />
-    </div>
-
-    <div class="invite-cards">
-      <div class="invite-card" @click="showPopup = !showPopup">
-        <h3>Invitér venner</h3>
-        <InviteIllustration />
-        <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
+      <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
+      <div class="flex flex-wrap gap-2">
+        <DescriptionChips text="Lokation" emoji="📍" class="added-chip" />
+        <DescriptionChips text="Dresscode" emoji="👔" />
+        <DescriptionChips text="Medorganisator" emoji="🤝" />
+        <DescriptionChips text="Privathed" emoji="🔒" />
+        <DescriptionChips text="Svar senest" emoji="🚩" />
       </div>
 
-      <div class="invite-card">
-        <h3>Invitér gruppe</h3>
-        <friendsIllustration />
-        <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
-      </div>
-    </div>
-    <div v-for="invitee in invitees" :key="invitee.id">{{ invitee.displayName }}</div>
-    <NormalButton type="submit" text="Opret begivenhed" @click="handleSubmit" />
-  </div>
+      <div class="invite-cards">
+        <div class="invite-card" @click="showPopup = !showPopup">
+          <h3>Invitér venner</h3>
+          <InviteIllustration />
+          <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
+        </div>
 
+        <div class="invite-card">
+          <h3>Invitér gruppe</h3>
+          <friendsIllustration />
+          <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->
+        </div>
+      </div>
+      <div v-for="invitee in invitees" :key="invitee.id">{{ invitee.displayName }}</div>
+      <NormalButton type="submit" text="Opret begivenhed" @click="handleSubmit" />
+    </div>
+  </form>
   <div v-if="showPopup" class="invite-popup wrapper overlay">
     <span class="material-icons-round close-btn" @click="showPopup = !showPopup"> highlight_off </span>
     <h1>Tilføj venner</h1>
@@ -303,5 +330,16 @@ textarea:focus-visible {
     right: 0;
     margin: 1.25rem;
   }
+}
+
+.v3-emoji-picker {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 5em;
+}
+
+.setIcon {
+  font-size: 4em;
 }
 </style>
