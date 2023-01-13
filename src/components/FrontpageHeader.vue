@@ -31,7 +31,7 @@ let greeting =
             <NotificationBell :class="[displayModal == true ? 'active' : '']" />
           </div>
           <router-link :to="{ name: '' }" class="icon-wrapper">
-            <span class="material-icons-round"> logout </span>
+            <span class="material-icons-round logout-btn"> logout </span>
           </router-link>
         </div>
       </div>
@@ -73,6 +73,11 @@ h1 {
   .frontpage-heading {
     background-color: $tertiary;
     padding-top: 3em;
+
+    .logout-btn {
+      color: $secondary-active;
+      font-size: 2rem;
+    }
     .profile-picture {
       height: 40px;
       width: 40px;
