@@ -90,7 +90,7 @@ const activeTab = ref(0);
   </div>
   <div class="wrapper overlay">
     <div class="add-icon-circle">
-      <span class="icon">✨</span>
+      <span class="icon">{{ event.icon }}</span>
     </div>
     <div class="tabview-custom">
       <div class="button-group">
