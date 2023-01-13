@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 import HeaderWave from "../assets/headerWave.svg";
-import UserIcon from "../assets/icons/User.svg";
+// import UserIcon from "../assets/icons/User.svg";
 import NotificationBell from "../assets/icons/NotificationBell.svg";
 import Dialog from "primevue/dialog";
 import { useUsersStore } from "../stores/users";
@@ -31,7 +31,7 @@ let greeting =
             <NotificationBell :class="[displayModal == true ? 'active' : '']" />
           </div>
           <router-link :to="{ name: '' }" class="icon-wrapper">
-            <UserIcon />
+            <span class="material-icons-round"> logout </span>
           </router-link>
         </div>
       </div>

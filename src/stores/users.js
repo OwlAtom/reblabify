@@ -1,6 +1,6 @@
 import { getFirestore, collection, query, where, getDocs, getDoc, setDoc, doc } from "firebase/firestore";
 import { compressToUTF16, decompressFromUTF16 } from "lz-string";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -143,6 +143,18 @@ export const useUsersStore = defineStore(
       users.value.self.friends.push(friendId);
     }
 
+    function logOut() {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error(error);
+        });
+    }
+
     return {
       users,
       setUser,
@@ -154,6 +166,7 @@ export const useUsersStore = defineStore(
       search,
       createUser,
       addFriend,
+      logOut,
     };
   },
   {

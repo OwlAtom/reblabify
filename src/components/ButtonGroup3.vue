@@ -13,7 +13,7 @@ defineProps({
     <div class="button-group">
       <div class="button-group-item" :class="[activetab === 0 ? 'active' : '']" @click="activetab = 0">
         <p class="p-smallest">Kommer</p>
-        <!-- <div>{{ event?.accepted?.length }}</div> -->
+
         <div class="declaration-badge p-smallest">{{ event?.accepted?.length || 0 }}</div>
       </div>
       <div class="button-group-item" :class="[activetab === 1 ? 'active' : '']" @click="activetab = 1">
