@@ -7,7 +7,9 @@ import ButtonGroup2 from "../components/ButtonGroup2.vue";
 <template>
   <DefaultHeader />
   <!-- <BackButton /> -->
-  <ButtonGroup2 />
+  <div class="wrapper">
+    <ButtonGroup2 />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
