@@ -53,32 +53,38 @@ export const useUsersStore = defineStore(
       });
     }
     function getUserById(userId) {
-      // check if the user is in the users.others object, if it is, return the user
-      if (users.value.others.some((user) => user.id === userId)) {
-        return users.value.others.find((user) => user.id === userId);
-      }
-      // if the userID is self, return the users own object
-      if (userId === users.value.self.uid) {
-        return users.value.self;
-      }
+      // race conditions?
+      return new Promise((resolve, reject) => {
+        if (userId === undefined) {
+          reject("userId is undefined");
+        }
+        // check if the user is in the users.others object, if it is, return the user
+        if (users.value.others.some((user) => user.id === userId)) {
+          resolve(users.value.others.find((user) => user.id === userId));
+        }
+        // if the userID is self, return the users own object
+        if (userId === users.value.self.uid) {
+          resolve(users.value.self);
+        }
 
-      console.log("fetching user from firestore");
-      const docRef = doc(db, "users", userId);
-      getDoc(docRef)
-        .then((doc) => {
-          if (doc.exists()) {
-            // add the user to the users.others object
-            users.value.others.push({ ...doc.data(), id: doc.id });
-            // return the user
-            return { ...doc.data(), id: doc.id };
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        })
-        .catch((error) => {
-          console.log("Error getting document:", error);
-        });
+        console.log("fetching user " + userId + " from firestore");
+        const docRef = doc(db, "users", userId);
+        getDoc(docRef)
+          .then((doc) => {
+            if (doc.exists()) {
+              // add the user to the users.others object
+              users.value.others.push({ ...doc.data(), id: doc.id });
+              // return the user
+              resolve({ ...doc.data(), id: doc.id });
+            } else {
+              // doc.data() will be undefined in this case
+              reject("No such document!");
+            }
+          })
+          .catch((error) => {
+            reject("Error getting document:", error);
+          });
+      });
     }
     async function getUserByEmail(email) {
       // check if the email is in the users.others object, if it is, return the user

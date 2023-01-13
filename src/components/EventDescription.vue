@@ -7,10 +7,11 @@ const defineProps = defineProps({
 const showMore = ref(false);
 
 const boxHeight = ref();
+const bool = ref(true);
+
 onMounted(() => {
   if (boxHeight.value.offsetHeight <= 24) {
-    document.querySelector(".btnText").style.display = "none";
-    document.querySelector(".fadeAfter").style.display = "none";
+    bool.value = false;
   }
 });
 </script>
@@ -21,9 +22,9 @@ onMounted(() => {
     <div class="flex flex-column align-items-center">
       <div ref="boxHeight" class="description">
         <p :class="{ fade: !showMore }">{{ description }}</p>
-        <div :class="{ fadeAfter: !showMore }"></div>
+        <div v-show="bool" :class="{ fadeAfter: !showMore }"></div>
       </div>
-      <span :class="{ btnTextMore: showMore }" class="btnText" @click="showMore = !showMore"></span>
+      <span v-show="bool" :class="{ btnTextMore: showMore }" class="btnText" @click="showMore = !showMore"></span>
     </div>
   </div>
 </template>
