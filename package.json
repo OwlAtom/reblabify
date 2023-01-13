@@ -39,6 +39,7 @@
     "vite": "^3.2.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-svg-loader": "^3.6.0",
+    "vite-plugin-pwa": "^0.14.1",
     "vitest": "^0.25.8",
     "vue-eslint-parser": "^9.1.0"
   }
