@@ -70,13 +70,14 @@ import "material-icons/iconfont/material-icons.css"; // Material icons
 
 const app = createApp(App);
 
+app.use(router);
+
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
-app.use(router);
 app.use(ConfirmationService);
 
 //defining PrimeVue components

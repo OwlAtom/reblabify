@@ -64,7 +64,7 @@ export const useEventsStore = defineStore(
       try {
         const querySnapshot = await getDocs(hostQuery);
         querySnapshot.forEach((doc) => {
-          addEventToArray({ ...doc.data(), id: doc.id });
+          addEventToArray(addAttendanceArrays({ ...doc.data(), id: doc.id }));
         });
       } catch (error) {
         console.log(error);
@@ -90,7 +90,7 @@ export const useEventsStore = defineStore(
         getDoc(docRef)
           .then((doc) => {
             if (doc.exists()) {
-              event = { ...doc.data(), id: doc.id };
+              event = addAttendanceArrays({ ...doc.data(), id: doc.id });
               events.value.push(event);
               resolve(event);
             } else {
@@ -102,6 +102,21 @@ export const useEventsStore = defineStore(
             reject(error);
           });
       });
+    }
+    function addAttendanceArrays(event) {
+      if (!event.invited) {
+        event.invited = [];
+      }
+      if (!event.accepted) {
+        event.accepted = [];
+      }
+      if (!event.maybe) {
+        event.maybe = [];
+      }
+      if (!event.declined) {
+        event.declined = [];
+      }
+      return event;
     }
 
     function inviteFriendToEvent(eventId, friendId) {
@@ -187,7 +202,7 @@ export const useEventsStore = defineStore(
       // todo: query the accepted, declined, and maybe arrays
       getDocs(invitedQuery).then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          addEventToArray({ ...doc.data(), id: doc.id });
+          addEventToArray(addAttendanceArrays({ ...doc.data(), id: doc.id }));
         });
       });
 
@@ -292,6 +307,7 @@ export const useEventsStore = defineStore(
       declineEvent,
       changeAttendanceStatus,
       getAttendanceStatus,
+      updateEventInDatabase,
     };
   },
   {

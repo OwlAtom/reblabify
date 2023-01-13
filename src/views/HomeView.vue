@@ -58,8 +58,8 @@ const user = useUsersStore().users.self;
       </div>
     </div>
 
-    <h2>Grupper</h2>
-    <div class="groups-display-container"></div>
+    <!-- <h2>Grupper</h2>
+    <div class="groups-display-container"></div> -->
   </section>
 </template>
 

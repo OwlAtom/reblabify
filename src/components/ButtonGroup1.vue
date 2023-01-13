@@ -31,7 +31,7 @@ onBeforeMount(() => {
 const confirm = useConfirm();
 const toast = useToast();
 
-const confirm1 = (event) => {
+const confirmDelete = (event) => {
   confirm.require({
     message: "Er du sikker på du vil slette begivenheden?",
     header: "Slet begivenhed",
@@ -75,12 +75,16 @@ const activeTab = ref(0);
 //   // If we've gotten this far, we have a valid email, so invite the friend
 //   eventsStore.inviteFriendByEmail(eventID, friendEmail);
 // }
+function editEvent() {
+  router.push({ name: "EditEvent", params: { id: eventID } });
+}
 </script>
 
 <template>
   <!-- todo: v-if på host id -->
   <div v-if="event.host === user.uid">
-    <DefaultButton icon="pi pi-trash" class="mr-2 iconBtn" @click="confirm1(event.id)"></DefaultButton>
+    <DefaultButton icon="pi pi-pencil" class="mr-2 edit-btn" @click="editEvent"></DefaultButton>
+    <DefaultButton icon="pi pi-trash" class="mr-2 delete-btn" @click="confirmDelete(event.id)"></DefaultButton>
     <ToastMsg position="bottom-center" />
     <ConfirmDialog class="confirmationBox"></ConfirmDialog>
   </div>
@@ -139,14 +143,23 @@ const activeTab = ref(0);
     width: 50%;
   }
 }
-.iconBtn {
+.edit-btn {
+  background: $middle-wave;
+  position: absolute;
+  top: 1.25rem;
+  right: 5.25rem;
+}
+.delete-btn {
   background: $notification;
   position: absolute;
   top: 1.25rem;
   right: 1.25rem;
 }
-.p-button:enabled:hover {
+.p-button.delete-btn:enabled:hover {
   background: $notification;
+}
+.p-button.edit-btn:enabled:hover {
+  background: $middle-wave;
 }
 
 // tabview styles i _theme.scss
