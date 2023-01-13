@@ -137,7 +137,7 @@ function showEmoji(newEmoji) {
           <span class="setIcon"> {{ emoji }} </span>
         </template>
       </div>
-      <EmojiPicker v-show="showDialog" @select="showEmoji" />
+      <EmojiPicker v-show="showDialog" :native="true" @select="showEmoji" />
 
       <h1>Opret begivenhed</h1>
 
