@@ -34,13 +34,15 @@ const user = useUsersStore().users.self;
         </router-link>
       </div>
     </div>
+  </section>
+  <div class="slider-container">
     <div v-for="event in events" :key="event.id" class="my-events-container">
-      <div class="event-details">
-        <EventCard v-if="event.host !== user.uid" :event="event" />
+      <div v-if="event.host !== user.uid" class="event-details">
+        <EventCard :event="event" />
       </div>
     </div>
-    <div class="upcoming-events-container"></div>
-
+  </div>
+  <section class="wrapper">
     <div class="flex justify-content-between align-items-center">
       <h2>Mine begivenheder</h2>
       <div class="see-more-link">
@@ -51,16 +53,18 @@ const user = useUsersStore().users.self;
         </router-link>
       </div>
     </div>
+  </section>
 
+  <div class="slider-container">
     <div v-for="event in events" :key="event.id" class="my-events-container">
-      <div class="event-details">
-        <EventCard v-if="event.host === user.uid" :event="event" />
+      <div v-if="event.host === user.uid" class="event-details">
+        <EventCard :event="event" />
       </div>
     </div>
+  </div>
 
-    <!-- <h2>Grupper</h2>
+  <!-- <h2>Grupper</h2>
     <div class="groups-display-container"></div> -->
-  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -83,5 +87,25 @@ const user = useUsersStore().users.self;
       font-size: 12px;
     }
   }
+}
+
+.slider-container {
+  padding-left: 1.25rem;
+  display: grid;
+  grid-auto-flow: column;
+  scroll-behavior: auto;
+  // gap: 1.2em;
+  overflow-y: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  .event-details {
+    width: 20em;
+    margin-right: 0.5em;
+  }
+}
+.slider-container::-webkit-scrollbar {
+  display: none;
 }
 </style>
