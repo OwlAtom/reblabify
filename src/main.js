@@ -4,8 +4,10 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 
 import { initializeApp } from "firebase/app";
-// import { getPerformance } from "firebase/performance";
-// import { getAnalytics } from "firebase/analytics";
+import { getPerformance } from "firebase/performance";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import { enableIndexedDbPersistence } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,11 +23,25 @@ const firebaseConfig = {
   measurementId: "G-GPNFV4ZWFF",
 };
 // Initialize Firebase
-// eslint-disable-next-line no-unused-vars
 const firebase = initializeApp(firebaseConfig);
-// const perf = getPerformance(firebase); // https://firebase.google.com/docs/perf-mon/get-started-web
-// const analytics = getAnalytics(firebase); // https://firebase.google.com/docs/analytics/get-started?platform=web
-// analytics.app.automaticDataCollectionEnabled = true;
+// eslint-disable-next-line no-unused-vars
+const perf = getPerformance(firebase); // https://firebase.google.com/docs/perf-mon/get-started-web
+const analytics = getAnalytics(firebase); // https://firebase.google.com/docs/analytics/get-started?platform=web
+analytics.app.automaticDataCollectionEnabled = true;
+
+const db = getFirestore();
+
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == "failed-precondition") {
+    // Multiple tabs open, persistence can only be enabled
+    // in one tab at a a time.
+    // ...
+  } else if (err.code == "unimplemented") {
+    // The current browser does not support all of the
+    // features required to enable persistence
+    // ...
+  }
+});
 
 import "normalize.css/normalize.css";
 
