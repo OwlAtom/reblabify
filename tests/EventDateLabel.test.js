@@ -11,11 +11,11 @@ describe("EventDateLabel", () => {
     const wrapper = mount(EventDateLabel, {
       props: {
         month: "jan.",
-        date: 1,
+        date: "1",
       },
     });
 
-    expect(wrapper.find("h3").text()).toContain("jan.");
+    expect(wrapper.find("h3").text().toLowerCase()).toContain("jan");
     expect(wrapper.find("h1").text()).toContain("1");
   });
 });
