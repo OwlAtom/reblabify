@@ -7951,6 +7951,8 @@ h3 {
 
 //* Styling af botton group som ses på begivenhedsside og -oversigt
 .tabview-custom {
+  padding-bottom: 6em;
+
   .p-tabview-nav {
     display: none;
   }
@@ -7985,6 +7987,32 @@ h3 {
     &:last-of-type {
       border-bottom-right-radius: 40px;
       border-bottom-left-radius: 40px;
+    }
+  }
+}
+.confirmationBox {
+  &.p-dialog {
+    margin: 0 1.25rem !important;
+    $modal-color-70: rgba($white, 0.7);
+
+    .p-dialog-footer {
+      background: $modal-color-70;
+      border-bottom-right-radius: 40px;
+      border-bottom-left-radius: 40px;
+      padding: 1.25rem;
+      text-align: center;
+
+      .p-confirm-dialog-accept {
+        background: $secondary;
+      }
+    }
+  }
+}
+
+.p-button {
+  &.p-button-icon-only {
+    span {
+      color: $white;
     }
   }
 }

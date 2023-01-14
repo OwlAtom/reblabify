@@ -1,15 +1,39 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import { useEventsStore } from "../stores/events";
 
-defineProps({
-  page: String,
-});
+const eventsStore = useEventsStore();
+
+const router = useRouter();
+const path = router.currentRoute.value.path;
 
 const picked = ref();
+
+const props = defineProps({
+  eventId: String,
+});
+
+const eventId = props.eventId || router.currentRoute.value.params.id;
+
+onBeforeMount(async () => {
+  // set picked to the current status
+  picked.value = await eventsStore.getAttendanceStatus(eventId);
+
+  // watch to see if picked changes
+  watch(
+    () => picked.value,
+    (newValue) => {
+      console.log("picked changed to", newValue);
+      console.log("eventId", eventId);
+      eventsStore.changeAttendanceStatus(eventId, newValue);
+    }
+  );
+});
 </script>
 
 <template>
-  <div :class="page == 'event-page' ? 'horisontal' : 'vertical'">
+  <div v-if="!path.includes('/home')" :class="path.includes('/event-info/') ? 'horisontal' : 'vertical'">
     <input id="accepted" v-model="picked" type="radio" value="accepted" />
     <label for="accepted" class="accepted-btn">
       <i class="pi pi-check-circle"></i>
@@ -20,8 +44,8 @@ const picked = ref();
       <i class="pi pi-question-circle"></i>
     </label>
 
-    <input id="rejected" v-model="picked" type="radio" value="rejected" />
-    <label for="rejected" class="rejected-btn">
+    <input id="declined" v-model="picked" type="radio" value="declined" />
+    <label for="declined" class="declined-btn">
       <i class="pi pi-times-circle"></i>
     </label>
   </div>
@@ -31,6 +55,7 @@ const picked = ref();
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none; //evt. tjekke for browser kompatibilitet
+  display: none;
 }
 label {
   border-radius: 50%;
@@ -42,7 +67,6 @@ label {
 .pi {
   color: $primary;
 }
-
 .horisontal {
   display: flex;
   justify-content: center;
@@ -59,7 +83,7 @@ label {
 .vertical {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 
   label {
     padding: 10px;
@@ -79,7 +103,7 @@ input[type="radio"]:checked + label {
   &.maybe-btn {
     background-color: $maybe;
   }
-  &.rejected-btn {
+  &.declined-btn {
     background-color: $not-coming;
   }
 }

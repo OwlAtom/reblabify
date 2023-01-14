@@ -36,6 +36,14 @@ $border-radius8: 8px;
   box-shadow: 0 2px 4px $box-shadow;
 }
 
+//link styling
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: $primary;
+}
+
 // Custom tabview buttons
 .button-group {
   width: 100%;
@@ -46,6 +54,7 @@ $border-radius8: 8px;
   padding: 3px;
   gap: 3px;
   box-shadow: 0 2px 4px $box-shadow;
+  margin: 1em 0;
 
   .button-group-item {
     padding: 3px;

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 import HeaderWave from "../assets/headerWave.svg";
-import UserIcon from "../assets/icons/User.svg";
+// import UserIcon from "../assets/icons/User.svg";
 import NotificationBell from "../assets/icons/NotificationBell.svg";
 import Dialog from "primevue/dialog";
 import { useUsersStore } from "../stores/users";
@@ -18,7 +18,7 @@ const openModal = () => {
 
 let timeNow = new Date().getHours();
 let greeting =
-  timeNow >= 5 && timeNow < 12 ? "Godmorgen" : timeNow >= 12 && timeNow < 18 ? "God eftermiddag" : "God aften";
+  timeNow >= 5 && timeNow < 12 ? "Godmorgen" : timeNow >= 12 && timeNow < 18 ? "God eftermiddag" : "Godaften";
 </script>
 
 <template>
@@ -31,7 +31,7 @@ let greeting =
             <NotificationBell :class="[displayModal == true ? 'active' : '']" />
           </div>
           <router-link :to="{ name: '' }" class="icon-wrapper">
-            <UserIcon />
+            <span class="material-icons-round"> logout </span>
           </router-link>
         </div>
       </div>
@@ -64,11 +64,14 @@ let greeting =
 </template>
 
 <style lang="scss" scoped>
+h1 {
+  color: $secondary-active;
+}
 .heading-wrapper {
   margin-bottom: 1em;
 
   .frontpage-heading {
-    background-color: rgb(27, 71, 85);
+    background-color: $tertiary;
     padding-top: 3em;
     .profile-picture {
       height: 40px;
@@ -80,7 +83,7 @@ let greeting =
 
     .user-name-heading {
       margin: 0;
-      color: #f9d6bc;
+      color: $secondary-active;
       font-size: 18px;
     }
   }

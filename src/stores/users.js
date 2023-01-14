@@ -1,6 +1,6 @@
 import { getFirestore, collection, query, where, getDocs, getDoc, setDoc, doc } from "firebase/firestore";
 import { compressToUTF16, decompressFromUTF16 } from "lz-string";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -53,19 +53,38 @@ export const useUsersStore = defineStore(
       });
     }
     function getUserById(userId) {
-      const docRef = doc(db, "users", userId);
-      getDoc(docRef)
-        .then((doc) => {
-          if (doc.exists()) {
-            console.log("Document data:", doc.data());
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        })
-        .catch((error) => {
-          console.log("Error getting document:", error);
-        });
+      // race conditions?
+      return new Promise((resolve, reject) => {
+        if (userId === undefined) {
+          reject("userId is undefined");
+        }
+        // check if the user is in the users.others object, if it is, return the user
+        if (users.value.others.some((user) => user.id === userId)) {
+          resolve(users.value.others.find((user) => user.id === userId));
+        }
+        // if the userID is self, return the users own object
+        if (userId === users.value.self.uid) {
+          resolve(users.value.self);
+        }
+
+        console.log("fetching user " + userId + " from firestore");
+        const docRef = doc(db, "users", userId);
+        getDoc(docRef)
+          .then((doc) => {
+            if (doc.exists()) {
+              // add the user to the users.others object
+              users.value.others.push({ ...doc.data(), id: doc.id });
+              // return the user
+              resolve({ ...doc.data(), id: doc.id });
+            } else {
+              // doc.data() will be undefined in this case
+              reject("No such document!");
+            }
+          })
+          .catch((error) => {
+            reject("Error getting document:", error);
+          });
+      });
     }
     async function getUserByEmail(email) {
       // check if the email is in the users.others object, if it is, return the user
@@ -112,6 +131,29 @@ export const useUsersStore = defineStore(
         }
       });
     }
+    function addFriend(friendId) {
+      if (users.value.self.friends === undefined) {
+        users.value.self.friends = [];
+      }
+      // check if friend is alredy added
+      if (users.value.self.friends.includes(friendId)) {
+        return;
+      }
+      // add the friend to the users friends array
+      users.value.self.friends.push(friendId);
+    }
+
+    function logOut() {
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error(error);
+        });
+    }
 
     return {
       users,
@@ -123,6 +165,8 @@ export const useUsersStore = defineStore(
       getUserByEmail,
       search,
       createUser,
+      addFriend,
+      logOut,
     };
   },
   {

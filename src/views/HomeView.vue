@@ -1,13 +1,23 @@
 <script setup>
 import FrontpageHeader from "../components/FrontpageHeader.vue";
 import { useEventsStore } from "../stores/events";
-import { onBeforeMount } from "vue";
+import { useUsersStore } from "../stores/users";
+
+import { ref, onBeforeMount } from "vue";
+import EventCard from "../components/EventCard.vue";
 const eventsStore = useEventsStore();
 
-let events = [...eventsStore.events];
+const events = ref(eventsStore.events);
 onBeforeMount(() => {
   eventsStore.getUsersOwnEvents();
+  eventsStore.getInvitedEvents();
+  events.value = eventsStore.events;
 });
+// function fetchEvents() {
+//   eventsStore.getInvitedEvents();
+// }
+
+const user = useUsersStore().users.self;
 </script>
 
 <template>
@@ -24,6 +34,11 @@ onBeforeMount(() => {
         </router-link>
       </div>
     </div>
+    <div v-for="event in events" :key="event.id" class="my-events-container">
+      <div class="event-details">
+        <EventCard v-if="event.host !== user.uid" :event="event" />
+      </div>
+    </div>
     <div class="upcoming-events-container"></div>
 
     <div class="flex justify-content-between align-items-center">
@@ -36,18 +51,15 @@ onBeforeMount(() => {
         </router-link>
       </div>
     </div>
+
     <div v-for="event in events" :key="event.id" class="my-events-container">
       <div class="event-details">
-        <p>{{ event.title }}</p>
-        <p>{{ event.id }}</p>
-        <router-link :to="{ name: 'EventInfo', params: { id: event.id } }">
-          <p>Se mere</p>
-        </router-link>
+        <EventCard v-if="event.host === user.uid" :event="event" />
       </div>
     </div>
 
-    <h2>Grupper</h2>
-    <div class="groups-display-container"></div>
+    <!-- <h2>Grupper</h2>
+    <div class="groups-display-container"></div> -->
   </section>
 </template>
 
