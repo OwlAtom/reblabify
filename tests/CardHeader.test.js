@@ -9,7 +9,7 @@ describe("CardHeader", () => {
 
   const wrapper = mount(CardHeader, {
     props: {
-      title: "Fest",
+      eventTitle: "Fest",
       icon: "star",
     },
   });

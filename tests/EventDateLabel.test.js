@@ -10,12 +10,12 @@ describe("EventDateLabel", () => {
   it("displays props correctly", () => {
     const wrapper = mount(EventDateLabel, {
       props: {
-        month: "feb",
-        date: 6,
+        month: "jan.",
+        date: 1,
       },
     });
 
-    expect(wrapper.find("h3").text()).toContain("feb");
-    expect(wrapper.find("h1").text()).toContain("6");
+    expect(wrapper.find("h3").text()).toContain("jan.");
+    expect(wrapper.find("h1").text()).toContain("1");
   });
 });

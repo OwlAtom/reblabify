@@ -22,6 +22,6 @@ describe("EventDeclarations", () => {
   it("displays props correctly", () => {
     expect(wrapper.find("p").text()).toContain(5);
     expect(wrapper.find("p").text()).toContain(10);
-    expect(wrapper.find("p").text()).toContain("5 af 10 tilkendegivelser");
+    expect(wrapper.find("p").text()).toContain("5 af 10 deltager");
   });
 });
