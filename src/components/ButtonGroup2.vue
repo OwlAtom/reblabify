@@ -34,21 +34,17 @@ if (route.path == "/all-events/mine") {
 
     <TabView v-model:activeIndex="activetab">
       <TabPanel>
-        <p>Liste over event, filtreret på dato og ejerskab (kommende)</p>
         <div v-for="event in events" :key="event.id" class="my-events-container">
-          <div class="event-details">
-            <EventCard v-if="event.host !== user.uid" :event="event" />
+          <div v-if="event.host !== user.uid" class="event-details">
+            <EventCard :event="event" />
           </div>
         </div>
       </TabPanel>
+      <TabPanel> </TabPanel>
       <TabPanel>
-        <p>Liste over event, filtreret på dato og ejerskab (afholdte)</p>
-      </TabPanel>
-      <TabPanel>
-        <p>Liste over event, filtreret på dato og ejerskab (mine)</p>
         <div v-for="event in events" :key="event.id" class="my-events-container">
-          <div class="event-details">
-            <EventCard v-if="event.host === user.uid" :event="event" />
+          <div v-if="event.host === user.uid" class="event-details">
+            <EventCard :event="event" />
           </div>
         </div>
       </TabPanel>
@@ -61,6 +57,9 @@ if (route.path == "/all-events/mine") {
   .button-group-item {
     width: 33%;
   }
+}
+.my-events-container {
+  margin-bottom: 0.5em;
 }
 
 // tabview styles i _theme.scss

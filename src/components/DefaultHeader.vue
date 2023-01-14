@@ -24,6 +24,7 @@ import headerWave from "../assets/headerWave.svg";
 
     h1 {
       margin-bottom: 0;
+      color: $secondary-active;
     }
   }
   .svg-container {
