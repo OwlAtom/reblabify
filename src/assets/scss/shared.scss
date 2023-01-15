@@ -1,0 +1,76 @@
+// Colors
+
+$background-color: #a9d5e3;
+$bottom-wave: #7abed3;
+$middle-wave: #67b5cd;
+$top-wave: #94cbdc;
+$primary: #0d232a; //primarily used for text
+$secondary: #edb183; //used for buttons or as higlighter
+$secondary-active: #f9d6bc; //primarily used for showing the current state e.g. a tab
+$tertiary: #1b4755; //used for header and bottom navigation
+$white: #fcfcfc;
+$box-shadow: #30303040; //opacity 25%
+$cards: #ecf1f3e6; //opacity 90%
+$notification: #be3334;
+$active: #4bd37b; //used in chats
+$coming: #4bd37b99; //opacity 60%
+$maybe: #d3c54b99; //opacity 60%
+$not-coming: #ff5a7999; //opacity 60%
+$important: #4fd1d9; //used in notifications
+$cancelled: #ff5a79; //used in notifications
+$new-invite: #ffce31; //used in notifications
+$accepted-invite: #4bd37b; //used in notifications
+$disabled: #dedede80; //opacity 50%
+$overlay: #f4f4f4b3; //opacity 70%   used for modals, notifications or when creating and showing an event/chat
+$icon-placeholder: #f4f4f466; //opacity 40%  used when creating an event
+
+// Typography
+//
+
+//Border radius'
+$border-radius4: 4px;
+$border-radius8: 8px;
+
+// box shadow
+.box-shadow {
+  box-shadow: 0 2px 4px $box-shadow;
+}
+
+//link styling
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: $primary;
+}
+
+// Custom tabview buttons
+.button-group {
+  width: 100%;
+  background-color: $white;
+  display: flex;
+  border-radius: $border-radius8;
+  height: 2.3em;
+  padding: 3px;
+  gap: 3px;
+  box-shadow: 0 2px 4px $box-shadow;
+  margin: 1em 0;
+
+  .button-group-item {
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.2s linear;
+
+    &.active {
+      background-color: $secondary-active;
+      border-radius: $border-radius4;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
