@@ -21,7 +21,7 @@ defineProps({
   padding: 0.6em;
   width: max-content;
   user-select: none;
-  cursor: pointer;
+  cursor: not-allowed;
 
   p {
     padding-right: 10px;
