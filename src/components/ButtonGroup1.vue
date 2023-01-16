@@ -54,12 +54,6 @@ const confirmDelete = (event) => {
   });
 };
 
-// funktionen er flyttet ind i confirm1 (gemmes hvis der skal skrives om det)
-// function deleteEvent(event) {
-//   history.back();
-//   eventsStore.deleteEvent(event);
-// }
-
 const activeTab = ref(0);
 // const inviteFriendInput = ref(null);
 
