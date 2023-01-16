@@ -7,7 +7,7 @@ const dayOfMonth = new Date(props.date).getDate();
 </script>
 
 <template>
-  <div class="flex align-items-center justify-content-center flex-column div">
+  <div class="flex align-items-center justify-content-center flex-column div mr-1">
     <h3 class="m-0">{{ month }}</h3>
     <h1 class="m-0">{{ dayOfMonth }}</h1>
   </div>

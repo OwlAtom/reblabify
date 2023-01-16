@@ -124,8 +124,8 @@ function showEmoji(newEmoji) {
   <BackButton />
   <form @submit.prevent="submitForm">
     <div class="add-cover">
-      <span class="material-icons-round"> add </span>
-      <p>Tilføj coverbillede/tema</p>
+      <!-- <span class="material-icons-round"> add </span>
+      <p>Tilføj coverbillede/tema</p> -->
     </div>
     <div v-if="!showPopup" class="wrapper overlay">
       <div class="add-icon-circle" @click="toogleDialogEmoji">
@@ -177,7 +177,7 @@ function showEmoji(newEmoji) {
       <!-- <button type="submit" @click="handleSubmit">Opret</button> -->
 
       <p style="font-weight: 600; font-size: 18px; text-align: center">Tilføj flere detaljer</p>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 opacity-40">
         <DescriptionChips text="Lokation" emoji="📍" class="added-chip" />
         <DescriptionChips text="Dresscode" emoji="👔" />
         <DescriptionChips text="Medorganisator" emoji="🤝" />
@@ -192,7 +192,7 @@ function showEmoji(newEmoji) {
           <!-- <a href="https://storyset.com/email">Email illustrations by Storyset</a> -->
         </div>
 
-        <div class="invite-card">
+        <div class="invite-card opacity-40">
           <h3>Invitér gruppe</h3>
           <friendsIllustration />
           <!-- <a href="https://storyset.com/people">People illustrations by Storyset</a> -->

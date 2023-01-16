@@ -12,9 +12,9 @@ defineProps({
         <span v-if="type === 'new-invite'" class="green-check material-icons-sharp notification-type">
           check_circle
         </span>
-        <span v-if="type === 'accepted-invite'" class="yellow-star material-icons"> star </span>
-        <span v-if="type === 'cancellation'" class="red-cross material-icons"> cancel </span>
-        <span v-if="type === 'important'" class="blue-exclamation material-icons"> error </span>
+        <span v-if="type === 'accepted-invite'" class="yellow-star material-icons notification-type"> star </span>
+        <span v-if="type === 'cancellation'" class="red-cross material-icons notification-type"> cancel </span>
+        <span v-if="type === 'important'" class="blue-exclamation material-icons notification-type"> error </span>
       </p>
       <p class="chat-text">{{ text }}</p>
     </div>
@@ -38,7 +38,7 @@ defineProps({
   p {
     margin: 0;
   }
-  .notification-type span {
+  .notification-type {
     font-size: 30px;
     margin-right: 10px;
 

@@ -54,12 +54,6 @@ const confirmDelete = (event) => {
   });
 };
 
-// funktionen er flyttet ind i confirm1 (gemmes hvis der skal skrives om det)
-// function deleteEvent(event) {
-//   history.back();
-//   eventsStore.deleteEvent(event);
-// }
-
 const activeTab = ref(0);
 // const inviteFriendInput = ref(null);
 
@@ -90,7 +84,7 @@ function editEvent() {
   </div>
 
   <div class="add-cover">
-    <p>Skal laves om til coverbilledet</p>
+    <!-- <p>Skal laves om til coverbilledet</p> -->
   </div>
   <div class="wrapper overlay">
     <div class="add-icon-circle">

@@ -29,11 +29,6 @@ onBeforeMount(async () => {
 //   props.event?.mayby?.length +
 //   props.event?.declined?.length +
 //   props.event?.invited?.length;
-
-console.log(props.event?.accepted?.length);
-console.log(props.event?.mayby?.length);
-console.log(props.event?.declined?.length);
-console.log(props.event?.invited?.length);
 </script>
 
 <template>
