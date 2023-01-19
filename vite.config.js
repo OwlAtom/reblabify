@@ -7,12 +7,28 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    eslintPlugin(),
+    eslintPlugin({
+      fix: true,
+      overrideConfigFile: "./.eslintrc.cjs",
+    }),
     vue(),
     svgLoader(),
     VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "firebase-messaging-sw.js",
+      workbox: {
+        globPatterns: [""],
+        globIgnores: ["*"],
+      },
+    }),
+    VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
+      devOptions: {
+        enabled: true,
+        type: "module",
+      },
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       },

@@ -8,20 +8,11 @@ import { getPerformance } from "firebase/performance";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { enableIndexedDbPersistence } from "firebase/firestore";
+import firebaseConfig from "./firebase-config.json";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCkMeu0Y5iCwjENndtY-KujBB7txtLtLio",
-  authDomain: "reblabify.firebaseapp.com",
-  databaseURL: "https://reblabify-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "reblabify",
-  storageBucket: "reblabify.appspot.com",
-  messagingSenderId: "342442064472",
-  appId: "1:342442064472:web:fc5b690eb43deaf709e82d",
-  measurementId: "G-GPNFV4ZWFF",
-};
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 // eslint-disable-next-line no-unused-vars

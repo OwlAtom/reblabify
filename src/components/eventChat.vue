@@ -2,10 +2,87 @@
 import { useRouter } from "vue-router";
 import { useChatStore } from "../stores/chat";
 import { ref, onBeforeUnmount } from "vue";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { firestore } from "firebase/app";
 
 const router = useRouter();
 const eventID = router.currentRoute.value.params.id;
 const chatStore = useChatStore();
+const messaging = getMessaging();
+
+getToken(messaging, {
+  vapidKey: "BKD6Xa0d7F0quqxu64icwiK9QKwrFn5R2qP3V9T1wvDCiB-SCkN6_IBqB_02yLWoyfW8c9iq3-jcrpKAjE2UFMc",
+})
+  .then((currentToken) => {
+    if (currentToken) {
+      console.log("Got FCM token:", currentToken);
+      // saveToTokenCollection(currentToken);
+    } else {
+      // Show permission request.
+      console.log("No registration token available. Request permission to generate one.");
+      // ...
+    }
+  })
+  .catch((err) => {
+    console.log("An error occurred while retrieving token. ", err);
+    // ...
+  });
+
+onMessage(messaging, (payload) => {
+  console.log("Message received. ", payload);
+  // ...
+});
+
+function saveToTokenCollection(token) {
+  const tokensRef = firestore().collection("tokens");
+
+  const tokenData = {
+    token,
+    user_id: "user_id_here",
+    timestamp: firestore.FieldValue.serverTimestamp(),
+    // device: "device_name_here", (optional)
+    // platform: "ios" or "android", (optional)
+  };
+
+  tokensRef
+    .add(tokenData)
+    .then((docRef) => {
+      console.log("Token written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+      console.error("Error adding token: ", error);
+    });
+}
+saveToTokenCollection;
+
+/*
+Cloud Function:
+import { firestore } from 'firebase/app';
+
+exports.cleanupTokens = functions.pubsub.schedule('every 24 hours').onRun(async (context) => {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    const tokensRef = firestore().collection("tokens");
+    const query = tokensRef.where("timestamp", "<", cutoff);
+    const tokens = await query.get();
+    tokens.forEach(token => {
+        token.ref.delete();
+    });
+});
+*/
+
+function requestPermission() {
+  console.log("Requesting permission...");
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+    } else {
+      console.log("Unable to get permission to notify.");
+    }
+  });
+}
+requestPermission;
 
 const messageContent = ref();
 const sendMessage = () => {
@@ -24,6 +101,10 @@ const unsubscribe = chatStore.subscribeToChat(eventID, snapshotHandler);
 onBeforeUnmount(() => {
   unsubscribe(); // needed to prevent memory leaks
 });
+
+// to notify the user of new messages when on other views, we need to detect the last message
+// and compare it to the last message in the store
+// const lastMessage = ref();
 </script>
 
 <template>
