@@ -3,20 +3,22 @@ import { useRouter } from "vue-router";
 import { useChatStore } from "../stores/chat";
 import { ref, onBeforeUnmount } from "vue";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { firestore } from "firebase/app";
+import { useTokenStore } from "../stores/token";
 
 const router = useRouter();
 const eventID = router.currentRoute.value.params.id;
 const chatStore = useChatStore();
+const tokenStore = useTokenStore();
 const messaging = getMessaging();
 
+//
 getToken(messaging, {
   vapidKey: "BKD6Xa0d7F0quqxu64icwiK9QKwrFn5R2qP3V9T1wvDCiB-SCkN6_IBqB_02yLWoyfW8c9iq3-jcrpKAjE2UFMc",
 })
   .then((currentToken) => {
     if (currentToken) {
       console.log("Got FCM token:", currentToken);
-      // saveToTokenCollection(currentToken);
+      tokenStore.updateToken(currentToken);
     } else {
       // Show permission request.
       console.log("No registration token available. Request permission to generate one.");
@@ -24,7 +26,7 @@ getToken(messaging, {
     }
   })
   .catch((err) => {
-    console.log("An error occurred while retrieving token. ", err);
+    console.error("An error occurred while retrieving token. ", err);
     // ...
   });
 
@@ -32,28 +34,6 @@ onMessage(messaging, (payload) => {
   console.log("Message received. ", payload);
   // ...
 });
-
-function saveToTokenCollection(token) {
-  const tokensRef = firestore().collection("tokens");
-
-  const tokenData = {
-    token,
-    user_id: "user_id_here",
-    timestamp: firestore.FieldValue.serverTimestamp(),
-    // device: "device_name_here", (optional)
-    // platform: "ios" or "android", (optional)
-  };
-
-  tokensRef
-    .add(tokenData)
-    .then((docRef) => {
-      console.log("Token written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Error adding token: ", error);
-    });
-}
-saveToTokenCollection;
 
 /*
 Cloud Function:

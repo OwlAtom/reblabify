@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-// import picker compopnent
+// import picker component
 import EmojiPicker from "vue3-emoji-picker";
 // import css
 import "vue3-emoji-picker/css";
@@ -171,7 +171,7 @@ function showEmoji(newEmoji) {
       <label for="description">Beskrivelse</label>
       <textarea v-model="formData.description" name="description" rows="3"></textarea>
 
-      <label for="loaction">Lokation</label>
+      <label for="location">Lokation</label>
       <input v-model="formData.location" type="text" name="location" />
       <!-- todo: 'normalButton'? + places i bunden derefter -->
       <!-- <button type="submit" @click="handleSubmit">Opret</button> -->

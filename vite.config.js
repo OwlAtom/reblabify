@@ -14,15 +14,6 @@ export default defineConfig({
     vue(),
     svgLoader(),
     VitePWA({
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "firebase-messaging-sw.js",
-      workbox: {
-        globPatterns: [""],
-        globIgnores: ["*"],
-      },
-    }),
-    VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
       devOptions: {
