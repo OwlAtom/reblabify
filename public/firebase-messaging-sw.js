@@ -370,17 +370,6 @@ function validateIndexedDBOpenable() {
     });
 }
 /**
- *
- * This method checks whether cookie is enabled within current browser
- * @return true if cookie is enabled within current browser
- */
-function areCookiesEnabled() {
-    if (typeof navigator === 'undefined' || !navigator.cookieEnabled) {
-        return false;
-    }
-    return true;
-}
-/**
  * Polyfill for `globalThis` object.
  * @returns the `globalThis` object for the given environment.
  */
@@ -1637,7 +1626,7 @@ const name$4 = "@firebase/storage";
 
 const name$3 = "@firebase/storage-compat";
 
-const name$2$1 = "@firebase/firestore";
+const name$2 = "@firebase/firestore";
 
 const name$1$1 = "@firebase/firestore-compat";
 
@@ -1688,7 +1677,7 @@ const PLATFORM_LOG_STRING = {
     [name$5]: 'fire-rc-compat',
     [name$4]: 'fire-gcs',
     [name$3]: 'fire-gcs-compat',
-    [name$2$1]: 'fire-fst',
+    [name$2]: 'fire-fst',
     [name$1$1]: 'fire-fst-compat',
     'fire-js': 'fire-js',
     [name$p]: 'fire-js-all'
@@ -1804,7 +1793,7 @@ const ERRORS = {
     ["idb-set" /* AppError.IDB_WRITE */]: 'Error thrown when writing to IndexedDB. Original error: {$originalErrorMessage}.',
     ["idb-delete" /* AppError.IDB_DELETE */]: 'Error thrown when deleting from IndexedDB. Original error: {$originalErrorMessage}.'
 };
-const ERROR_FACTORY$3 = new ErrorFactory('app', 'Firebase', ERRORS);
+const ERROR_FACTORY$2 = new ErrorFactory('app', 'Firebase', ERRORS);
 
 /**
  * @license
@@ -1868,7 +1857,7 @@ class FirebaseAppImpl {
      */
     checkDestroyed() {
         if (this.isDeleted) {
-            throw ERROR_FACTORY$3.create("app-deleted" /* AppError.APP_DELETED */, { appName: this._name });
+            throw ERROR_FACTORY$2.create("app-deleted" /* AppError.APP_DELETED */, { appName: this._name });
         }
     }
 }
@@ -1881,13 +1870,13 @@ function initializeApp(_options, rawConfig = {}) {
     const config = Object.assign({ name: DEFAULT_ENTRY_NAME, automaticDataCollectionEnabled: false }, rawConfig);
     const name = config.name;
     if (typeof name !== 'string' || !name) {
-        throw ERROR_FACTORY$3.create("bad-app-name" /* AppError.BAD_APP_NAME */, {
+        throw ERROR_FACTORY$2.create("bad-app-name" /* AppError.BAD_APP_NAME */, {
             appName: String(name)
         });
     }
     options || (options = getDefaultAppConfig());
     if (!options) {
-        throw ERROR_FACTORY$3.create("no-options" /* AppError.NO_OPTIONS */);
+        throw ERROR_FACTORY$2.create("no-options" /* AppError.NO_OPTIONS */);
     }
     const existingApp = _apps.get(name);
     if (existingApp) {
@@ -1897,7 +1886,7 @@ function initializeApp(_options, rawConfig = {}) {
             return existingApp;
         }
         else {
-            throw ERROR_FACTORY$3.create("duplicate-app" /* AppError.DUPLICATE_APP */, { appName: name });
+            throw ERROR_FACTORY$2.create("duplicate-app" /* AppError.DUPLICATE_APP */, { appName: name });
         }
     }
     const container = new ComponentContainer(name);
@@ -1943,7 +1932,7 @@ function getApp(name = DEFAULT_ENTRY_NAME) {
         return initializeApp();
     }
     if (!app) {
-        throw ERROR_FACTORY$3.create("no-app" /* AppError.NO_APP */, { appName: name });
+        throw ERROR_FACTORY$2.create("no-app" /* AppError.NO_APP */, { appName: name });
     }
     return app;
 }
@@ -2003,10 +1992,10 @@ function registerVersion(libraryKeyOrName, version, variant) {
 const DB_NAME = 'firebase-heartbeat-database';
 const DB_VERSION = 1;
 const STORE_NAME = 'firebase-heartbeat-store';
-let dbPromise$3 = null;
-function getDbPromise$3() {
-    if (!dbPromise$3) {
-        dbPromise$3 = openDB(DB_NAME, DB_VERSION, {
+let dbPromise$2 = null;
+function getDbPromise$2() {
+    if (!dbPromise$2) {
+        dbPromise$2 = openDB(DB_NAME, DB_VERSION, {
             upgrade: (db, oldVersion) => {
                 // We don't use 'break' in this switch statement, the fall-through
                 // behavior is what we want, because if there are multiple versions between
@@ -2019,16 +2008,16 @@ function getDbPromise$3() {
                 }
             }
         }).catch(e => {
-            throw ERROR_FACTORY$3.create("idb-open" /* AppError.IDB_OPEN */, {
+            throw ERROR_FACTORY$2.create("idb-open" /* AppError.IDB_OPEN */, {
                 originalErrorMessage: e.message
             });
         });
     }
-    return dbPromise$3;
+    return dbPromise$2;
 }
 async function readHeartbeatsFromIndexedDB(app) {
     try {
-        const db = await getDbPromise$3();
+        const db = await getDbPromise$2();
         return db
             .transaction(STORE_NAME)
             .objectStore(STORE_NAME)
@@ -2039,7 +2028,7 @@ async function readHeartbeatsFromIndexedDB(app) {
             logger.warn(e.message);
         }
         else {
-            const idbGetError = ERROR_FACTORY$3.create("idb-get" /* AppError.IDB_GET */, {
+            const idbGetError = ERROR_FACTORY$2.create("idb-get" /* AppError.IDB_GET */, {
                 originalErrorMessage: e === null || e === void 0 ? void 0 : e.message
             });
             logger.warn(idbGetError.message);
@@ -2048,7 +2037,7 @@ async function readHeartbeatsFromIndexedDB(app) {
 }
 async function writeHeartbeatsToIndexedDB(app, heartbeatObject) {
     try {
-        const db = await getDbPromise$3();
+        const db = await getDbPromise$2();
         const tx = db.transaction(STORE_NAME, 'readwrite');
         const objectStore = tx.objectStore(STORE_NAME);
         await objectStore.put(heartbeatObject, computeKey(app));
@@ -2059,7 +2048,7 @@ async function writeHeartbeatsToIndexedDB(app, heartbeatObject) {
             logger.warn(e.message);
         }
         else {
-            const idbGetError = ERROR_FACTORY$3.create("idb-set" /* AppError.IDB_WRITE */, {
+            const idbGetError = ERROR_FACTORY$2.create("idb-set" /* AppError.IDB_WRITE */, {
                 originalErrorMessage: e === null || e === void 0 ? void 0 : e.message
             });
             logger.warn(idbGetError.message);
@@ -2337,8 +2326,8 @@ function registerCoreComponents(variant) {
  */
 registerCoreComponents('');
 
-var name$2 = "firebase";
-var version$2 = "9.15.0";
+var name$1 = "firebase";
+var version$1 = "9.15.0";
 
 /**
  * @license
@@ -2356,10 +2345,10 @@ var version$2 = "9.15.0";
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-registerVersion(name$2, version$2, 'app');
+registerVersion(name$1, version$1, 'app');
 
-const name$1 = "@firebase/installations";
-const version$1 = "0.6.0";
+const name = "@firebase/installations";
+const version = "0.6.0";
 
 /**
  * @license
@@ -2378,7 +2367,7 @@ const version$1 = "0.6.0";
  * limitations under the License.
  */
 const PENDING_TIMEOUT_MS = 10000;
-const PACKAGE_VERSION = `w:${version$1}`;
+const PACKAGE_VERSION = `w:${version}`;
 const INTERNAL_AUTH_VERSION = 'FIS_v2';
 const INSTALLATIONS_API_URL = 'https://firebaseinstallations.googleapis.com/v1';
 const TOKEN_EXPIRATION_BUFFER = 60 * 60 * 1000; // One hour
@@ -2409,7 +2398,7 @@ const ERROR_DESCRIPTION_MAP = {
     ["app-offline" /* ErrorCode.APP_OFFLINE */]: 'Could not process request. Application offline.',
     ["delete-pending-registration" /* ErrorCode.DELETE_PENDING_REGISTRATION */]: "Can't delete installation while there is a pending registration request."
 };
-const ERROR_FACTORY$2 = new ErrorFactory(SERVICE, SERVICE_NAME, ERROR_DESCRIPTION_MAP);
+const ERROR_FACTORY$1 = new ErrorFactory(SERVICE, SERVICE_NAME, ERROR_DESCRIPTION_MAP);
 /** Returns true if error is a FirebaseError that is based on an error from the server. */
 function isServerError(error) {
     return (error instanceof FirebaseError &&
@@ -2446,14 +2435,14 @@ function extractAuthTokenInfoFromResponse(response) {
 async function getErrorFromResponse(requestName, response) {
     const responseJson = await response.json();
     const errorData = responseJson.error;
-    return ERROR_FACTORY$2.create("request-failed" /* ErrorCode.REQUEST_FAILED */, {
+    return ERROR_FACTORY$1.create("request-failed" /* ErrorCode.REQUEST_FAILED */, {
         requestName,
         serverCode: errorData.code,
         serverMessage: errorData.message,
         serverStatus: errorData.status
     });
 }
-function getHeaders$2({ apiKey }) {
+function getHeaders$1({ apiKey }) {
     return new Headers({
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -2461,7 +2450,7 @@ function getHeaders$2({ apiKey }) {
     });
 }
 function getHeadersWithAuth(appConfig, { refreshToken }) {
-    const headers = getHeaders$2(appConfig);
+    const headers = getHeaders$1(appConfig);
     headers.append('Authorization', getAuthorizationHeader(refreshToken));
     return headers;
 }
@@ -2504,7 +2493,7 @@ function getAuthorizationHeader(refreshToken) {
  */
 async function createInstallationRequest({ appConfig, heartbeatServiceProvider }, { fid }) {
     const endpoint = getInstallationsEndpoint(appConfig);
-    const headers = getHeaders$2(appConfig);
+    const headers = getHeaders$1(appConfig);
     // If heartbeat service exists, add the heartbeat string to the header.
     const heartbeatService = heartbeatServiceProvider.getImmediate({
         optional: true
@@ -2650,7 +2639,7 @@ function encode(fidByteArray) {
  * limitations under the License.
  */
 /** Returns a string key that can be used to identify the app. */
-function getKey$2(appConfig) {
+function getKey$1(appConfig) {
     return `${appConfig.appName}!${appConfig.appId}`;
 }
 
@@ -2676,7 +2665,7 @@ const fidChangeCallbacks = new Map();
  * change to other tabs.
  */
 function fidChanged(appConfig, fid) {
-    const key = getKey$2(appConfig);
+    const key = getKey$1(appConfig);
     callFidChangeCallbacks(key, fid);
     broadcastFidChange(key, fid);
 }
@@ -2730,13 +2719,13 @@ function closeBroadcastChannel() {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const DATABASE_NAME$2 = 'firebase-installations-database';
-const DATABASE_VERSION$2 = 1;
-const OBJECT_STORE_NAME$2 = 'firebase-installations-store';
-let dbPromise$2 = null;
-function getDbPromise$2() {
-    if (!dbPromise$2) {
-        dbPromise$2 = openDB(DATABASE_NAME$2, DATABASE_VERSION$2, {
+const DATABASE_NAME$1 = 'firebase-installations-database';
+const DATABASE_VERSION$1 = 1;
+const OBJECT_STORE_NAME$1 = 'firebase-installations-store';
+let dbPromise$1 = null;
+function getDbPromise$1() {
+    if (!dbPromise$1) {
+        dbPromise$1 = openDB(DATABASE_NAME$1, DATABASE_VERSION$1, {
             upgrade: (db, oldVersion) => {
                 // We don't use 'break' in this switch statement, the fall-through
                 // behavior is what we want, because if there are multiple versions between
@@ -2745,19 +2734,19 @@ function getDbPromise$2() {
                 // eslint-disable-next-line default-case
                 switch (oldVersion) {
                     case 0:
-                        db.createObjectStore(OBJECT_STORE_NAME$2);
+                        db.createObjectStore(OBJECT_STORE_NAME$1);
                 }
             }
         });
     }
-    return dbPromise$2;
+    return dbPromise$1;
 }
 /** Assigns or overwrites the record for the given key with the given value. */
 async function set(appConfig, value) {
-    const key = getKey$2(appConfig);
-    const db = await getDbPromise$2();
-    const tx = db.transaction(OBJECT_STORE_NAME$2, 'readwrite');
-    const objectStore = tx.objectStore(OBJECT_STORE_NAME$2);
+    const key = getKey$1(appConfig);
+    const db = await getDbPromise$1();
+    const tx = db.transaction(OBJECT_STORE_NAME$1, 'readwrite');
+    const objectStore = tx.objectStore(OBJECT_STORE_NAME$1);
     const oldValue = (await objectStore.get(key));
     await objectStore.put(value, key);
     await tx.done;
@@ -2768,10 +2757,10 @@ async function set(appConfig, value) {
 }
 /** Removes record(s) from the objectStore that match the given key. */
 async function remove(appConfig) {
-    const key = getKey$2(appConfig);
-    const db = await getDbPromise$2();
-    const tx = db.transaction(OBJECT_STORE_NAME$2, 'readwrite');
-    await tx.objectStore(OBJECT_STORE_NAME$2).delete(key);
+    const key = getKey$1(appConfig);
+    const db = await getDbPromise$1();
+    const tx = db.transaction(OBJECT_STORE_NAME$1, 'readwrite');
+    await tx.objectStore(OBJECT_STORE_NAME$1).delete(key);
     await tx.done;
 }
 /**
@@ -2781,10 +2770,10 @@ async function remove(appConfig) {
  * @return Updated value
  */
 async function update(appConfig, updateFn) {
-    const key = getKey$2(appConfig);
-    const db = await getDbPromise$2();
-    const tx = db.transaction(OBJECT_STORE_NAME$2, 'readwrite');
-    const store = tx.objectStore(OBJECT_STORE_NAME$2);
+    const key = getKey$1(appConfig);
+    const db = await getDbPromise$1();
+    const tx = db.transaction(OBJECT_STORE_NAME$1, 'readwrite');
+    const store = tx.objectStore(OBJECT_STORE_NAME$1);
     const oldValue = (await store.get(key));
     const newValue = updateFn(oldValue);
     if (newValue === undefined) {
@@ -2859,7 +2848,7 @@ function triggerRegistrationIfNecessary(installations, installationEntry) {
     if (installationEntry.registrationStatus === 0 /* RequestStatus.NOT_STARTED */) {
         if (!navigator.onLine) {
             // Registration required but app is offline.
-            const registrationPromiseWithError = Promise.reject(ERROR_FACTORY$2.create("app-offline" /* ErrorCode.APP_OFFLINE */));
+            const registrationPromiseWithError = Promise.reject(ERROR_FACTORY$1.create("app-offline" /* ErrorCode.APP_OFFLINE */));
             return {
                 installationEntry,
                 registrationPromise: registrationPromiseWithError
@@ -2941,7 +2930,7 @@ async function waitUntilFidRegistration(installations) {
 function updateInstallationRequest(appConfig) {
     return update(appConfig, oldEntry => {
         if (!oldEntry) {
-            throw ERROR_FACTORY$2.create("installation-not-found" /* ErrorCode.INSTALLATION_NOT_FOUND */);
+            throw ERROR_FACTORY$1.create("installation-not-found" /* ErrorCode.INSTALLATION_NOT_FOUND */);
         }
         return clearTimedOutRequest(oldEntry);
     });
@@ -3040,7 +3029,7 @@ async function refreshAuthToken(installations, forceRefresh = false) {
     let tokenPromise;
     const entry = await update(installations.appConfig, oldEntry => {
         if (!isEntryRegistered(oldEntry)) {
-            throw ERROR_FACTORY$2.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
+            throw ERROR_FACTORY$1.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
         }
         const oldAuthToken = oldEntry.authToken;
         if (!forceRefresh && isAuthTokenValid(oldAuthToken)) {
@@ -3055,7 +3044,7 @@ async function refreshAuthToken(installations, forceRefresh = false) {
         else {
             // No token or token expired.
             if (!navigator.onLine) {
-                throw ERROR_FACTORY$2.create("app-offline" /* ErrorCode.APP_OFFLINE */);
+                throw ERROR_FACTORY$1.create("app-offline" /* ErrorCode.APP_OFFLINE */);
             }
             const inProgressEntry = makeAuthTokenRequestInProgressEntry(oldEntry);
             tokenPromise = fetchAuthTokenFromServer(installations, inProgressEntry);
@@ -3103,7 +3092,7 @@ async function waitUntilAuthTokenRequest(installations, forceRefresh) {
 function updateAuthTokenRequest(appConfig) {
     return update(appConfig, oldEntry => {
         if (!isEntryRegistered(oldEntry)) {
-            throw ERROR_FACTORY$2.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
+            throw ERROR_FACTORY$1.create("not-registered" /* ErrorCode.NOT_REGISTERED */);
         }
         const oldAuthToken = oldEntry.authToken;
         if (hasAuthTokenRequestTimedOut(oldAuthToken)) {
@@ -3252,12 +3241,12 @@ async function completeInstallationRegistration(installations) {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function extractAppConfig$2(app) {
+function extractAppConfig$1(app) {
     if (!app || !app.options) {
-        throw getMissingValueError$2('App Configuration');
+        throw getMissingValueError$1('App Configuration');
     }
     if (!app.name) {
-        throw getMissingValueError$2('App Name');
+        throw getMissingValueError$1('App Name');
     }
     // Required app config keys
     const configKeys = [
@@ -3267,7 +3256,7 @@ function extractAppConfig$2(app) {
     ];
     for (const keyName of configKeys) {
         if (!app.options[keyName]) {
-            throw getMissingValueError$2(keyName);
+            throw getMissingValueError$1(keyName);
         }
     }
     return {
@@ -3277,8 +3266,8 @@ function extractAppConfig$2(app) {
         appId: app.options.appId
     };
 }
-function getMissingValueError$2(valueName) {
-    return ERROR_FACTORY$2.create("missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */, {
+function getMissingValueError$1(valueName) {
+    return ERROR_FACTORY$1.create("missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */, {
         valueName
     });
 }
@@ -3304,7 +3293,7 @@ const INSTALLATIONS_NAME_INTERNAL = 'installations-internal';
 const publicFactory = (container) => {
     const app = container.getProvider('app').getImmediate();
     // Throws if app isn't configured properly.
-    const appConfig = extractAppConfig$2(app);
+    const appConfig = extractAppConfig$1(app);
     const heartbeatServiceProvider = _getProvider(app, 'heartbeat');
     const installationsImpl = {
         app,
@@ -3335,1133 +3324,9 @@ function registerInstallations() {
  * @packageDocumentation
  */
 registerInstallations();
-registerVersion(name$1, version$1);
+registerVersion(name, version);
 // BUILD_TARGET will be replaced by values like esm5, esm2017, cjs5, etc during the compilation
-registerVersion(name$1, version$1, 'esm2017');
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const DEFAULT_SW_PATH = '/firebase-messaging-sw.js';
-const DEFAULT_SW_SCOPE = '/firebase-cloud-messaging-push-scope';
-const DEFAULT_VAPID_KEY$1 = 'BDOU99-h67HcA6JeFXHbSNMu7e2yNNu3RzoMj8TM4W88jITfq7ZmPvIM1Iv-4_l2LxQcYwhqby2xGpWwzjfAnG4';
-const ENDPOINT$1 = 'https://fcmregistrations.googleapis.com/v1';
-const CONSOLE_CAMPAIGN_ID$1 = 'google.c.a.c_id';
-const CONSOLE_CAMPAIGN_NAME = 'google.c.a.c_l';
-const CONSOLE_CAMPAIGN_TIME = 'google.c.a.ts';
-/** Set to '1' if Analytics is enabled for the campaign */
-const CONSOLE_CAMPAIGN_ANALYTICS_ENABLED = 'google.c.a.e';
-var MessageType$1$1;
-(function (MessageType) {
-    MessageType[MessageType["DATA_MESSAGE"] = 1] = "DATA_MESSAGE";
-    MessageType[MessageType["DISPLAY_NOTIFICATION"] = 3] = "DISPLAY_NOTIFICATION";
-})(MessageType$1$1 || (MessageType$1$1 = {}));
-
-/**
- * @license
- * Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
-var MessageType$2;
-(function (MessageType) {
-    MessageType["PUSH_RECEIVED"] = "push-received";
-    MessageType["NOTIFICATION_CLICKED"] = "notification-clicked";
-})(MessageType$2 || (MessageType$2 = {}));
-
-/**
- * @license
- * Copyright 2017 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function arrayToBase64$1(array) {
-    const uint8Array = new Uint8Array(array);
-    const base64String = btoa(String.fromCharCode(...uint8Array));
-    return base64String.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-}
-function base64ToArray$1(base64String) {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-        .replace(/\-/g, '+')
-        .replace(/_/g, '/');
-    const rawData = atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const OLD_DB_NAME$1 = 'fcm_token_details_db';
-/**
- * The last DB version of 'fcm_token_details_db' was 4. This is one higher, so that the upgrade
- * callback is called for all versions of the old DB.
- */
-const OLD_DB_VERSION$1 = 5;
-const OLD_OBJECT_STORE_NAME$1 = 'fcm_token_object_Store';
-async function migrateOldDatabase$1(senderId) {
-    if ('databases' in indexedDB) {
-        // indexedDb.databases() is an IndexedDB v3 API and does not exist in all browsers. TODO: Remove
-        // typecast when it lands in TS types.
-        const databases = await indexedDB.databases();
-        const dbNames = databases.map(db => db.name);
-        if (!dbNames.includes(OLD_DB_NAME$1)) {
-            // old DB didn't exist, no need to open.
-            return null;
-        }
-    }
-    let tokenDetails = null;
-    const db = await openDB(OLD_DB_NAME$1, OLD_DB_VERSION$1, {
-        upgrade: async (db, oldVersion, newVersion, upgradeTransaction) => {
-            var _a;
-            if (oldVersion < 2) {
-                // Database too old, skip migration.
-                return;
-            }
-            if (!db.objectStoreNames.contains(OLD_OBJECT_STORE_NAME$1)) {
-                // Database did not exist. Nothing to do.
-                return;
-            }
-            const objectStore = upgradeTransaction.objectStore(OLD_OBJECT_STORE_NAME$1);
-            const value = await objectStore.index('fcmSenderId').get(senderId);
-            await objectStore.clear();
-            if (!value) {
-                // No entry in the database, nothing to migrate.
-                return;
-            }
-            if (oldVersion === 2) {
-                const oldDetails = value;
-                if (!oldDetails.auth || !oldDetails.p256dh || !oldDetails.endpoint) {
-                    return;
-                }
-                tokenDetails = {
-                    token: oldDetails.fcmToken,
-                    createTime: (_a = oldDetails.createTime) !== null && _a !== void 0 ? _a : Date.now(),
-                    subscriptionOptions: {
-                        auth: oldDetails.auth,
-                        p256dh: oldDetails.p256dh,
-                        endpoint: oldDetails.endpoint,
-                        swScope: oldDetails.swScope,
-                        vapidKey: typeof oldDetails.vapidKey === 'string'
-                            ? oldDetails.vapidKey
-                            : arrayToBase64$1(oldDetails.vapidKey)
-                    }
-                };
-            }
-            else if (oldVersion === 3) {
-                const oldDetails = value;
-                tokenDetails = {
-                    token: oldDetails.fcmToken,
-                    createTime: oldDetails.createTime,
-                    subscriptionOptions: {
-                        auth: arrayToBase64$1(oldDetails.auth),
-                        p256dh: arrayToBase64$1(oldDetails.p256dh),
-                        endpoint: oldDetails.endpoint,
-                        swScope: oldDetails.swScope,
-                        vapidKey: arrayToBase64$1(oldDetails.vapidKey)
-                    }
-                };
-            }
-            else if (oldVersion === 4) {
-                const oldDetails = value;
-                tokenDetails = {
-                    token: oldDetails.fcmToken,
-                    createTime: oldDetails.createTime,
-                    subscriptionOptions: {
-                        auth: arrayToBase64$1(oldDetails.auth),
-                        p256dh: arrayToBase64$1(oldDetails.p256dh),
-                        endpoint: oldDetails.endpoint,
-                        swScope: oldDetails.swScope,
-                        vapidKey: arrayToBase64$1(oldDetails.vapidKey)
-                    }
-                };
-            }
-        }
-    });
-    db.close();
-    // Delete all old databases.
-    await deleteDB(OLD_DB_NAME$1);
-    await deleteDB('fcm_vapid_details_db');
-    await deleteDB('undefined');
-    return checkTokenDetails$1(tokenDetails) ? tokenDetails : null;
-}
-function checkTokenDetails$1(tokenDetails) {
-    if (!tokenDetails || !tokenDetails.subscriptionOptions) {
-        return false;
-    }
-    const { subscriptionOptions } = tokenDetails;
-    return (typeof tokenDetails.createTime === 'number' &&
-        tokenDetails.createTime > 0 &&
-        typeof tokenDetails.token === 'string' &&
-        tokenDetails.token.length > 0 &&
-        typeof subscriptionOptions.auth === 'string' &&
-        subscriptionOptions.auth.length > 0 &&
-        typeof subscriptionOptions.p256dh === 'string' &&
-        subscriptionOptions.p256dh.length > 0 &&
-        typeof subscriptionOptions.endpoint === 'string' &&
-        subscriptionOptions.endpoint.length > 0 &&
-        typeof subscriptionOptions.swScope === 'string' &&
-        subscriptionOptions.swScope.length > 0 &&
-        typeof subscriptionOptions.vapidKey === 'string' &&
-        subscriptionOptions.vapidKey.length > 0);
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-// Exported for tests.
-const DATABASE_NAME$1 = 'firebase-messaging-database';
-const DATABASE_VERSION$1 = 1;
-const OBJECT_STORE_NAME$1 = 'firebase-messaging-store';
-let dbPromise$1 = null;
-function getDbPromise$1() {
-    if (!dbPromise$1) {
-        dbPromise$1 = openDB(DATABASE_NAME$1, DATABASE_VERSION$1, {
-            upgrade: (upgradeDb, oldVersion) => {
-                // We don't use 'break' in this switch statement, the fall-through behavior is what we want,
-                // because if there are multiple versions between the old version and the current version, we
-                // want ALL the migrations that correspond to those versions to run, not only the last one.
-                // eslint-disable-next-line default-case
-                switch (oldVersion) {
-                    case 0:
-                        upgradeDb.createObjectStore(OBJECT_STORE_NAME$1);
-                }
-            }
-        });
-    }
-    return dbPromise$1;
-}
-/** Gets record(s) from the objectStore that match the given key. */
-async function dbGet$1(firebaseDependencies) {
-    const key = getKey$1(firebaseDependencies);
-    const db = await getDbPromise$1();
-    const tokenDetails = (await db
-        .transaction(OBJECT_STORE_NAME$1)
-        .objectStore(OBJECT_STORE_NAME$1)
-        .get(key));
-    if (tokenDetails) {
-        return tokenDetails;
-    }
-    else {
-        // Check if there is a tokenDetails object in the old DB.
-        const oldTokenDetails = await migrateOldDatabase$1(firebaseDependencies.appConfig.senderId);
-        if (oldTokenDetails) {
-            await dbSet$1(firebaseDependencies, oldTokenDetails);
-            return oldTokenDetails;
-        }
-    }
-}
-/** Assigns or overwrites the record for the given key with the given value. */
-async function dbSet$1(firebaseDependencies, tokenDetails) {
-    const key = getKey$1(firebaseDependencies);
-    const db = await getDbPromise$1();
-    const tx = db.transaction(OBJECT_STORE_NAME$1, 'readwrite');
-    await tx.objectStore(OBJECT_STORE_NAME$1).put(tokenDetails, key);
-    await tx.done;
-    return tokenDetails;
-}
-/** Removes record(s) from the objectStore that match the given key. */
-async function dbRemove$1(firebaseDependencies) {
-    const key = getKey$1(firebaseDependencies);
-    const db = await getDbPromise$1();
-    const tx = db.transaction(OBJECT_STORE_NAME$1, 'readwrite');
-    await tx.objectStore(OBJECT_STORE_NAME$1).delete(key);
-    await tx.done;
-}
-function getKey$1({ appConfig }) {
-    return appConfig.appId;
-}
-
-/**
- * @license
- * Copyright 2017 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const ERROR_MAP$1 = {
-    ["missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */]: 'Missing App configuration value: "{$valueName}"',
-    ["only-available-in-window" /* ErrorCode.AVAILABLE_IN_WINDOW */]: 'This method is available in a Window context.',
-    ["only-available-in-sw" /* ErrorCode.AVAILABLE_IN_SW */]: 'This method is available in a service worker context.',
-    ["permission-default" /* ErrorCode.PERMISSION_DEFAULT */]: 'The notification permission was not granted and dismissed instead.',
-    ["permission-blocked" /* ErrorCode.PERMISSION_BLOCKED */]: 'The notification permission was not granted and blocked instead.',
-    ["unsupported-browser" /* ErrorCode.UNSUPPORTED_BROWSER */]: "This browser doesn't support the API's required to use the Firebase SDK.",
-    ["indexed-db-unsupported" /* ErrorCode.INDEXED_DB_UNSUPPORTED */]: "This browser doesn't support indexedDb.open() (ex. Safari iFrame, Firefox Private Browsing, etc)",
-    ["failed-service-worker-registration" /* ErrorCode.FAILED_DEFAULT_REGISTRATION */]: 'We are unable to register the default service worker. {$browserErrorMessage}',
-    ["token-subscribe-failed" /* ErrorCode.TOKEN_SUBSCRIBE_FAILED */]: 'A problem occurred while subscribing the user to FCM: {$errorInfo}',
-    ["token-subscribe-no-token" /* ErrorCode.TOKEN_SUBSCRIBE_NO_TOKEN */]: 'FCM returned no token when subscribing the user to push.',
-    ["token-unsubscribe-failed" /* ErrorCode.TOKEN_UNSUBSCRIBE_FAILED */]: 'A problem occurred while unsubscribing the ' +
-        'user from FCM: {$errorInfo}',
-    ["token-update-failed" /* ErrorCode.TOKEN_UPDATE_FAILED */]: 'A problem occurred while updating the user from FCM: {$errorInfo}',
-    ["token-update-no-token" /* ErrorCode.TOKEN_UPDATE_NO_TOKEN */]: 'FCM returned no token when updating the user to push.',
-    ["use-sw-after-get-token" /* ErrorCode.USE_SW_AFTER_GET_TOKEN */]: 'The useServiceWorker() method may only be called once and must be ' +
-        'called before calling getToken() to ensure your service worker is used.',
-    ["invalid-sw-registration" /* ErrorCode.INVALID_SW_REGISTRATION */]: 'The input to useServiceWorker() must be a ServiceWorkerRegistration.',
-    ["invalid-bg-handler" /* ErrorCode.INVALID_BG_HANDLER */]: 'The input to setBackgroundMessageHandler() must be a function.',
-    ["invalid-vapid-key" /* ErrorCode.INVALID_VAPID_KEY */]: 'The public VAPID key must be a string.',
-    ["use-vapid-key-after-get-token" /* ErrorCode.USE_VAPID_KEY_AFTER_GET_TOKEN */]: 'The usePublicVapidKey() method may only be called once and must be ' +
-        'called before calling getToken() to ensure your VAPID key is used.'
-};
-const ERROR_FACTORY$1 = new ErrorFactory('messaging', 'Messaging', ERROR_MAP$1);
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function requestGetToken$1(firebaseDependencies, subscriptionOptions) {
-    const headers = await getHeaders$1(firebaseDependencies);
-    const body = getBody$1(subscriptionOptions);
-    const subscribeOptions = {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
-    };
-    let responseData;
-    try {
-        const response = await fetch(getEndpoint$1(firebaseDependencies.appConfig), subscribeOptions);
-        responseData = await response.json();
-    }
-    catch (err) {
-        throw ERROR_FACTORY$1.create("token-subscribe-failed" /* ErrorCode.TOKEN_SUBSCRIBE_FAILED */, {
-            errorInfo: err === null || err === void 0 ? void 0 : err.toString()
-        });
-    }
-    if (responseData.error) {
-        const message = responseData.error.message;
-        throw ERROR_FACTORY$1.create("token-subscribe-failed" /* ErrorCode.TOKEN_SUBSCRIBE_FAILED */, {
-            errorInfo: message
-        });
-    }
-    if (!responseData.token) {
-        throw ERROR_FACTORY$1.create("token-subscribe-no-token" /* ErrorCode.TOKEN_SUBSCRIBE_NO_TOKEN */);
-    }
-    return responseData.token;
-}
-async function requestUpdateToken$1(firebaseDependencies, tokenDetails) {
-    const headers = await getHeaders$1(firebaseDependencies);
-    const body = getBody$1(tokenDetails.subscriptionOptions);
-    const updateOptions = {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify(body)
-    };
-    let responseData;
-    try {
-        const response = await fetch(`${getEndpoint$1(firebaseDependencies.appConfig)}/${tokenDetails.token}`, updateOptions);
-        responseData = await response.json();
-    }
-    catch (err) {
-        throw ERROR_FACTORY$1.create("token-update-failed" /* ErrorCode.TOKEN_UPDATE_FAILED */, {
-            errorInfo: err === null || err === void 0 ? void 0 : err.toString()
-        });
-    }
-    if (responseData.error) {
-        const message = responseData.error.message;
-        throw ERROR_FACTORY$1.create("token-update-failed" /* ErrorCode.TOKEN_UPDATE_FAILED */, {
-            errorInfo: message
-        });
-    }
-    if (!responseData.token) {
-        throw ERROR_FACTORY$1.create("token-update-no-token" /* ErrorCode.TOKEN_UPDATE_NO_TOKEN */);
-    }
-    return responseData.token;
-}
-async function requestDeleteToken$1(firebaseDependencies, token) {
-    const headers = await getHeaders$1(firebaseDependencies);
-    const unsubscribeOptions = {
-        method: 'DELETE',
-        headers
-    };
-    try {
-        const response = await fetch(`${getEndpoint$1(firebaseDependencies.appConfig)}/${token}`, unsubscribeOptions);
-        const responseData = await response.json();
-        if (responseData.error) {
-            const message = responseData.error.message;
-            throw ERROR_FACTORY$1.create("token-unsubscribe-failed" /* ErrorCode.TOKEN_UNSUBSCRIBE_FAILED */, {
-                errorInfo: message
-            });
-        }
-    }
-    catch (err) {
-        throw ERROR_FACTORY$1.create("token-unsubscribe-failed" /* ErrorCode.TOKEN_UNSUBSCRIBE_FAILED */, {
-            errorInfo: err === null || err === void 0 ? void 0 : err.toString()
-        });
-    }
-}
-function getEndpoint$1({ projectId }) {
-    return `${ENDPOINT$1}/projects/${projectId}/registrations`;
-}
-async function getHeaders$1({ appConfig, installations }) {
-    const authToken = await installations.getToken();
-    return new Headers({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'x-goog-api-key': appConfig.apiKey,
-        'x-goog-firebase-installations-auth': `FIS ${authToken}`
-    });
-}
-function getBody$1({ p256dh, auth, endpoint, vapidKey }) {
-    const body = {
-        web: {
-            endpoint,
-            auth,
-            p256dh
-        }
-    };
-    if (vapidKey !== DEFAULT_VAPID_KEY$1) {
-        body.web.applicationPubKey = vapidKey;
-    }
-    return body;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-// UpdateRegistration will be called once every week.
-const TOKEN_EXPIRATION_MS$1 = 7 * 24 * 60 * 60 * 1000; // 7 days
-async function getTokenInternal$1(messaging) {
-    const pushSubscription = await getPushSubscription$1(messaging.swRegistration, messaging.vapidKey);
-    const subscriptionOptions = {
-        vapidKey: messaging.vapidKey,
-        swScope: messaging.swRegistration.scope,
-        endpoint: pushSubscription.endpoint,
-        auth: arrayToBase64$1(pushSubscription.getKey('auth')),
-        p256dh: arrayToBase64$1(pushSubscription.getKey('p256dh'))
-    };
-    const tokenDetails = await dbGet$1(messaging.firebaseDependencies);
-    if (!tokenDetails) {
-        // No token, get a new one.
-        return getNewToken$1(messaging.firebaseDependencies, subscriptionOptions);
-    }
-    else if (!isTokenValid$1(tokenDetails.subscriptionOptions, subscriptionOptions)) {
-        // Invalid token, get a new one.
-        try {
-            await requestDeleteToken$1(messaging.firebaseDependencies, tokenDetails.token);
-        }
-        catch (e) {
-            // Suppress errors because of #2364
-            console.warn(e);
-        }
-        return getNewToken$1(messaging.firebaseDependencies, subscriptionOptions);
-    }
-    else if (Date.now() >= tokenDetails.createTime + TOKEN_EXPIRATION_MS$1) {
-        // Weekly token refresh
-        return updateToken$1(messaging, {
-            token: tokenDetails.token,
-            createTime: Date.now(),
-            subscriptionOptions
-        });
-    }
-    else {
-        // Valid token, nothing to do.
-        return tokenDetails.token;
-    }
-}
-/**
- * This method deletes the token from the database, unsubscribes the token from FCM, and unregisters
- * the push subscription if it exists.
- */
-async function deleteTokenInternal$1(messaging) {
-    const tokenDetails = await dbGet$1(messaging.firebaseDependencies);
-    if (tokenDetails) {
-        await requestDeleteToken$1(messaging.firebaseDependencies, tokenDetails.token);
-        await dbRemove$1(messaging.firebaseDependencies);
-    }
-    // Unsubscribe from the push subscription.
-    const pushSubscription = await messaging.swRegistration.pushManager.getSubscription();
-    if (pushSubscription) {
-        return pushSubscription.unsubscribe();
-    }
-    // If there's no SW, consider it a success.
-    return true;
-}
-async function updateToken$1(messaging, tokenDetails) {
-    try {
-        const updatedToken = await requestUpdateToken$1(messaging.firebaseDependencies, tokenDetails);
-        const updatedTokenDetails = Object.assign(Object.assign({}, tokenDetails), { token: updatedToken, createTime: Date.now() });
-        await dbSet$1(messaging.firebaseDependencies, updatedTokenDetails);
-        return updatedToken;
-    }
-    catch (e) {
-        await deleteTokenInternal$1(messaging);
-        throw e;
-    }
-}
-async function getNewToken$1(firebaseDependencies, subscriptionOptions) {
-    const token = await requestGetToken$1(firebaseDependencies, subscriptionOptions);
-    const tokenDetails = {
-        token,
-        createTime: Date.now(),
-        subscriptionOptions
-    };
-    await dbSet$1(firebaseDependencies, tokenDetails);
-    return tokenDetails.token;
-}
-/**
- * Gets a PushSubscription for the current user.
- */
-async function getPushSubscription$1(swRegistration, vapidKey) {
-    const subscription = await swRegistration.pushManager.getSubscription();
-    if (subscription) {
-        return subscription;
-    }
-    return swRegistration.pushManager.subscribe({
-        userVisibleOnly: true,
-        // Chrome <= 75 doesn't support base64-encoded VAPID key. For backward compatibility, VAPID key
-        // submitted to pushManager#subscribe must be of type Uint8Array.
-        applicationServerKey: base64ToArray$1(vapidKey)
-    });
-}
-/**
- * Checks if the saved tokenDetails object matches the configuration provided.
- */
-function isTokenValid$1(dbOptions, currentOptions) {
-    const isVapidKeyEqual = currentOptions.vapidKey === dbOptions.vapidKey;
-    const isEndpointEqual = currentOptions.endpoint === dbOptions.endpoint;
-    const isAuthEqual = currentOptions.auth === dbOptions.auth;
-    const isP256dhEqual = currentOptions.p256dh === dbOptions.p256dh;
-    return isVapidKeyEqual && isEndpointEqual && isAuthEqual && isP256dhEqual;
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function externalizePayload$1(internalPayload) {
-    const payload = {
-        from: internalPayload.from,
-        // eslint-disable-next-line camelcase
-        collapseKey: internalPayload.collapse_key,
-        // eslint-disable-next-line camelcase
-        messageId: internalPayload.fcmMessageId
-    };
-    propagateNotificationPayload$1(payload, internalPayload);
-    propagateDataPayload$1(payload, internalPayload);
-    propagateFcmOptions$1(payload, internalPayload);
-    return payload;
-}
-function propagateNotificationPayload$1(payload, messagePayloadInternal) {
-    if (!messagePayloadInternal.notification) {
-        return;
-    }
-    payload.notification = {};
-    const title = messagePayloadInternal.notification.title;
-    if (!!title) {
-        payload.notification.title = title;
-    }
-    const body = messagePayloadInternal.notification.body;
-    if (!!body) {
-        payload.notification.body = body;
-    }
-    const image = messagePayloadInternal.notification.image;
-    if (!!image) {
-        payload.notification.image = image;
-    }
-    const icon = messagePayloadInternal.notification.icon;
-    if (!!icon) {
-        payload.notification.icon = icon;
-    }
-}
-function propagateDataPayload$1(payload, messagePayloadInternal) {
-    if (!messagePayloadInternal.data) {
-        return;
-    }
-    payload.data = messagePayloadInternal.data;
-}
-function propagateFcmOptions$1(payload, messagePayloadInternal) {
-    var _a, _b, _c, _d, _e;
-    // fcmOptions.link value is written into notification.click_action. see more in b/232072111
-    if (!messagePayloadInternal.fcmOptions &&
-        !((_a = messagePayloadInternal.notification) === null || _a === void 0 ? void 0 : _a.click_action)) {
-        return;
-    }
-    payload.fcmOptions = {};
-    const link = (_c = (_b = messagePayloadInternal.fcmOptions) === null || _b === void 0 ? void 0 : _b.link) !== null && _c !== void 0 ? _c : (_d = messagePayloadInternal.notification) === null || _d === void 0 ? void 0 : _d.click_action;
-    if (!!link) {
-        payload.fcmOptions.link = link;
-    }
-    // eslint-disable-next-line camelcase
-    const analyticsLabel = (_e = messagePayloadInternal.fcmOptions) === null || _e === void 0 ? void 0 : _e.analytics_label;
-    if (!!analyticsLabel) {
-        payload.fcmOptions.analyticsLabel = analyticsLabel;
-    }
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function isConsoleMessage$1(data) {
-    // This message has a campaign ID, meaning it was sent using the Firebase Console.
-    return typeof data === 'object' && !!data && CONSOLE_CAMPAIGN_ID$1 in data;
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-_mergeStrings$1('hts/frbslgigp.ogepscmv/ieo/eaylg', 'tp:/ieaeogn-agolai.o/1frlglgc/o');
-_mergeStrings$1('AzSCbw63g1R0nCw85jG8', 'Iaya3yLKwmgvh7cF0q4');
-function _mergeStrings$1(s1, s2) {
-    const resultArray = [];
-    for (let i = 0; i < s1.length; i++) {
-        resultArray.push(s1.charAt(i));
-        if (i < s2.length) {
-            resultArray.push(s2.charAt(i));
-        }
-    }
-    return resultArray.join('');
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function extractAppConfig$1(app) {
-    if (!app || !app.options) {
-        throw getMissingValueError$1('App Configuration Object');
-    }
-    if (!app.name) {
-        throw getMissingValueError$1('App Name');
-    }
-    // Required app config keys
-    const configKeys = [
-        'projectId',
-        'apiKey',
-        'appId',
-        'messagingSenderId'
-    ];
-    const { options } = app;
-    for (const keyName of configKeys) {
-        if (!options[keyName]) {
-            throw getMissingValueError$1(keyName);
-        }
-    }
-    return {
-        appName: app.name,
-        projectId: options.projectId,
-        apiKey: options.apiKey,
-        appId: options.appId,
-        senderId: options.messagingSenderId
-    };
-}
-function getMissingValueError$1(valueName) {
-    return ERROR_FACTORY$1.create("missing-app-config-values" /* ErrorCode.MISSING_APP_CONFIG_VALUES */, {
-        valueName
-    });
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-class MessagingService$1 {
-    constructor(app, installations, analyticsProvider) {
-        // logging is only done with end user consent. Default to false.
-        this.deliveryMetricsExportedToBigQueryEnabled = false;
-        this.onBackgroundMessageHandler = null;
-        this.onMessageHandler = null;
-        this.logEvents = [];
-        this.isLogServiceStarted = false;
-        const appConfig = extractAppConfig$1(app);
-        this.firebaseDependencies = {
-            app,
-            appConfig,
-            installations,
-            analyticsProvider
-        };
-    }
-    _delete() {
-        return Promise.resolve();
-    }
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function registerDefaultSw(messaging) {
-    try {
-        messaging.swRegistration = await navigator.serviceWorker.register(DEFAULT_SW_PATH, {
-            scope: DEFAULT_SW_SCOPE
-        });
-        // The timing when browser updates sw when sw has an update is unreliable from experiment. It
-        // leads to version conflict when the SDK upgrades to a newer version in the main page, but sw
-        // is stuck with the old version. For example,
-        // https://github.com/firebase/firebase-js-sdk/issues/2590 The following line reliably updates
-        // sw if there was an update.
-        messaging.swRegistration.update().catch(() => {
-            /* it is non blocking and we don't care if it failed */
-        });
-    }
-    catch (e) {
-        throw ERROR_FACTORY$1.create("failed-service-worker-registration" /* ErrorCode.FAILED_DEFAULT_REGISTRATION */, {
-            browserErrorMessage: e === null || e === void 0 ? void 0 : e.message
-        });
-    }
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function updateSwReg(messaging, swRegistration) {
-    if (!swRegistration && !messaging.swRegistration) {
-        await registerDefaultSw(messaging);
-    }
-    if (!swRegistration && !!messaging.swRegistration) {
-        return;
-    }
-    if (!(swRegistration instanceof ServiceWorkerRegistration)) {
-        throw ERROR_FACTORY$1.create("invalid-sw-registration" /* ErrorCode.INVALID_SW_REGISTRATION */);
-    }
-    messaging.swRegistration = swRegistration;
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function updateVapidKey(messaging, vapidKey) {
-    if (!!vapidKey) {
-        messaging.vapidKey = vapidKey;
-    }
-    else if (!messaging.vapidKey) {
-        messaging.vapidKey = DEFAULT_VAPID_KEY$1;
-    }
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function getToken$1(messaging, options) {
-    if (!navigator) {
-        throw ERROR_FACTORY$1.create("only-available-in-window" /* ErrorCode.AVAILABLE_IN_WINDOW */);
-    }
-    if (Notification.permission === 'default') {
-        await Notification.requestPermission();
-    }
-    if (Notification.permission !== 'granted') {
-        throw ERROR_FACTORY$1.create("permission-blocked" /* ErrorCode.PERMISSION_BLOCKED */);
-    }
-    await updateVapidKey(messaging, options === null || options === void 0 ? void 0 : options.vapidKey);
-    await updateSwReg(messaging, options === null || options === void 0 ? void 0 : options.serviceWorkerRegistration);
-    return getTokenInternal$1(messaging);
-}
-
-/**
- * @license
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function logToScion(messaging, messageType, data) {
-    const eventType = getEventType(messageType);
-    const analytics = await messaging.firebaseDependencies.analyticsProvider.get();
-    analytics.logEvent(eventType, {
-        /* eslint-disable camelcase */
-        message_id: data[CONSOLE_CAMPAIGN_ID$1],
-        message_name: data[CONSOLE_CAMPAIGN_NAME],
-        message_time: data[CONSOLE_CAMPAIGN_TIME],
-        message_device_time: Math.floor(Date.now() / 1000)
-        /* eslint-enable camelcase */
-    });
-}
-function getEventType(messageType) {
-    switch (messageType) {
-        case MessageType$2.NOTIFICATION_CLICKED:
-            return 'notification_open';
-        case MessageType$2.PUSH_RECEIVED:
-            return 'notification_foreground';
-        default:
-            throw new Error();
-    }
-}
-
-/**
- * @license
- * Copyright 2017 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function messageEventListener(messaging, event) {
-    const internalPayload = event.data;
-    if (!internalPayload.isFirebaseMessaging) {
-        return;
-    }
-    if (messaging.onMessageHandler &&
-        internalPayload.messageType === MessageType$2.PUSH_RECEIVED) {
-        if (typeof messaging.onMessageHandler === 'function') {
-            messaging.onMessageHandler(externalizePayload$1(internalPayload));
-        }
-        else {
-            messaging.onMessageHandler.next(externalizePayload$1(internalPayload));
-        }
-    }
-    // Log to Scion if applicable
-    const dataPayload = internalPayload.data;
-    if (isConsoleMessage$1(dataPayload) &&
-        dataPayload[CONSOLE_CAMPAIGN_ANALYTICS_ENABLED] === '1') {
-        await logToScion(messaging, internalPayload.messageType, dataPayload);
-    }
-}
-
-const name = "@firebase/messaging";
-const version = "0.12.0";
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const WindowMessagingFactory = (container) => {
-    const messaging = new MessagingService$1(container.getProvider('app').getImmediate(), container.getProvider('installations-internal').getImmediate(), container.getProvider('analytics-internal'));
-    navigator.serviceWorker.addEventListener('message', e => messageEventListener(messaging, e));
-    return messaging;
-};
-const WindowMessagingInternalFactory = (container) => {
-    const messaging = container
-        .getProvider('messaging')
-        .getImmediate();
-    const messagingInternal = {
-        getToken: (options) => getToken$1(messaging, options)
-    };
-    return messagingInternal;
-};
-function registerMessagingInWindow() {
-    _registerComponent(new Component('messaging', WindowMessagingFactory, "PUBLIC" /* ComponentType.PUBLIC */));
-    _registerComponent(new Component('messaging-internal', WindowMessagingInternalFactory, "PRIVATE" /* ComponentType.PRIVATE */));
-    registerVersion(name, version);
-    // BUILD_TARGET will be replaced by values like esm5, esm2017, cjs5, etc during the compilation
-    registerVersion(name, version, 'esm2017');
-}
-
-/**
- * @license
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Checks if all required APIs exist in the browser.
- * @returns a Promise that resolves to a boolean.
- *
- * @public
- */
-async function isWindowSupported() {
-    try {
-        // This throws if open() is unsupported, so adding it to the conditional
-        // statement below can cause an uncaught error.
-        await validateIndexedDBOpenable();
-    }
-    catch (e) {
-        return false;
-    }
-    // firebase-js-sdk/issues/2393 reveals that idb#open in Safari iframe and Firefox private browsing
-    // might be prohibited to run. In these contexts, an error would be thrown during the messaging
-    // instantiating phase, informing the developers to import/call isSupported for special handling.
-    return (typeof window !== 'undefined' &&
-        isIndexedDBAvailable() &&
-        areCookiesEnabled() &&
-        'serviceWorker' in navigator &&
-        'PushManager' in window &&
-        'Notification' in window &&
-        'fetch' in window &&
-        ServiceWorkerRegistration.prototype.hasOwnProperty('showNotification') &&
-        PushSubscription.prototype.hasOwnProperty('getKey'));
-}
-
-/**
- * @license
- * Copyright 2017 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Retrieves a Firebase Cloud Messaging instance.
- *
- * @returns The Firebase Cloud Messaging instance associated with the provided firebase app.
- *
- * @public
- */
-function getMessagingInWindow(app = getApp()) {
-    // Conscious decision to make this async check non-blocking during the messaging instance
-    // initialization phase for performance consideration. An error would be thrown latter for
-    // developer's information. Developers can then choose to import and call `isSupported` for
-    // special handling.
-    isWindowSupported().then(isSupported => {
-        // If `isWindowSupported()` resolved, but returned false.
-        if (!isSupported) {
-            throw ERROR_FACTORY$1.create("unsupported-browser" /* ErrorCode.UNSUPPORTED_BROWSER */);
-        }
-    }, _ => {
-        // If `isWindowSupported()` rejected.
-        throw ERROR_FACTORY$1.create("indexed-db-unsupported" /* ErrorCode.INDEXED_DB_UNSUPPORTED */);
-    });
-    return _getProvider(getModularInstance(app), 'messaging').getImmediate();
-}
-
-/**
- * Firebase Cloud Messaging
- *
- * @packageDocumentation
- */
-registerMessagingInWindow();
+registerVersion(name, version, 'esm2017');
 
 /**
  * @license
@@ -5566,6 +4431,40 @@ function registerMessagingInSw() {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Checks whether all required APIs exist within SW Context
+ * @returns a Promise that resolves to a boolean.
+ *
+ * @public
+ */
+async function isSwSupported() {
+    // firebase-js-sdk/issues/2393 reveals that idb#open in Safari iframe and Firefox private browsing
+    // might be prohibited to run. In these contexts, an error would be thrown during the messaging
+    // instantiating phase, informing the developers to import/call isSupported for special handling.
+    return (isIndexedDBAvailable() &&
+        (await validateIndexedDBOpenable()) &&
+        'PushManager' in self &&
+        'Notification' in self &&
+        ServiceWorkerRegistration.prototype.hasOwnProperty('showNotification') &&
+        PushSubscription.prototype.hasOwnProperty('getKey'));
+}
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 function onBackgroundMessage$1(messaging, nextOrObserver) {
     if (self.document !== undefined) {
         throw ERROR_FACTORY.create("only-available-in-sw" /* ErrorCode.AVAILABLE_IN_SW */);
@@ -5574,6 +4473,46 @@ function onBackgroundMessage$1(messaging, nextOrObserver) {
     return () => {
         messaging.onBackgroundMessageHandler = null;
     };
+}
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * Retrieves a Firebase Cloud Messaging instance.
+ *
+ * @returns The Firebase Cloud Messaging instance associated with the provided firebase app.
+ *
+ * @public
+ */
+function getMessagingInSw(app = getApp()) {
+    // Conscious decision to make this async check non-blocking during the messaging instance
+    // initialization phase for performance consideration. An error would be thrown latter for
+    // developer's information. Developers can then choose to import and call `isSupported` for
+    // special handling.
+    isSwSupported().then(isSupported => {
+        // If `isSwSupported()` resolved, but returned false.
+        if (!isSupported) {
+            throw ERROR_FACTORY.create("unsupported-browser" /* ErrorCode.UNSUPPORTED_BROWSER */);
+        }
+    }, _ => {
+        // If `isSwSupported()` rejected.
+        throw ERROR_FACTORY.create("indexed-db-unsupported" /* ErrorCode.INDEXED_DB_UNSUPPORTED */);
+    });
+    return _getProvider(getModularInstance(app), 'messaging-sw').getImmediate();
 }
 /**
  * Called when a message is received while the app is in the background. An app is considered to be
@@ -5629,37 +4568,18 @@ const firebaseConfig = {
 	measurementId: measurementId
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-console.info("Firebase messaging service worker is set up");
-// If we don't include a point to inject the manifest the plugin will fail.
-// Using just a variable will not work because it is tree-shaked, we need to make it part of a side effect to prevent it from being removed
-console.log(self.__WB_MANIFEST);
+try {
+  const firebaseApp = initializeApp(firebaseConfig);
+  console.info("Firebase messaging service worker is set up");
 
-const messaging = getMessagingInWindow(firebaseApp);
-onBackgroundMessage(messaging, (payload) => {
-  console.log("[firebase-messaging-sw.js] Received background message ", payload);
-  // Customize notification here
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/firebase-logo.png",
-  };
+  const messaging = getMessagingInSw(firebaseApp, {
+    serviceWorkerRegistration: self.registration,
+  });
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
-
-// https://stackoverflow.com/questions/73355783/proper-way-to-setup-firebase-messaging-service-worker-with-vite
-
-/*
-other links:
-https://stackoverflow.com/questions/41144151/firebaseerror-we-are-unable-to-register-the-default-service-worker
-
-
-https://firebase.google.com/docs/cloud-messaging/js/client?authuser=0#configure_web_credentials_in_your_app 
-
-https://firebase.google.com/docs/cloud-messaging/js/receive?authuser=0#setting_notification_options_in_the_service_worker
-
-https://firebase.google.com/docs/cloud-messaging/js/first-message?hl=en&authuser=0#send_a_test_notification_message
-
-https://console.firebase.google.com/project/reblabify/notification/compose
-*/
+  onBackgroundMessage(messaging, (payload) => {
+    console.log("[firebase-messaging-sw.js] Received background message ", payload);
+    // firebase automatically displays the notification, so we don't need to do anything here
+  });
+} catch (error) {
+  console.log("firebase-messaging-sw.js error: ", error);
+}
