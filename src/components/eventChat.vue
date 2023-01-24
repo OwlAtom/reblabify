@@ -14,7 +14,7 @@ tokenStore.initMessaging();
 const messageContent = ref();
 const sendMessage = () => {
   chatStore.sendMessage(messageContent.value.value, eventID);
-  messageContent.value = "";
+  messageContent.value.value = "";
 };
 
 const messages = ref([]);
