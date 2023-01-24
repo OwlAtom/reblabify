@@ -1,29 +1,37 @@
 const functions = require("firebase-functions");
-
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
+const firebase = require("firebase-admin");
+// init the app
+firebase.initializeApp();
+const firestore = firebase.firestore();
+// realtime db
+const db = firebase.database();
+// messaging
+const messaging = firebase.messaging();
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 
-/*
-Cloud Function to expire tokens:
-import { firestore } from 'firebase/app';
+/* Cloud Function to expire tokens: */
+exports.cleanupTokens = functions.pubsub.schedule("every 24 hours").onRun(async () => {
+  const now = new Date();
+  const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-exports.cleanupTokens = functions.pubsub.schedule('every 24 hours').onRun(async (context) => {
-    const now = new Date();
-    const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-    const tokensRef = firestore().collection("tokens");
-    const query = tokensRef.where("timestamp", "<", cutoff);
-    const tokens = await query.get();
-    tokens.forEach(token => {
-        token.ref.delete();
-    });
+  const tokensRef = firestore().collection("tokens");
+  const query = tokensRef.where("timestamp", "<", cutoff);
+  const tokens = await query.get();
+  tokens.forEach((token) => {
+    token.ref.delete();
+  });
 });
-*/
+
+exports.scheduledFunction = functions.pubsub.schedule("every 1 minute").onRun(() => {
+  console.log("This will be run every minute!");
+  return null;
+});
+
+// For each new message in the chat / id collection in the realtime db, send a notification to the users
+// exports.sendNotification = functions.database.ref("/chat/{id}").onCreate((snapshot, context) => {
+//     const chat = snapshot.val();
+//     const chatId = context.params.id;
+//     //
 
 /*
 relevante links:
