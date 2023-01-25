@@ -3,26 +3,18 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import App from "./App.vue";
 
+const useEmulators = false;
 import { initializeApp } from "firebase/app";
 import { getPerformance } from "firebase/performance";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { enableIndexedDbPersistence } from "firebase/firestore";
+import firebaseConfig from "./firebase-config.json";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+if (useEmulators) {
+  firebaseConfig.databaseURL = "http://localhost:9000/?ns=reblabify";
+}
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCkMeu0Y5iCwjENndtY-KujBB7txtLtLio",
-  authDomain: "reblabify.firebaseapp.com",
-  databaseURL: "https://reblabify-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "reblabify",
-  storageBucket: "reblabify.appspot.com",
-  messagingSenderId: "342442064472",
-  appId: "1:342442064472:web:fc5b690eb43deaf709e82d",
-  measurementId: "G-GPNFV4ZWFF",
-};
-// Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 // eslint-disable-next-line no-unused-vars
 const perf = getPerformance(firebase); // https://firebase.google.com/docs/perf-mon/get-started-web
@@ -31,17 +23,23 @@ analytics.app.automaticDataCollectionEnabled = true;
 
 const db = getFirestore();
 
-enableIndexedDbPersistence(db).catch((err) => {
-  if (err.code == "failed-precondition") {
-    // Multiple tabs open, persistence can only be enabled
-    // in one tab at a a time.
-    // ...
-  } else if (err.code == "unimplemented") {
-    // The current browser does not support all of the
-    // features required to enable persistence
-    // ...
-  }
-});
+if (useEmulators) {
+  connectFirestoreEmulator(db, "localhost", 8080);
+}
+
+if (!useEmulators) {
+  enableIndexedDbPersistence(db).catch((err) => {
+    if (err.code == "failed-precondition") {
+      // Multiple tabs open, persistence can only be enabled
+      // in one tab at a a time.
+      // ...
+    } else if (err.code == "unimplemented") {
+      // The current browser does not support all of the
+      // features required to enable persistence
+      // ...
+    }
+  });
+}
 
 import "normalize.css/normalize.css";
 

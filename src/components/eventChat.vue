@@ -1,16 +1,20 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { useTokenStore } from "../stores/token";
 import { useChatStore } from "../stores/chat";
 import { ref, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const eventID = router.currentRoute.value.params.id;
 const chatStore = useChatStore();
+const tokenStore = useTokenStore();
+
+tokenStore.initMessaging();
 
 const messageContent = ref();
 const sendMessage = () => {
   chatStore.sendMessage(messageContent.value.value, eventID);
-  messageContent.value = "";
+  messageContent.value.value = "";
 };
 
 const messages = ref([]);
@@ -24,6 +28,10 @@ const unsubscribe = chatStore.subscribeToChat(eventID, snapshotHandler);
 onBeforeUnmount(() => {
   unsubscribe(); // needed to prevent memory leaks
 });
+
+// to notify the user of new messages when on other views, we need to detect the last message
+// and compare it to the last message in the store
+// const lastMessage = ref();
 </script>
 
 <template>

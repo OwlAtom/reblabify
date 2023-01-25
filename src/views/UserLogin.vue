@@ -1,6 +1,7 @@
 <script setup>
 import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import { useUsersStore } from "../stores/users";
+import { useTokenStore } from "../stores/token";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import welcomeIllustration from "../assets/illustrations/welcome.svg";
@@ -30,6 +31,8 @@ onMounted(() => {
         photoURL: user.photoURL,
         uid: user.uid,
       });
+
+      useTokenStore().initMessaging();
 
       router.push({ name: "Home" });
     })
