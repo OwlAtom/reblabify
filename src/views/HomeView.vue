@@ -36,11 +36,11 @@ const user = useUsersStore().users.self;
     </div>
   </section>
   <div class="slider-container">
-    <div v-for="event in events" :key="event.id" class="my-events-container">
+    <template v-for="event in events" :key="event.id">
       <div v-if="event.host !== user.uid" class="event-details">
         <EventCard :event="event" />
       </div>
-    </div>
+    </template>
   </div>
   <section class="wrapper">
     <div class="flex justify-content-between align-items-center">
@@ -56,11 +56,11 @@ const user = useUsersStore().users.self;
   </section>
 
   <div class="slider-container">
-    <div v-for="event in events" :key="event.id" class="my-events-container">
+    <template v-for="event in events" :key="event.id">
       <div v-if="event.host === user.uid" class="event-details">
         <EventCard :event="event" />
       </div>
-    </div>
+    </template>
   </div>
 
   <!-- <h2>Grupper</h2>
