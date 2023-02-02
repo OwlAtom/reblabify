@@ -141,38 +141,39 @@ function showEmoji(newEmoji) {
 
       <h1>Opret begivenhed</h1>
 
-      <label for="title">Begivenhedsnavn</label>
-      <input v-model="formData.title" type="text" name="title" />
+      <label for="title">Begivenhedsnavn*</label>
+      <input v-model="formData.title" type="text" name="title" required />
 
       <div class="set-time">
         <label for="startDate">
-          Start dato
-          <input v-model="formData.startDate" type="date" name="startDate" />
+          Start dato*
+          <input v-model="formData.startDate" type="date" name="startDate" required />
         </label>
 
         <label for="startTime">
-          Start tidspunkt
-          <input v-model="formData.startTime" type="time" name="startTime" />
+          Start tidspunkt*
+          <input v-model="formData.startTime" type="time" name="startTime" required />
         </label>
       </div>
 
       <div class="set-time">
         <label for="endDate">
-          Slut dato
-          <input v-model="formData.endDate" type="date" name="endDate" />
+          Slut dato*
+          <input v-model="formData.endDate" type="date" name="endDate" required />
         </label>
 
         <label for="endDate">
-          Slut tidspunkt
-          <input v-model="formData.endTime" type="time" name="endTime" />
+          Slut tidspunkt*
+          <input v-model="formData.endTime" type="time" name="endTime" required />
         </label>
       </div>
+
+      <label for="location">Lokation*</label>
+      <input v-model="formData.location" type="text" name="location" required />
 
       <label for="description">Beskrivelse</label>
       <textarea v-model="formData.description" name="description" rows="3"></textarea>
 
-      <label for="location">Lokation</label>
-      <input v-model="formData.location" type="text" name="location" />
       <!-- todo: 'normalButton'? + places i bunden derefter -->
       <!-- <button type="submit" @click="handleSubmit">Opret</button> -->
 
