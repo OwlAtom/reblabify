@@ -5,7 +5,7 @@ import headerWave from "../assets/headerWave.svg";
 <template>
   <div class="heading-wrapper">
     <div class="default-heading">
-      <h1>{{ $route.meta.heading }}</h1>
+      <h1>{{ $route.meta.title }}</h1>
     </div>
     <div class="svg-container">
       <headerWave />
