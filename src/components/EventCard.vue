@@ -24,11 +24,11 @@ onBeforeMount(async () => {
   renderByline.value = true;
 });
 
-// const totalPeopleInvited =
-//   props.event?.accepted?.length +
-//   props.event?.mayby?.length +
-//   props.event?.declined?.length +
-//   props.event?.invited?.length;
+const totalPeopleInvited =
+  props.event?.accepted?.length +
+  props.event?.maybe?.length +
+  props.event?.declined?.length +
+  props.event?.invited?.length;
 </script>
 
 <template>
@@ -41,7 +41,7 @@ onBeforeMount(async () => {
         <CardHeader :event-title="event.title" :icon="event.icon" />
         <EventTime :start-time="event.startTime" :end-time="event.endTime" />
         <EventLocation v-if="event.location" :event-location="event.location" />
-        <EventDeclarations :declarations="event?.accepted?.length" :invited-total="event?.invited?.length" />
+        <EventDeclarations :declarations="event?.accepted?.length" :invited-total="totalPeopleInvited" />
       </div>
       <!-- <div class="buttons">
         <RoundButtons :event-id="event.id" />

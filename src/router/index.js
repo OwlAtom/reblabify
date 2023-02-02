@@ -10,31 +10,40 @@ const routes = [
     path: "/home",
     name: "Home",
     component: () => import("../views/HomeView.vue"),
+    meta: {
+      title: "Hjem",
+    },
   },
   {
     path: "/add-event",
     name: "AddEvent",
     component: () => import("../views/AddEvent.vue"),
+    meta: {
+      title: "Opret",
+    },
   },
   {
     path: "/chat",
     name: "Chat",
     component: () => import("../views/ChatOverview.vue"),
     meta: {
-      heading: "Chatoversigt",
+      title: "Chatoversigt",
     },
   },
   {
     path: "/event-info/:id",
     name: "EventInfo",
     component: () => import("../views/EventInfo.vue"),
+    meta: {
+      title: "Begivenhedsinfo",
+    },
   },
   {
     path: "/all-events",
     name: "AllEvents",
     component: () => import("../views/AllEvents.vue"),
     meta: {
-      heading: "Begivenhedsoversigt",
+      title: "Begivenhedsoversigt",
     },
     children: [
       {
@@ -49,7 +58,7 @@ const routes = [
     name: "Groups",
     component: () => import("../views/GroupsOverview.vue"),
     meta: {
-      heading: "Grupper",
+      title: "Grupper",
     },
   },
   {
@@ -66,6 +75,9 @@ const routes = [
     path: "/edit-event/:id",
     name: "EditEvent",
     component: () => import("../views/TheEditEvent.vue"),
+    meta: {
+      title: "Rediger",
+    },
   },
 ];
 
@@ -77,6 +89,8 @@ const router = createRouter({
 });
 // eslint-disable-next-line no-unused-vars
 router.beforeEach((to, from, next) => {
+  document.title = `Reblabify · ${to.meta.title}`;
+
   const usersStore = useUsersStore();
   usersStore.init();
   console.log("Route guarded: ", !usersStore.users.self.loggedIn);
