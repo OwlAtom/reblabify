@@ -1,3 +1,4 @@
+An alternative to Facebook Events. A PWA where you can make events, invite friends and chat with them in the event. A bachelor project in Web Development. 
 # Reblabify - Because Blabbing is so last year
 
 # Vue 3 + Vite
